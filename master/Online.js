@@ -39,7 +39,7 @@ var __copyProps = (to, from, except, desc) => {
 	}
 	return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", {
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule || !__hasOwnProp.call(mod, "default") ? __defProp(target, "default", {
 	value: mod,
 	enumerable: true
 }) : target, mod));
@@ -10609,9 +10609,7 @@ function detectEncodingByLangtype(langType, disableKorean) {
 		case 242:
 			result = "utf-16be";
 			break;
-		default:
-			result = "windows-1252";
-			break;
+		default: result = "windows-1252";
 	}
 	if (disableKorean) result = "windows-1252";
 	return result;
@@ -10951,7 +10949,7 @@ function getDateSub() {
 */
 function isROExec(file) {
 	if (!file.name.match(/\.exe$/i)) return false;
-	if (file.size < 1024 * 1024 * 3 || file.size > 1024 * 1024 * 7) return false;
+	if (file.size < 3145728 || file.size > 7340032) return false;
 	return true;
 }
 var _fp, Executable_default;
@@ -11199,9 +11197,9 @@ var _memory, _rememberTime, _lastCheckTick, _cleanUpInterval, _cleaningInProgres
 var init_MemoryManager = __esmMin((() => {
 	init_MemoryItem();
 	_memory = {};
-	_rememberTime = 30 * 1e3;
+	_rememberTime = 3e4;
 	_lastCheckTick = 0;
-	_cleanUpInterval = 10 * 1e3;
+	_cleanUpInterval = 1e4;
 	_cleaningInProgress = false;
 	_cleanIndex = 0;
 	_filesToClean = [];
@@ -11331,9 +11329,7 @@ var init_MemoryManager = __esmMin((() => {
 						}
 					}
 					break;
-				default:
-					if (file.match && file.match(/^blob:/)) URL.revokeObjectURL(file);
-					break;
+				default: if (file.match && file.match(/^blob:/)) URL.revokeObjectURL(file);
 			}
 			delete _memory[filename];
 		};
@@ -77891,7 +77887,7 @@ var init_preload_helper = __esmMin((() => {
 //#region src/UI/Common.css?raw
 var Common_default$1;
 var init_Common$1 = __esmMin((() => {
-	Common_default$1 = "/* Avoid input focus border */\r\n:focus {\r\n	outline: none;\r\n}\r\n::-moz-focus-inner {\r\n	border: 0;\r\n}\r\n\r\n* {\r\n	-moz-user-select: none;\r\n}\r\n\r\nhtml,\r\nbody {\r\n	touch-action: manipulation;\r\n	margin: 0;\r\n}\r\n\r\n/* Prevent mobile browser auto-zoom on input focus and double-tap */\r\n:host {\r\n	touch-action: manipulation;\r\n}\r\n\r\ninput,\r\ntextarea,\r\nselect {\r\n	touch-action: manipulation;\r\n}\r\n\r\ncanvas {\r\n	touch-action: none;\r\n}\r\n\r\nbody {\r\n	background-color: black;\r\n	font-size: 12px;\r\n	font-family: 'SCDream', Arial, Helvetica, sans-serif;\r\n	overflow: hidden;\r\n	-webkit-user-select: none;\r\n	user-select: none;\r\n	min-width: 100vw;\r\n	min-height: 100vh;\r\n	letter-spacing: 0;\r\n	line-height: 1.2;\r\n}\r\n\r\n.title {\r\n	font-size: 12px;\r\n}\r\n\r\nbutton,\r\nui-button {\r\n	padding: 0;\r\n}\r\n\r\nui-button {\r\n	display: inline-block;\r\n}\r\n\r\n.ui-btn {\r\n	-webkit-appearance: none;\r\n	appearance: none;\r\n	display: inline-flex;\r\n	align-items: center;\r\n	justify-content: center;\r\n\r\n	height: 20px;\r\n	min-width: 52px;\r\n	padding: 0 10px;\r\n\r\n	font-size: 12px;\r\n	line-height: 1;\r\n	color: #3f3f3f;\r\n	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);\r\n\r\n	border-radius: 4px;\r\n	border: 1px solid;\r\n\r\n	/* 3D border: top right bottom left */\r\n	border-color: #cfcfcf #a9a9a9 #5f5f5f #bdbdbd;\r\n\r\n	/* glossy + subtle depth */\r\n	background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 35%, #dcdcdc 55%, #f9f9f9 100%);\r\n\r\n	box-shadow:\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.95),\r\n		/* top highlight */ inset 0 -1px 0 rgba(0, 0, 0, 0.12),\r\n		/* bottom inner edge */ 0 1px 0 rgba(0, 0, 0, 0.12); /* outer bottom shadow */\r\n\r\n	cursor: pointer;\r\n}\r\n\r\n/* Hover: hơi xanh nhẹ giống button Reset */\r\n.ui-btn:hover {\r\n	border-color: #c9d1dd #8ea2c4 #4d5f86 #b1bfd5;\r\n	background: linear-gradient(to bottom, #f7fbff 0%, #dfe8f6 35%, #c0d0ee 55%, #f0f6ff 100%);\r\n\r\n	box-shadow:\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.95),\r\n		inset 0 -1px 0 rgba(0, 0, 0, 0.12),\r\n		0 1px 0 rgba(0, 0, 0, 0.12);\r\n}\r\n\r\n/* Active: giống \"ấn xuống\" */\r\n.ui-btn:active {\r\n	border-color: #9fb0c9 #6f86a6 #3b4b67 #7f96b6;\r\n\r\n	background: linear-gradient(to bottom, #cdd8eb 0%, #b7c8e5 45%, #dfe9fb 100%);\r\n\r\n	box-shadow:\r\n		inset 0 2px 3px rgba(0, 0, 0, 0.18),\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.35);\r\n\r\n	transform: translateY(1px); /* cảm giác bị nhấn */\r\n}\r\n\r\n/* Disabled */\r\n.ui-btn:disabled,\r\n.ui-btn.is-disabled {\r\n	cursor: default;\r\n	color: #8f8f8f;\r\n	text-shadow: none;\r\n\r\n	border-color: #d3d3d3 #bdbdbd #9b9b9b #c9c9c9;\r\n\r\n	background: linear-gradient(to bottom, #f6f6f6 0%, #e7e7e7 55%, #fafafa 100%);\r\n\r\n	box-shadow:\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.9),\r\n		inset 0 -1px 0 rgba(0, 0, 0, 0.08),\r\n		0 1px 0 rgba(0, 0, 0, 0.08);\r\n\r\n	transform: none;\r\n}\r\n\r\n/* Hide native cursor inside Shadow DOM when custom cursor is active */\r\n:host-context(.custom-cursor) * {\r\n	cursor: none !important;\r\n}\r\n";
+	Common_default$1 = "/* Avoid input focus border */\r\n:focus {\r\n	outline: none;\r\n}\r\n::-moz-focus-inner {\r\n	border: 0;\r\n}\r\n\r\n* {\r\n	-moz-user-select: none;\r\n}\r\n\r\nhtml,\r\nbody {\r\n	touch-action: manipulation;\r\n	margin: 0;\r\n}\r\n\r\n/* Prevent mobile browser auto-zoom on input focus and double-tap */\r\n:host {\r\n	touch-action: manipulation;\r\n}\r\n\r\ninput,\r\ntextarea,\r\nselect {\r\n	touch-action: manipulation;\r\n}\r\n\r\ncanvas {\r\n	touch-action: none;\r\n}\r\n\r\nbody {\r\n	background-color: black;\r\n	font-size: 12px;\r\n	/* 'SCDream' first: wins only when the server actually serves the client font (loaded via\r\n	   @font-face in DBManager). When it isn't served it resolves to Arial — the official client's\r\n	   window UI font for intl/america servicetype (Ragexe draws window text with CreateFontA on the\r\n	   Gulim/Arial face table). Liberation Sans / Arimo provide Arial metrics on Linux. */\r\n	font-family: 'SCDream', Arial, 'Liberation Sans', Arimo, sans-serif;\r\n	/* Normalize any resolved font's x-height to Arial's (sxHeight 1062 / unitsPerEm 2048 = 0.5186),\r\n	   so text keeps Arial's apparent size on every OS/font. It's inherited and crosses Shadow DOM\r\n	   hosts, so it also rescales elements that use a non-Arial face; those opt out with\r\n	   `font-size-adjust: none` on the selector declaring that font (Intro, GrfViewer, JoystickUI\r\n	   header). SCDream, when a server serves it, is normalized to Arial on purpose.\r\n	   Progressive enhancement: engines that don't support the numeric form ignore it\r\n	   and render at the resolved font's native x-height (no JS fallback needed — Arial\r\n	   / Liberation Sans already carry correct metrics, only annex fonts degrade). */\r\n	font-size-adjust: 0.5186;\r\n	overflow: hidden;\r\n	-webkit-user-select: none;\r\n	user-select: none;\r\n	min-width: 100vw;\r\n	min-height: 100vh;\r\n	letter-spacing: 0;\r\n	line-height: 1.2;\r\n}\r\n\r\n.title {\r\n	font-size: 12px;\r\n}\r\n\r\nbutton,\r\nui-button {\r\n	padding: 0;\r\n}\r\n\r\nui-button {\r\n	display: inline-block;\r\n}\r\n\r\n.ui-btn {\r\n	-webkit-appearance: none;\r\n	appearance: none;\r\n	display: inline-flex;\r\n	align-items: center;\r\n	justify-content: center;\r\n\r\n	height: 20px;\r\n	min-width: 52px;\r\n	padding: 0 10px;\r\n\r\n	font-size: 12px;\r\n	line-height: 1;\r\n	color: #3f3f3f;\r\n	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.85);\r\n\r\n	border-radius: 4px;\r\n	border: 1px solid;\r\n\r\n	/* 3D border: top right bottom left */\r\n	border-color: #cfcfcf #a9a9a9 #5f5f5f #bdbdbd;\r\n\r\n	/* glossy + subtle depth */\r\n	background: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 35%, #dcdcdc 55%, #f9f9f9 100%);\r\n\r\n	box-shadow:\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.95),\r\n		/* top highlight */ inset 0 -1px 0 rgba(0, 0, 0, 0.12),\r\n		/* bottom inner edge */ 0 1px 0 rgba(0, 0, 0, 0.12); /* outer bottom shadow */\r\n\r\n	cursor: pointer;\r\n}\r\n\r\n/* Hover: hơi xanh nhẹ giống button Reset */\r\n.ui-btn:hover {\r\n	border-color: #c9d1dd #8ea2c4 #4d5f86 #b1bfd5;\r\n	background: linear-gradient(to bottom, #f7fbff 0%, #dfe8f6 35%, #c0d0ee 55%, #f0f6ff 100%);\r\n\r\n	box-shadow:\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.95),\r\n		inset 0 -1px 0 rgba(0, 0, 0, 0.12),\r\n		0 1px 0 rgba(0, 0, 0, 0.12);\r\n}\r\n\r\n/* Active: giống \"ấn xuống\" */\r\n.ui-btn:active {\r\n	border-color: #9fb0c9 #6f86a6 #3b4b67 #7f96b6;\r\n\r\n	background: linear-gradient(to bottom, #cdd8eb 0%, #b7c8e5 45%, #dfe9fb 100%);\r\n\r\n	box-shadow:\r\n		inset 0 2px 3px rgba(0, 0, 0, 0.18),\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.35);\r\n\r\n	transform: translateY(1px); /* cảm giác bị nhấn */\r\n}\r\n\r\n/* Disabled */\r\n.ui-btn:disabled,\r\n.ui-btn.is-disabled {\r\n	cursor: default;\r\n	color: #8f8f8f;\r\n	text-shadow: none;\r\n\r\n	border-color: #d3d3d3 #bdbdbd #9b9b9b #c9c9c9;\r\n\r\n	background: linear-gradient(to bottom, #f6f6f6 0%, #e7e7e7 55%, #fafafa 100%);\r\n\r\n	box-shadow:\r\n		inset 0 1px 0 rgba(255, 255, 255, 0.9),\r\n		inset 0 -1px 0 rgba(0, 0, 0, 0.08),\r\n		0 1px 0 rgba(0, 0, 0, 0.08);\r\n\r\n	transform: none;\r\n}\r\n\r\n/* Hide native cursor inside Shadow DOM when custom cursor is active */\r\n:host-context(.custom-cursor) * {\r\n	cursor: none !important;\r\n}\r\n";
 }));
 //#endregion
 //#region src/Controls/MouseEventHandler.js
@@ -78045,6 +78041,7 @@ var init_SessionStorage = __esmMin((() => {
 		isPartyLeader: false,
 		hasGuild: false,
 		guildRight: 0,
+		guildName: "",
 		isGuildMaster: false,
 		Playing: false,
 		hasCart: false,
@@ -82057,7 +82054,7 @@ var init_gl_matrix$1 = __esmMin((() => {
 //#endregion
 //#region src/Utils/PathFinding.js
 function calc_index(x, y) {
-	return x + y * MAX_WALKPATH & MAX_WALKPATH * MAX_WALKPATH - 1;
+	return x + y * MAX_WALKPATH & 1023;
 }
 function calc_cost(i, x1, y1) {
 	return (Math.abs(x1 - _x[i]) + Math.abs(y1 - _y[i])) * MOVE_COST;
@@ -82294,7 +82291,7 @@ function search(x0, y0, x1, y1, range, out) {
 		if ((dirFlag & 12) === 12 && types[x + 1 + (y - 1) * width] & TYPE.WALKABLE) error += add_path(heap, x + 1, y - 1, dist + MOVE_DIAGONAL_COST, currentNode, x1, y1);
 		if ((dirFlag & 9) === 9 && types[x + 1 + (y + 1) * width] & TYPE.WALKABLE) error += add_path(heap, x + 1, y + 1, dist + MOVE_DIAGONAL_COST, currentNode, x1, y1);
 		_flag$1[currentNode] = 1;
-		if (error || heap[0] >= MAX_HEAP - 5) return 0;
+		if (error || heap[0] >= 145) return 0;
 	}
 	for (pathLen = 0, i = currentNode; pathLen < 100 && i !== calc_index(x0, y0); i = _before[i], pathLen++);
 	finalLen = 0;
@@ -82386,14 +82383,14 @@ var init_PathFinding = __esmMin((() => {
 	MOVE_DIAGONAL_COST = 14;
 	_heap = new Uint32Array(MAX_HEAP);
 	_heap_clean = new Uint32Array(MAX_HEAP);
-	short_clean = new Uint16Array(MAX_WALKPATH * MAX_WALKPATH);
-	char_clean = new Uint8Array(MAX_WALKPATH * MAX_WALKPATH);
-	_x = new Uint16Array(MAX_WALKPATH * MAX_WALKPATH);
-	_y = new Uint16Array(MAX_WALKPATH * MAX_WALKPATH);
-	_dist = new Uint16Array(MAX_WALKPATH * MAX_WALKPATH);
-	_cost = new Uint16Array(MAX_WALKPATH * MAX_WALKPATH);
-	_before = new Uint16Array(MAX_WALKPATH * MAX_WALKPATH);
-	_flag$1 = new Uint8Array(MAX_WALKPATH * MAX_WALKPATH);
+	short_clean = /* @__PURE__ */ new Uint16Array(1024);
+	char_clean = /* @__PURE__ */ new Uint8Array(1024);
+	_x = /* @__PURE__ */ new Uint16Array(1024);
+	_y = /* @__PURE__ */ new Uint16Array(1024);
+	_dist = /* @__PURE__ */ new Uint16Array(1024);
+	_cost = /* @__PURE__ */ new Uint16Array(1024);
+	_before = /* @__PURE__ */ new Uint16Array(1024);
+	_flag$1 = /* @__PURE__ */ new Uint8Array(1024);
 	PathFinding_default = {
 		search,
 		searchLong,
@@ -82571,9 +82568,7 @@ var init_libgif = __esmMin((() => {
 					case "NETSCAPE":
 						parseNetscapeExt(block);
 						break;
-					default:
-						parseUnknownAppExt(block);
-						break;
+					default: parseUnknownAppExt(block);
 				}
 			};
 			var parseUnknownExt = function(block) {
@@ -82601,7 +82596,6 @@ var init_libgif = __esmMin((() => {
 				default:
 					block.extType = "unknown";
 					parseUnknownExt(block);
-					break;
 			}
 		};
 		var parseImg = function(img) {
@@ -83847,9 +83841,7 @@ var init_Altitude = __esmMin((() => {
 				case 13:
 					buffer = buffer13x13;
 					break;
-				default:
-					buffer = new Float32Array(size * size * 30);
-					break;
+				default: buffer = new Float32Array(size * size * 30);
 			}
 			for (x = -middle; x <= middle; ++x) for (y = -middle; y <= middle; ++y, i += 30) {
 				index = (pos_x + x + (pos_y + y) * Altitude.width) * 5;
@@ -145125,7 +145117,7 @@ function isDigit(value) {
 	return !isNaN(parseInt(value, 10));
 }
 function divideu128(value) {
-	const DIVISOR = Long.fromNumber(1e3 * 1e3 * 1e3);
+	const DIVISOR = Long.fromNumber(1e9);
 	let _rem = Long.fromNumber(0);
 	if (!value.parts[0] && !value.parts[1] && !value.parts[2] && !value.parts[3]) return {
 		quotient: value,
@@ -145504,9 +145496,7 @@ function deserializeObject(buffer, index, options, isArray = false) {
 				case "s":
 					optionsArray[i] = "g";
 					break;
-				case "i":
-					optionsArray[i] = "i";
-					break;
+				case "i": optionsArray[i] = "i";
 			}
 			value = new RegExp(source, optionsArray.join(""));
 		} else if (elementType === BSON_DATA_REGEXP && bsonRegExp === true) {
@@ -146593,7 +146583,8 @@ var init_bson = __esmMin((() => {
 				const byte0 = buffer[i];
 				const byte1 = buffer[i + 1];
 				const byte2 = buffer[i + 2];
-				buffer[i] = buffer[i + 3];
+				const byte3 = buffer[i + 3];
+				buffer[i] = byte3;
 				buffer[i + 1] = byte2;
 				buffer[i + 2] = byte1;
 				buffer[i + 3] = byte0;
@@ -146884,7 +146875,8 @@ var init_bson = __esmMin((() => {
 			const bits = new Int8Array(bitCount);
 			for (let bitOffset = 0; bitOffset < bits.length; bitOffset++) {
 				const byteOffset = bitOffset / 8 | 0;
-				bits[bitOffset] = this.buffer[byteOffset + 2] >> 7 - bitOffset % 8 & 1;
+				const bit = this.buffer[byteOffset + 2] >> 7 - bitOffset % 8 & 1;
+				bits[bitOffset] = bit;
 			}
 			return bits;
 		}
@@ -148850,7 +148842,7 @@ var init_bson = __esmMin((() => {
 	onDemand.ByteUtils = ByteUtils;
 	onDemand.NumberUtils = NumberUtils;
 	Object.freeze(onDemand);
-	MAXSIZE = 1024 * 1024 * 17;
+	MAXSIZE = 17825792;
 	buffer = ByteUtils.allocate(MAXSIZE);
 	bson = /*#__PURE__*/ Object.freeze({
 		__proto__: null,
@@ -161183,6 +161175,17 @@ var init_PacketStructure = __esmMin((() => {
 		this.GName = fp.readString(NAME_LENGTH);
 	};
 	PACKET.ZC.UPDATE_GDID.size = 43;
+	PACKET.ZC.UPDATE_GDID2 = function PACKET_ZC_UPDATE_GDID2(fp, end) {
+		if (end - fp.tell() < 45) return;
+		this.GDID = fp.readULong();
+		this.emblemVersion = fp.readLong();
+		this.right = fp.readLong();
+		this.isMaster = fp.readUChar();
+		this.InterSID = fp.readLong();
+		this.GName = fp.readString(NAME_LENGTH);
+		this.masterGID = fp.readULong();
+	};
+	PACKET.ZC.UPDATE_GDID2.size = 47;
 	PACKET.ZC.UPDATE_CHARSTAT = function PACKET_ZC_UPDATE_CHARSTAT(fp, end) {
 		this.AID = fp.readULong();
 		this.GID = fp.readULong();
@@ -202457,6 +202460,7 @@ var init_PacketRegister = __esmMin((() => {
 		751: PACKET.ZC.NOTIFY_FONT,
 		752: PACKET.ZC.PROGRESS,
 		754: PACKET.ZC.PROGRESS_CANCEL,
+		759: PACKET.ZC.UPDATE_GDID2,
 		861: PACKET.ZC.SIMPLE_CASHSHOP_POINT_ITEMLIST,
 		863: PACKET.CZ.REQUEST_MOVE2,
 		864: PACKET.CZ.REQUEST_TIME2,
@@ -206063,9 +206067,9 @@ var init_Background = __esmMin((() => {
 			_ctx$6.fillStyle = "rgb(0,255,255)";
 			_ctx$6.fillRect(x, y, width, height);
 			_ctx$6.fillStyle = "rgb(140,140,140)";
-			_ctx$6.fillRect(x + 1, y + 1, width - 2, height - 2);
+			_ctx$6.fillRect(x + 1, y + 1, 238, 13);
 			_ctx$6.fillStyle = "rgb(66,99,165)";
-			_ctx$6.fillRect(x + 2, y + 2, Math.floor(percent * (width - 4) * .01), height - 4);
+			_ctx$6.fillRect(x + 2, y + 2, Math.floor(percent * 236 * .01), 11);
 			_ctx$6.fillStyle = "rgb(255,255,0)";
 			_ctx$6.fillText(percent + "%", Math.floor((_canvas.width - _ctx$6.measureText(percent + "%").width) * .5), y + 11);
 		}
@@ -206969,7 +206973,7 @@ var init_SpriteRenderer = __esmMin((() => {
 			scale_x = 1;
 			scale_y = 1;
 			const _x = _pos$8[0] + this.offset[0];
-			const _y = _pos$8[1] + this.offset[1] - .5 * 35;
+			const _y = _pos$8[1] + this.offset[1] - 17.5;
 			const pal = this.palette;
 			const frame = this.sprite;
 			const width = frame.width;
@@ -210984,7 +210988,7 @@ var init_granny_ro_wasm_esm = __esmMin((() => {
 	Qt = null;
 	q = null;
 	$t = null;
-	cn = 4096 * 4096;
+	cn = 16777216;
 	ln = 4096;
 	Q = /* @__PURE__ */ new Float32Array();
 	vn = Object.freeze({
@@ -211028,21 +211032,21 @@ var init_granny_ro_wasm_esm = __esmMin((() => {
 	$ = .707106781;
 	bn = [
 		[$ * 2, -.707106781],
-		[$ * 1, -.707106781 * .5],
-		[$ * .5, -.707106781 * .75],
-		[$ * .5, -.707106781 * .25],
+		[$ * 1, -.3535533905],
+		[$ * .5, -.53033008575],
+		[$ * .5, -.17677669525],
 		[$ * .5, $ * .25],
-		[$ * .25, -.707106781 * .25],
-		[$ * .25, -.707106781 * .125],
-		[$ * .25, $ * 0],
-		[-.707106781 * 2, $],
-		[-.707106781 * 1, $ * .5],
-		[-.707106781 * .5, $ * .75],
-		[-.707106781 * .5, $ * .25],
-		[-.707106781 * .5, -.707106781 * .25],
-		[-.707106781 * .25, $ * .25],
-		[-.707106781 * .25, $ * .125],
-		[-.707106781 * .25, -0]
+		[$ * .25, -.17677669525],
+		[$ * .25, -.088388347625],
+		[$ * .25, 0],
+		[-1.414213562, $],
+		[-.707106781, $ * .5],
+		[-.3535533905, $ * .75],
+		[-.3535533905, $ * .25],
+		[-.3535533905, -.17677669525],
+		[-.17677669525, $ * .25],
+		[-.17677669525, $ * .125],
+		[-.17677669525, -0]
 	];
 	new TextDecoder(`utf-8`, { fatal: !1 });
 	Qn = Object.freeze([
@@ -212382,7 +212386,7 @@ function clear() {
 	for (let i = 0; i < insts.length; i++) detach(insts[i]);
 	_poseCache = {};
 }
-var mat3$3, mat4$18, ALPHA_REF, _phaseDiffuse, _phaseAmbient, _phaseEnv, _gr2FlagDiffuse, _gr2EmpDiffuse, _gr2EmpAmbient, _gr2FlagAmbient, GR2_ROSTER, _program$20, _gl$1, _types, _missing, _instances, _poseCache, _dbgCellTile, _dbgTileInst, _dbgCellInited, _debugCell, BASE_SPHERE_RADIUS, BASE_SPHERE_HALF_EXTENT, _readyPromise, _mv, _mvp, _nmat, _lightView, _clip, CULL_MARGIN, CLIP_W_EPS, DIR_STEP_DEG, FADE, TEX_MISSING_PX, TEX_GREY_PX, A4_NIBBLE_EXPAND, _emblemCanvas, GR2_VERTEX_STRIDE, GR2_VERTEX_LAYOUT, GR2ModelRenderer_default;
+var mat3$3, mat4$18, ALPHA_REF, _phaseDiffuse, _phaseAmbient, _phaseEnv, _gr2FlagDiffuse, _gr2EmpDiffuse, _gr2EmpAmbient, _gr2FlagAmbient, GR2_ROSTER, _program$20, _gl$1, _types, _missing, _instances, _poseCache, _dbgCellTile, _dbgTileInst, _dbgCellInited, _debugCell, BASE_SPHERE_HALF_EXTENT, _readyPromise, _mv, _mvp, _nmat, _lightView, _clip, CULL_MARGIN, CLIP_W_EPS, DIR_STEP_DEG, FADE, TEX_MISSING_PX, TEX_GREY_PX, A4_NIBBLE_EXPAND, _emblemCanvas, GR2_VERTEX_STRIDE, GR2_VERTEX_LAYOUT, GR2ModelRenderer_default;
 var init_GR2ModelRenderer = __esmMin((() => {
 	init_Client();
 	init_gl_matrix();
@@ -212460,8 +212464,7 @@ var init_GR2ModelRenderer = __esmMin((() => {
 	]);
 	_dbgCellInited = false;
 	_debugCell = false;
-	BASE_SPHERE_RADIUS = 2;
-	BASE_SPHERE_HALF_EXTENT = Math.sqrt(BASE_SPHERE_RADIUS * BASE_SPHERE_RADIUS * .5);
+	BASE_SPHERE_HALF_EXTENT = Math.sqrt(2);
 	_readyPromise = null;
 	_mv = mat4$18.create();
 	_mvp = mat4$18.create();
@@ -216772,7 +216775,7 @@ var init_Announce = __esmMin((() => {
 	*/
 	Announce.needFocus = false;
 	_timer$2 = 0;
-	_life$1 = 20 * 1e3;
+	_life$1 = 2e4;
 	Announce.render = () => Announce_default$2;
 	/**
 	* Initialize component
@@ -218414,7 +218417,7 @@ function makeResizableDiv() {
 	const fixHeight = (height) => Math.floor(height / MAGIC_NUMBER) * MAGIC_NUMBER;
 	const resize = (e) => {
 		let height = fixHeight(originalHeight - (e.pageY - originalMouseY));
-		height = Math.max(MAGIC_NUMBER, Math.min(MAGIC_NUMBER * 5, height));
+		height = Math.max(MAGIC_NUMBER, Math.min(210, height));
 		ChatBox._host.style.top = `${originalAnchorY - height}px`;
 		const contentWrapper = root.querySelector(".contentwrapper");
 		if (contentWrapper) contentWrapper.style.height = `${height}px`;
@@ -219256,10 +219259,10 @@ var init_ChatBox = __esmMin((() => {
 			0,
 			0,
 			MAGIC_NUMBER,
-			MAGIC_NUMBER * 2,
-			MAGIC_NUMBER * 3,
-			MAGIC_NUMBER * 4,
-			MAGIC_NUMBER * 5
+			84,
+			126,
+			168,
+			210
 		];
 		const content = root.querySelector(".contentwrapper");
 		const bottomBefore = getChatBottomAnchorPx(root, this.__lastBottomY);
@@ -219284,7 +219287,6 @@ var init_ChatBox = __esmMin((() => {
 				if (inputEl) inputEl.classList.remove("fix");
 				if (header) header.style.display = "";
 				if (body) body.style.display = "";
-				break;
 		}
 		if (_heightIndex !== 0 && isFinite(bottomBefore)) {
 			const bottomAfter = getChatBottomAnchorPx(root, bottomBefore);
@@ -219802,9 +219804,7 @@ function addEvent$1(item) {
 			});
 			break;
 		}
-		default:
-			if (viewBtn) viewBtn.style.display = "none";
-			break;
+		default: if (viewBtn) viewBtn.style.display = "none";
 	}
 }
 function eventsBooks$1() {
@@ -219979,14 +219979,10 @@ var init_ItemCompare = __esmMin((() => {
 			switch (item.slot["card1"]) {
 				case 255:
 				case 254:
-				case 65280:
-					hideslots = true;
-					break;
+				case 65280: hideslots = true;
 			}
 			switch (item.slot["card4"]) {
-				case 1:
-					hideslots = true;
-					break;
+				case 1: hideslots = true;
 			}
 		}
 		const cardListParent = cardList ? cardList.parentElement : null;
@@ -220008,9 +220004,7 @@ var init_ItemCompare = __esmMin((() => {
 				if (!item.IsIdentified && cardListParent) cardListParent.style.display = "none";
 				break;
 			}
-			case ItemType_default.PETEGG:
-				if (cardListParent) cardListParent.style.display = "none";
-				break;
+			case ItemType_default.PETEGG: if (cardListParent) cardListParent.style.display = "none";
 		}
 		if (descInner) resize$4(descInner.offsetHeight + 45);
 	};
@@ -220504,7 +220498,6 @@ var init_InputBox = __esmMin((() => {
 				if (textEl) textEl.textContent = DB.getItemInfo(itemId).identifiedDisplayName;
 				if (input) input.type = "text";
 				defaultVal = defaultVal || 0;
-				break;
 		}
 		if (typeof defaultVal !== "undefined" && input) {
 			input.value = defaultVal;
@@ -220814,9 +220807,7 @@ var init_SwitchEquip = __esmMin((() => {
 	*/
 	SwitchEquip.onShortCut = function onShurtCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				this.toggle();
-				break;
+			case "TOGGLE": this.toggle();
 		}
 	};
 	/**
@@ -221375,7 +221366,6 @@ function createMiniMap({ name, htmlText, cssText, worldMap = null, townInfoToggl
 			case 2:
 				_ctx.globalAlpha = 1;
 				this.ui.show();
-				break;
 		}
 	};
 	/**
@@ -221433,9 +221423,7 @@ function createMiniMap({ name, htmlText, cssText, worldMap = null, townInfoToggl
 						case 5:
 							img = _inn;
 							break;
-						case 6:
-							img = _kafra;
-							break;
+						case 6: img = _kafra;
 					}
 					if (img.complete && img.width) {
 						_ctx.save();
@@ -221847,7 +221835,6 @@ function initializePathFindingWorker() {
 							this.setLocationTitle(mapName, null);
 						}
 					}
-					break;
 			}
 		}.bind(Navigation);
 	}
@@ -223033,9 +223020,7 @@ var init_WorldMap = __esmMin((() => {
 	*/
 	WorldMap.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				this.toggle();
-				break;
+			case "TOGGLE": this.toggle();
 		}
 	};
 	/**
@@ -223186,7 +223171,7 @@ function cancel$1() {
 * Select an index, change background color
 */
 function selectIndex(div) {
-	NpcMenu.getRoot().querySelector(".content").querySelectorAll("div").forEach((d) => d.classList.remove("selected"));
+	NpcMenu.getRoot().querySelector(".content").querySelectorAll("div[data-index]").forEach((d) => d.classList.remove("selected"));
 	div.classList.add("selected");
 	_index = parseInt(div.dataset.index, 10);
 }
@@ -223257,22 +223242,23 @@ var init_NpcMenu = __esmMin((() => {
 				cancel$1();
 				break;
 			case KEYS.UP: {
-				const divs = content.querySelectorAll("div");
+				const divs = content.querySelectorAll("div[data-index]");
 				_index = Math.max(_index - 1, 0);
 				divs.forEach((d) => d.classList.remove("selected"));
-				if (divs[_index]) divs[_index].classList.add("selected");
-				const top = _index * 20;
-				if (top < content.scrollTop) content.scrollTop = top;
+				if (divs[_index]) {
+					divs[_index].classList.add("selected");
+					divs[_index].scrollIntoView({ block: "nearest" });
+				}
 				break;
 			}
 			case KEYS.DOWN: {
-				const divs = content.querySelectorAll("div");
-				const count = divs.length;
-				_index = Math.min(_index + 1, count - 1);
+				const divs = content.querySelectorAll("div[data-index]");
+				_index = Math.min(_index + 1, divs.length - 1);
 				divs.forEach((d) => d.classList.remove("selected"));
-				if (divs[_index]) divs[_index].classList.add("selected");
-				const top = _index * 20;
-				if (top >= content.scrollTop + 80) content.scrollTop = top - 60;
+				if (divs[_index]) {
+					divs[_index].classList.add("selected");
+					divs[_index].scrollIntoView({ block: "nearest" });
+				}
 				break;
 			}
 			default: return true;
@@ -223299,7 +223285,7 @@ var init_NpcMenu = __esmMin((() => {
 			div.dataset.index = j++;
 			content.appendChild(div);
 		}
-		const first = content.querySelector("div");
+		const first = content.querySelector("div[data-index]");
 		if (first) first.classList.add("selected");
 	};
 	/**
@@ -223372,9 +223358,7 @@ function onFriendAdded(pkt) {
 		case 2:
 			ChatBox_default.addText(DB.getMessage(819), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		case 3:
-			ChatBox_default.addText(DB.getMessage(820).replace("%s", pkt.Name), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		case 3: ChatBox_default.addText(DB.getMessage(820).replace("%s", pkt.Name), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -224072,7 +224056,6 @@ var init_PartyHelper = __esmMin((() => {
 				footerBtns.forEach((el) => {
 					el.style.display = "none";
 				});
-				break;
 		}
 		_type$6 = type;
 	};
@@ -226015,7 +225998,6 @@ function createPartyFriends(config) {
 					_showWindow();
 				}
 				if (_isVisible()) this.focus();
-				break;
 		}
 	};
 	/**
@@ -227240,6 +227222,143 @@ var init_PartyFriends = __esmMin((() => {
 	};
 }));
 //#endregion
+//#region src/UI/Components/GuildCompanion/GuildCompanion.html?raw
+var GuildCompanion_default$2;
+var init_GuildCompanion$2 = __esmMin((() => {
+	GuildCompanion_default$2 = "<div id=\"GuildCompanion\">\r\n	<div class=\"win companion\">\r\n		<div class=\"titlebar\">\r\n			<ui-image src=\"basic_interface/titlebar_mid.bmp\"></ui-image>\r\n			<span class=\"title\">Guild Companion</span>\r\n			<div class=\"right\">\r\n				<ui-button\r\n					class=\"base btn_x\"\r\n					bg=\"basic_interface/sys_close_off.bmp\"\r\n					hover=\"basic_interface/sys_close_on.bmp\"\r\n				></ui-button>\r\n			</div>\r\n			<div class=\"clear\"></div>\r\n		</div>\r\n		<div class=\"body\">\r\n			<div class=\"msg\">Join a guild or start your own!</div>\r\n			<div class=\"btns\">\r\n				<button class=\"btn btn_create\" type=\"button\">create guild</button>\r\n				<button class=\"btn btn_close\" type=\"button\">OK</button>\r\n			</div>\r\n		</div>\r\n	</div>\r\n	<div class=\"win namebox\">\r\n		<div class=\"titlebar\">\r\n			<ui-image src=\"basic_interface/titlebar_mid.bmp\"></ui-image>\r\n			<span class=\"title name_title\">Create Guild</span>\r\n			<div class=\"right\">\r\n				<ui-button\r\n					class=\"base btn_x2\"\r\n					bg=\"basic_interface/sys_close_off.bmp\"\r\n					hover=\"basic_interface/sys_close_on.bmp\"\r\n				></ui-button>\r\n			</div>\r\n			<div class=\"clear\"></div>\r\n		</div>\r\n		<div class=\"body\">\r\n			<div class=\"label name_label\">Guild Name</div>\r\n			<input type=\"text\" class=\"guildname\" maxlength=\"23\" />\r\n			<div class=\"btns\">\r\n				<button class=\"btn btn_ok\" type=\"button\">OK</button>\r\n				<button class=\"btn btn_cancel\" type=\"button\">cancel</button>\r\n			</div>\r\n		</div>\r\n	</div>\r\n</div>\r\n";
+}));
+//#endregion
+//#region src/UI/Components/GuildCompanion/GuildCompanion.css?raw
+var GuildCompanion_default$1;
+var init_GuildCompanion$1 = __esmMin((() => {
+	GuildCompanion_default$1 = ":host {\r\n	top: 160px;\r\n	left: 260px;\r\n	z-index: 100;\r\n}\r\n\r\n#GuildCompanion {\r\n	position: relative;\r\n	font-family: Arial, sans-serif;\r\n	font-size: 12px;\r\n	white-space: nowrap;\r\n}\r\n\r\n#GuildCompanion .win {\r\n	display: inline-block;\r\n	vertical-align: top;\r\n	background-color: white;\r\n	border: 1px solid #a5a5a5;\r\n	border-radius: 3px;\r\n	margin-right: 6px;\r\n}\r\n\r\n#GuildCompanion .win.namebox {\r\n	display: none;\r\n}\r\n#GuildCompanion .win.namebox.visible {\r\n	display: inline-block;\r\n}\r\n\r\n#GuildCompanion .win.companion.hidden {\r\n	display: none;\r\n}\r\n\r\n#GuildCompanion .titlebar {\r\n	height: 17px;\r\n	line-height: 17px;\r\n	background-color: white;\r\n	background-repeat: repeat-x;\r\n	border-radius: 3px 3px 0 0;\r\n	font-size: 11px;\r\n	font-weight: bold;\r\n	padding-left: 6px;\r\n}\r\n#GuildCompanion .titlebar .title {\r\n	vertical-align: middle;\r\n}\r\n#GuildCompanion .titlebar .base {\r\n	width: 11px;\r\n	height: 11px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	vertical-align: middle;\r\n}\r\n#GuildCompanion .titlebar .right {\r\n	float: right;\r\n	margin-right: 3px;\r\n}\r\n#GuildCompanion .titlebar .clear {\r\n	clear: both;\r\n}\r\n\r\n#GuildCompanion .body {\r\n	padding: 10px 12px 8px 12px;\r\n}\r\n\r\n#GuildCompanion .companion .msg {\r\n	margin-bottom: 12px;\r\n}\r\n\r\n#GuildCompanion .namebox .label {\r\n	margin-bottom: 4px;\r\n}\r\n#GuildCompanion .namebox input {\r\n	border: 1px solid #c1c6c2;\r\n	background-color: #efefef;\r\n	width: 150px;\r\n	height: 16px;\r\n	margin-bottom: 12px;\r\n}\r\n\r\n#GuildCompanion .btns {\r\n	text-align: center;\r\n}\r\n#GuildCompanion .namebox .btns {\r\n	text-align: right;\r\n}\r\n\r\n#GuildCompanion .btn {\r\n	font-family: Arial, sans-serif;\r\n	font-size: 11px;\r\n	padding: 2px 10px;\r\n	margin: 0 3px;\r\n	cursor: pointer;\r\n}\r\n";
+}));
+//#endregion
+//#region src/UI/Components/GuildCompanion/GuildCompanion.js
+function open(mode) {
+	_mode = mode;
+	if (!GuildCompanion.__active) GuildCompanion.append();
+	const root = GuildCompanion._shadow;
+	const companion = root.querySelector(".win.companion");
+	const nameWin = root.querySelector(".win.namebox");
+	const input = root.querySelector(".guildname");
+	if (mode === "disband") {
+		companion.classList.add("hidden");
+		nameWin.classList.add("visible");
+		root.querySelector(".name_title").textContent = "Disband the Guild";
+		root.querySelector(".name_label").textContent = "Enter Guild Name";
+		input.value = "";
+		input.focus();
+	} else {
+		companion.classList.remove("hidden");
+		nameWin.classList.remove("visible");
+		root.querySelector(".name_title").textContent = "Create Guild";
+		root.querySelector(".name_label").textContent = "Guild Name";
+		input.value = "";
+	}
+	center();
+}
+function center() {
+	const host = GuildCompanion._host;
+	if (!host) return;
+	const rect = host.getBoundingClientRect();
+	const w = Renderer.width || window.innerWidth;
+	const h = Renderer.height || window.innerHeight;
+	host.style.left = `${Math.max(0, Math.round((w - rect.width) / 2))}px`;
+	host.style.top = `${Math.max(0, Math.round((h - rect.height) / 2))}px`;
+}
+var GuildCompanion, _mode, GuildCompanion_default;
+var init_GuildCompanion = __esmMin((() => {
+	init_Renderer();
+	init_SessionStorage();
+	init_DBManager();
+	init_UIManager();
+	init_GUIComponent();
+	init_KeyEventHandler();
+	init_Elements();
+	init_GuildCompanion$2();
+	init_GuildCompanion$1();
+	GuildCompanion = new GUIComponent("GuildCompanion", GuildCompanion_default$1);
+	GuildCompanion.render = () => GuildCompanion_default$2;
+	_mode = "create";
+	GuildCompanion.onRequestCreateGuild = function onRequestCreateGuild() {};
+	GuildCompanion.onRequestBreakGuild = function onRequestBreakGuild() {};
+	GuildCompanion.init = function init() {
+		const root = this._shadow;
+		this.draggable(root.querySelector(".companion .titlebar"));
+		const nameWin = root.querySelector(".win.namebox");
+		const input = root.querySelector(".guildname");
+		const closeAll = () => {
+			GuildCompanion.remove();
+		};
+		root.querySelector(".btn_create").addEventListener("click", () => {
+			nameWin.classList.add("visible");
+			input.value = "";
+			input.focus();
+		});
+		root.querySelector(".btn_close").addEventListener("click", closeAll);
+		root.querySelector(".btn_x").addEventListener("click", closeAll);
+		root.querySelector(".btn_x2").addEventListener("click", closeAll);
+		const submit = () => {
+			const name = input.value.trim();
+			if (!name.length) {
+				input.focus();
+				return;
+			}
+			if (_mode === "disband") {
+				if (SessionStorage_default.guildName && name !== SessionStorage_default.guildName) {
+					UIManager.showMessageBox(DB.getMessage(401, "You have failed to disband the guild."), "ok", () => {
+						input.value = "";
+						input.focus();
+					});
+					return;
+				}
+				GuildCompanion.onRequestBreakGuild(name);
+				return;
+			}
+			GuildCompanion.onRequestCreateGuild(name);
+			closeAll();
+		};
+		const cancel = () => {
+			if (_mode === "disband") {
+				closeAll();
+				return;
+			}
+			nameWin.classList.remove("visible");
+		};
+		root.querySelector(".btn_ok").addEventListener("click", submit);
+		root.querySelector(".btn_cancel").addEventListener("click", cancel);
+		input.addEventListener("keydown", (event) => {
+			if (event.which === KEYS.ENTER) {
+				event.stopImmediatePropagation();
+				submit();
+			} else if (event.which === KEYS.ESCAPE) {
+				event.stopImmediatePropagation();
+				cancel();
+			}
+		});
+	};
+	GuildCompanion.openCreate = function openCreate() {
+		open("create");
+	};
+	GuildCompanion.openDisband = function openDisband() {
+		open("disband");
+	};
+	GuildCompanion.closeDisband = function closeDisband() {
+		if (_mode === "disband" && GuildCompanion.__active) GuildCompanion.remove();
+	};
+	GuildCompanion.toggleCreate = function toggleCreate() {
+		if (GuildCompanion.__active) {
+			GuildCompanion.remove();
+			return;
+		}
+		GuildCompanion.openCreate();
+	};
+	GuildCompanion.mouseMode = GUIComponent.MouseMode.STOP;
+	GuildCompanion.needFocus = true;
+	GuildCompanion_default = UIManager.addComponent(GuildCompanion);
+}));
+//#endregion
 //#region src/UI/Components/SkillDescription/SkillDescription.html?raw
 var SkillDescription_default$2;
 var init_SkillDescription$2 = __esmMin((() => {
@@ -227339,13 +227458,13 @@ var init_SkillDescription = __esmMin((() => {
 //#region src/UI/Components/Guild/Guild.html?raw
 var Guild_default$2;
 var init_Guild$3 = __esmMin((() => {
-	Guild_default$2 = "<div id=\"Guild\">\r\n	<div class=\"titlebar\">\r\n		<ui-image src=\"basic_interface/titlebar_mid.bmp\"></ui-image>\r\n		<div class=\"right\">\r\n			<ui-button\r\n				class=\"base close\"\r\n				bg=\"basic_interface/sys_close_off.bmp\"\r\n				hover=\"basic_interface/sys_close_on.bmp\"\r\n			></ui-button>\r\n		</div>\r\n		<div class=\"clear\"></div>\r\n	</div>\r\n\r\n	<div class=\"tabs\">\r\n		<!--\r\n		--><button data-flag=\"0\" class=\"info\"><ui-text msg=\"340\">Guild Info</ui-text></button><!--\r\n		--><button data-flag=\"1\" class=\"members\"><ui-text msg=\"341\">Guildsmen Info</ui-text></button><!--\r\n		--><button data-flag=\"2\" class=\"positions\"><ui-text msg=\"342\">Position</ui-text></button><!--\r\n		--><button data-flag=\"3\" class=\"skills\"><ui-text msg=\"343\">Guild Skill</ui-text></button><!--\r\n		--><button data-flag=\"4\" class=\"history\"><ui-text msg=\"344\">Expel History</ui-text></button><!--\r\n		--><button data-flag=\"6\" class=\"notice\"><ui-text msg=\"345\">Guild Notice</ui-text></button>\r\n	</div>\r\n\r\n	<div class=\"panel\">\r\n		<!-- INFO TAB -->\r\n		<div class=\"content info\">\r\n			<div class=\"name\"><ui-text msg=\"328\">Guild Name</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"level\"><ui-text msg=\"329\">Guild lvl</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"master\"><ui-text msg=\"330\">Guild Master</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"members\">\r\n				<ui-text msg=\"331\">Guildsmen</ui-text> : <span class=\"numMember\">0</span> /\r\n				<span class=\"maxMember\">0</span> <ui-button bg=\"basic_interface/grp_online.bmp\"></ui-button>\r\n				<span class=\"online\"></span>\r\n			</div>\r\n			<div class=\"avglevel\"><ui-text msg=\"332\">Avg.lvl of Guildsmen</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"territory\"><ui-text msg=\"333\">Territory</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"tendency\">\r\n				<div class=\"title\"><ui-text msg=\"334\">Tendency</ui-text> : <span class=\"value\"></span></div>\r\n				<div class=\"righteous\">R</div>\r\n				<div class=\"wiked\">W</div>\r\n				<div class=\"vulgar\">V</div>\r\n				<div class=\"famed\">F</div>\r\n				<canvas width=\"90\" height=\"90\"></canvas>\r\n			</div>\r\n			<div class=\"exp\"><ui-text msg=\"335\">EXP</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"emblem\"><ui-text msg=\"336\">Emblem</ui-text></div>\r\n			<div class=\"emblem_container\"></div>\r\n			<ui-button class=\"emblem_edit\" bg=\"btn_edit.bmp\" hover=\"btn_edit_a.bmp\" down=\"btn_edit_b.bmp\">\r\n				<input type=\"file\" />\r\n			</ui-button>\r\n\r\n			<div class=\"tax\"><ui-text msg=\"337\">Tax Point</ui-text> : <span class=\"value\">0</span></div>\r\n			<div class=\"ally\"><ui-text msg=\"338\">Alliance</ui-text></div>\r\n			<div class=\"ally_list\"></div>\r\n			<div class=\"hostile\"><ui-text msg=\"339\">Antagonist</ui-text></div>\r\n			<div class=\"hostile_list\"></div>\r\n		</div>\r\n\r\n		<!-- MEMBERS TAB -->\r\n		<div class=\"content members\">\r\n			<table>\r\n				<thead>\r\n					<tr>\r\n						<th class=\"name\"><ui-text msg=\"407\">Name</ui-text></th>\r\n						<th class=\"position\"><ui-text msg=\"503\">Position</ui-text></th>\r\n						<th class=\"job\"><ui-text msg=\"504\">Job</ui-text></th>\r\n						<th class=\"level\"><ui-text msg=\"408\">Level</ui-text></th>\r\n						<th class=\"note\"><ui-text msg=\"505\">Note</ui-text></th>\r\n						<th class=\"devotion\"><ui-text msg=\"506\">Devotion</ui-text></th>\r\n						<th class=\"tax\"><ui-text msg=\"507\">Tax Point</ui-text></th>\r\n					</tr>\r\n				</thead>\r\n				<tbody>\r\n					<tr class=\"MemberView\">\r\n						<td class=\"name\">\r\n							<canvas width=\"30\" height=\"30\"></canvas>\r\n							<span class=\"value\"></span>\r\n						</td>\r\n						<td class=\"position\"></td>\r\n						<td class=\"job\"></td>\r\n						<td class=\"level\"></td>\r\n						<td class=\"note\"></td>\r\n						<td class=\"devotion\"></td>\r\n						<td class=\"tax\"></td>\r\n					</tr>\r\n				</tbody>\r\n			</table>\r\n		</div>\r\n\r\n		<!-- POSITIONS TAB -->\r\n		<div class=\"content positions\">\r\n			<table>\r\n				<thead>\r\n					<tr>\r\n						<th class=\"id\"><ui-text msg=\"510\">Rank</ui-text></th>\r\n						<th class=\"title\"><ui-text msg=\"511\">Position Title</ui-text></th>\r\n						<th class=\"invite\"><ui-text msg=\"512\">Invitation</ui-text></th>\r\n						<th class=\"punish\"><ui-text msg=\"513\">Punish</ui-text></th>\r\n						<th class=\"tax\"><ui-text msg=\"514\">Tax</ui-text></th>\r\n					</tr>\r\n				</thead>\r\n				<tbody>\r\n					<tr class=\"PositionView\">\r\n						<td class=\"id\"></td>\r\n						<td class=\"title\">\r\n							<input type=\"text\" value=\"\" />\r\n						</td>\r\n						<td class=\"invite\">\r\n							<ui-button bg=\"checkbox_0.bmp\" class=\"off\"></ui-button>\r\n						</td>\r\n						<td class=\"punish\">\r\n							<ui-button bg=\"checkbox_0.bmp\" class=\"off\"></ui-button>\r\n						</td>\r\n						<td class=\"tax\"><input type=\"text\" value=\"0\" /> %</td>\r\n					</tr>\r\n				</tbody>\r\n			</table>\r\n		</div>\r\n\r\n		<!-- SKILLS TAB -->\r\n		<div class=\"content skills\">\r\n			<div class=\"skill_list\">\r\n				<table>\r\n					<!-- Just to get reference, will be removed -->\r\n					<ui-button\r\n						class=\"btn levelup\"\r\n						bg=\"basic_interface/skill_up_a.bmp\"\r\n						hover=\"basic_interface/skill_up_b.bmp\"\r\n						down=\"basic_interface/skill_up_c.bmp\"\r\n					></ui-button>\r\n				</table>\r\n			</div>\r\n\r\n			<div class=\"footer\">\r\n				<ui-image src=\"basic_interface/btnbar_mid2.bmp\"></ui-image>\r\n				<div class=\"text\">Skill Points: <span class=\"skpoints_count\">0</span></div>\r\n				<ui-button\r\n					class=\"btn apply\"\r\n					bg=\"btn_apply.bmp\"\r\n					hover=\"btn_apply_a.bmp\"\r\n					down=\"btn_apply_b.bmp\"\r\n				></ui-button>\r\n				<ui-button\r\n					class=\"btn reset\"\r\n					bg=\"btn_reset.bmp\"\r\n					hover=\"btn_reset_a.bmp\"\r\n					down=\"btn_reset_b.bmp\"\r\n				></ui-button>\r\n			</div>\r\n		</div>\r\n\r\n		<!-- HISTORY BAN TAB -->\r\n		<div class=\"content history\">\r\n			<table>\r\n				<thead>\r\n					<tr>\r\n						<th class=\"name\"><ui-text msg=\"407\">Name</ui-text></th>\r\n						<th class=\"reason\"><ui-text msg=\"462\">The Reason of Expulsion</ui-text></th>\r\n					</tr>\r\n				</thead>\r\n				<tbody>\r\n					<tr class=\"ExpelView\">\r\n						<td class=\"name\"></td>\r\n						<td class=\"reason\"></td>\r\n					</tr>\r\n				</tbody>\r\n			</table>\r\n		</div>\r\n\r\n		<!-- NOTICE TAB -->\r\n		<div class=\"content notice\">\r\n			<div class=\"subjectTitle\"><ui-text msg=\"515\">Title</ui-text></div>\r\n			<input type=\"text\" class=\"subject\" />\r\n\r\n			<div class=\"noticeTitle\"><ui-text msg=\"516\">Contents</ui-text></div>\r\n			<textarea class=\"notice\"></textarea>\r\n		</div>\r\n	</div>\r\n\r\n	<div class=\"footer\">\r\n		<ui-image src=\"basic_interface/btnbar_mid2.bmp\"></ui-image>\r\n		<ui-button class=\"btn_ok\" bg=\"btn_ok.bmp\" hover=\"btn_ok_a.bmp\" down=\"btn_ok_b.bmp\"></ui-button>\r\n	</div>\r\n</div>\r\n";
+	Guild_default$2 = "<div id=\"Guild\">\r\n	<div class=\"titlebar\">\r\n		<ui-image src=\"basic_interface/titlebar_mid.bmp\"></ui-image>\r\n		<div class=\"right\">\r\n			<ui-button\r\n				class=\"base close\"\r\n				bg=\"basic_interface/sys_close_off.bmp\"\r\n				hover=\"basic_interface/sys_close_on.bmp\"\r\n			></ui-button>\r\n		</div>\r\n		<div class=\"clear\"></div>\r\n	</div>\r\n\r\n	<div class=\"tabs\">\r\n		<!--\r\n		--><button data-flag=\"0\" class=\"info\"><ui-text msg=\"340\">Guild Info</ui-text></button><!--\r\n		--><button data-flag=\"1\" class=\"members\"><ui-text msg=\"341\">Guildsmen Info</ui-text></button><!--\r\n		--><button data-flag=\"2\" class=\"positions\"><ui-text msg=\"342\">Position</ui-text></button><!--\r\n		--><button data-flag=\"3\" class=\"skills\"><ui-text msg=\"343\">Guild Skill</ui-text></button><!--\r\n		--><button data-flag=\"4\" class=\"history\"><ui-text msg=\"344\">Expel History</ui-text></button><!--\r\n		--><button data-flag=\"6\" class=\"notice\"><ui-text msg=\"345\">Guild Notice</ui-text></button>\r\n	</div>\r\n\r\n	<div class=\"panel\">\r\n		<!-- INFO TAB -->\r\n		<div class=\"content info\">\r\n			<div class=\"name\"><ui-text msg=\"328\">Guild Name</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"level\"><ui-text msg=\"329\">Guild lvl</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"master\"><ui-text msg=\"330\">Guild Master</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"members\">\r\n				<ui-text msg=\"331\">Guildsmen</ui-text> : <span class=\"numMember\">0</span> /\r\n				<span class=\"maxMember\">0</span> <ui-button bg=\"basic_interface/grp_online.bmp\"></ui-button>\r\n				<span class=\"online\"></span>\r\n			</div>\r\n			<div class=\"avglevel\"><ui-text msg=\"332\">Avg.lvl of Guildsmen</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"territory\"><ui-text msg=\"333\">Territory</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"tendency\">\r\n				<div class=\"title\"><ui-text msg=\"334\">Tendency</ui-text> : <span class=\"value\"></span></div>\r\n				<div class=\"righteous\">R</div>\r\n				<div class=\"wiked\">W</div>\r\n				<div class=\"vulgar\">V</div>\r\n				<div class=\"famed\">F</div>\r\n				<canvas width=\"90\" height=\"90\"></canvas>\r\n			</div>\r\n			<div class=\"exp\"><ui-text msg=\"335\">EXP</ui-text> : <span class=\"value\"></span></div>\r\n			<div class=\"emblem\"><ui-text msg=\"336\">Emblem</ui-text></div>\r\n			<div class=\"emblem_container\"></div>\r\n			<ui-button class=\"emblem_edit\" bg=\"btn_edit.bmp\" hover=\"btn_edit_a.bmp\" down=\"btn_edit_b.bmp\">\r\n				<input type=\"file\" />\r\n			</ui-button>\r\n\r\n			<div class=\"tax\"><ui-text msg=\"337\">Tax Point</ui-text> : <span class=\"value\">0</span></div>\r\n			<div class=\"ally\"><ui-text msg=\"338\">Alliance</ui-text></div>\r\n			<div class=\"ally_list\"></div>\r\n			<div class=\"hostile\"><ui-text msg=\"339\">Antagonist</ui-text></div>\r\n			<div class=\"hostile_list\"></div>\r\n		</div>\r\n\r\n		<!-- MEMBERS TAB -->\r\n		<div class=\"content members\">\r\n			<table>\r\n				<thead>\r\n					<tr>\r\n						<th class=\"name\"><ui-text msg=\"407\">Name</ui-text></th>\r\n						<th class=\"position\"><ui-text msg=\"503\">Position</ui-text></th>\r\n						<th class=\"job\"><ui-text msg=\"504\">Job</ui-text></th>\r\n						<th class=\"level\"><ui-text msg=\"408\">Level</ui-text></th>\r\n						<th class=\"note\"><ui-text msg=\"505\">Note</ui-text></th>\r\n						<th class=\"devotion\"><ui-text msg=\"506\">Devotion</ui-text></th>\r\n						<th class=\"tax\"><ui-text msg=\"507\">Tax Point</ui-text></th>\r\n					</tr>\r\n				</thead>\r\n				<tbody>\r\n					<tr class=\"MemberView\">\r\n						<td class=\"name\">\r\n							<canvas width=\"30\" height=\"30\"></canvas>\r\n							<span class=\"value\"></span>\r\n						</td>\r\n						<td class=\"position\"></td>\r\n						<td class=\"job\"></td>\r\n						<td class=\"level\"></td>\r\n						<td class=\"note\"></td>\r\n						<td class=\"devotion\"></td>\r\n						<td class=\"tax\"></td>\r\n					</tr>\r\n				</tbody>\r\n			</table>\r\n		</div>\r\n\r\n		<!-- POSITIONS TAB -->\r\n		<div class=\"content positions\">\r\n			<table>\r\n				<thead>\r\n					<tr>\r\n						<th class=\"id\"><ui-text msg=\"510\">Rank</ui-text></th>\r\n						<th class=\"title\"><ui-text msg=\"511\">Position Title</ui-text></th>\r\n						<th class=\"invite\"><ui-text msg=\"512\">Invitation</ui-text></th>\r\n						<th class=\"punish\"><ui-text msg=\"513\">Punish</ui-text></th>\r\n						<th class=\"tax\"><ui-text msg=\"514\">Tax</ui-text></th>\r\n					</tr>\r\n				</thead>\r\n				<tbody>\r\n					<tr class=\"PositionView\">\r\n						<td class=\"id\"></td>\r\n						<td class=\"title\">\r\n							<input type=\"text\" value=\"\" />\r\n						</td>\r\n						<td class=\"invite\">\r\n							<ui-button bg=\"checkbox_0.bmp\" class=\"off\"></ui-button>\r\n						</td>\r\n						<td class=\"punish\">\r\n							<ui-button bg=\"checkbox_0.bmp\" class=\"off\"></ui-button>\r\n						</td>\r\n						<td class=\"tax\"><input type=\"text\" value=\"0\" /> %</td>\r\n					</tr>\r\n				</tbody>\r\n			</table>\r\n		</div>\r\n\r\n		<!-- SKILLS TAB -->\r\n		<div class=\"content skills\">\r\n			<div class=\"skill_list\">\r\n				<table>\r\n					<!-- Just to get reference, will be removed -->\r\n					<ui-button\r\n						class=\"btn levelup\"\r\n						bg=\"basic_interface/skill_up_a.bmp\"\r\n						hover=\"basic_interface/skill_up_b.bmp\"\r\n						down=\"basic_interface/skill_up_c.bmp\"\r\n					></ui-button>\r\n				</table>\r\n			</div>\r\n\r\n			<div class=\"footer\">\r\n				<ui-image src=\"basic_interface/btnbar_mid2.bmp\"></ui-image>\r\n				<div class=\"text\">Skill Points: <span class=\"skpoints_count\">0</span></div>\r\n				<ui-button\r\n					class=\"btn apply\"\r\n					bg=\"btn_apply.bmp\"\r\n					hover=\"btn_apply_a.bmp\"\r\n					down=\"btn_apply_b.bmp\"\r\n				></ui-button>\r\n				<ui-button\r\n					class=\"btn reset\"\r\n					bg=\"btn_reset.bmp\"\r\n					hover=\"btn_reset_a.bmp\"\r\n					down=\"btn_reset_b.bmp\"\r\n				></ui-button>\r\n			</div>\r\n		</div>\r\n\r\n		<!-- HISTORY BAN TAB -->\r\n		<div class=\"content history\">\r\n			<table>\r\n				<thead>\r\n					<tr>\r\n						<th class=\"name\"><ui-text msg=\"407\">Name</ui-text></th>\r\n						<th class=\"reason\"><ui-text msg=\"462\">The Reason of Expulsion</ui-text></th>\r\n					</tr>\r\n				</thead>\r\n				<tbody>\r\n					<tr class=\"ExpelView\">\r\n						<td class=\"name\"></td>\r\n						<td class=\"reason\"></td>\r\n					</tr>\r\n				</tbody>\r\n			</table>\r\n		</div>\r\n\r\n		<!-- NOTICE TAB -->\r\n		<div class=\"content notice\">\r\n			<div class=\"subjectTitle\"><ui-text msg=\"515\">Title</ui-text></div>\r\n			<input type=\"text\" class=\"subject\" />\r\n\r\n			<div class=\"noticeTitle\"><ui-text msg=\"516\">Contents</ui-text></div>\r\n			<textarea class=\"notice\"></textarea>\r\n		</div>\r\n	</div>\r\n\r\n	<div class=\"footer\">\r\n		<ui-image src=\"basic_interface/btnbar_mid2.bmp\"></ui-image>\r\n		<button class=\"btn_disband\" type=\"button\">Disband</button>\r\n		<ui-button class=\"btn_ok\" bg=\"btn_ok.bmp\" hover=\"btn_ok_a.bmp\" down=\"btn_ok_b.bmp\"></ui-button>\r\n	</div>\r\n</div>\r\n";
 }));
 //#endregion
 //#region src/UI/Components/Guild/Guild.css?raw
 var Guild_default$1;
 var init_Guild$2 = __esmMin((() => {
-	Guild_default$1 = ":host {\r\n	top: 100px;\r\n	left: 100px;\r\n	width: 400px;\r\n	height: 317px;\r\n}\r\n\r\n#Guild {\r\n	position: absolute;\r\n}\r\n\r\n#Guild .titlebar {\r\n	width: 100%;\r\n	height: 17px;\r\n	background-color: white;\r\n	background-repeat: repeat-x;\r\n	border-radius: 3px 3px 0px 0px;\r\n	font-size: 11px;\r\n	font-weight: bold;\r\n}\r\n#Guild .titlebar .base {\r\n	width: 11px;\r\n	height: 11px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	vertical-align: middle;\r\n}\r\n#Guild .titlebar .right {\r\n	float: right;\r\n	margin-right: 3px;\r\n}\r\n#Guild .titlebar .clear {\r\n	clear: both;\r\n}\r\n\r\n#Guild .panel {\r\n	background-color: white;\r\n	padding-right: 2px;\r\n}\r\n#Guild .content {\r\n	overflow-y: auto;\r\n	padding: 2px;\r\n	border-top: 1px solid #c6c6c6;\r\n	height: 238px;\r\n}\r\n\r\n#Guild .tabs {\r\n	height: 23px;\r\n	background-color: #b5b6b5;\r\n	white-space: nowrap;\r\n}\r\n#Guild .tabs button.active {\r\n	background-color: #fff;\r\n}\r\n#Guild .tabs button {\r\n	width: 64px;\r\n	height: 23px;\r\n	margin-left: 1px;\r\n	margin-right: 1px;\r\n	margin-top: 1px;\r\n	padding: 0;\r\n	overflow: hidden;\r\n	text-overflow: ellipsis;\r\n	white-space: nowrap;\r\n	background-color: #cecece;\r\n	border: 0px;\r\n	padding: 3px;\r\n}\r\n#Guild .footer {\r\n	width: 100%;\r\n	height: 27px;\r\n	background-repeat: repeat-x;\r\n	background-color: transparent;\r\n	position: relative;\r\n	border-radius: 0px 0px 3px 3px;\r\n}\r\n#Guild .footer .btn_ok {\r\n	display: none;\r\n	position: absolute;\r\n	bottom: 4px;\r\n	right: 4px;\r\n	width: 42px;\r\n	height: 20px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n	border: none;\r\n}\r\n\r\n#Guild .content.members,\r\n#Guild .content.positions,\r\n#Guild .content.skills,\r\n#Guild .content.history,\r\n#Guild .content.notice {\r\n	display: none;\r\n}\r\n\r\n/*\r\n * Guild Info CSS\r\n */\r\n#Guild .content.info .exp,\r\n#Guild .content.info .emblem,\r\n#Guild .content.info .tax,\r\n#Guild .content.info .ally,\r\n#Guild .content.info .ally_list,\r\n#Guild .content.info .hostile,\r\n#Guild .content.info .hostile_list {\r\n	position: absolute;\r\n	left: 201px;\r\n}\r\n\r\n#Guild .content.info .name {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 13px;\r\n}\r\n#Guild .content.info .level {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 28px;\r\n}\r\n#Guild .content.info .master {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 45px;\r\n}\r\n#Guild .content.info .members {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 61px;\r\n}\r\n#Guild .content.info .avglevel {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 77px;\r\n}\r\n#Guild .content.info .territory {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 93px;\r\n}\r\n#Guild .content.info .tendency {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 114px;\r\n}\r\n#Guild .content.info .tendency .title {\r\n	position: absolute;\r\n	top: 0px;\r\n	left: 0px;\r\n}\r\n#Guild .content.info .tendency .righteous {\r\n	position: absolute;\r\n	left: 50px;\r\n	top: 16px;\r\n	text-align: center;\r\n}\r\n#Guild .content.info .tendency .wiked {\r\n	position: absolute;\r\n	left: 50px;\r\n	top: 120px;\r\n	text-align: center;\r\n}\r\n#Guild .content.info .tendency .vulgar {\r\n	position: absolute;\r\n	left: 0px;\r\n	top: 68px;\r\n}\r\n#Guild .content.info .tendency .famed {\r\n	position: absolute;\r\n	left: 102px;\r\n	top: 68px;\r\n}\r\n#Guild .content.info .tendency canvas {\r\n	position: absolute;\r\n	top: 30px;\r\n	left: 10px;\r\n}\r\n\r\n#Guild .content.info .members ui-button {\r\n	margin-left: 5px;\r\n	vertical-align: -4px;\r\n	border: none;\r\n	width: 15px;\r\n	height: 15px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n}\r\n\r\n#Guild .content.info .exp {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 13px;\r\n}\r\n#Guild .content.info .emblem {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 37px;\r\n}\r\n#Guild .content.info .tax {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 61px;\r\n}\r\n#Guild .content.info .ally {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 103px;\r\n}\r\n#Guild .content.info .ally_list {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 118px;\r\n	white-space: pre;\r\n	width: 168px;\r\n	height: 48px;\r\n	background: #cecece;\r\n}\r\n#Guild .content.info .hostile {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 177px;\r\n}\r\n#Guild .content.info .hostile_list {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 193px;\r\n	white-space: pre;\r\n	width: 168px;\r\n	height: 48px;\r\n	background: #cecece;\r\n}\r\n\r\n#Guild .content.info .ally_list div,\r\n#Guild .content.info .hostile_list div {\r\n	padding: 2px;\r\n}\r\n#Guild .content.info .ally_list div.active,\r\n#Guild .content.info .hostile_list div.active {\r\n	background-color: #739eef;\r\n	padding: 2px;\r\n}\r\n\r\n#Guild .content.info .emblem_container {\r\n	width: 24px;\r\n	height: 24px;\r\n	position: absolute;\r\n	top: 29px;\r\n	left: 300px;\r\n	background-color: #709ce7;\r\n	background-repeat: no-repeat;\r\n}\r\n#Guild .content.info .emblem_edit {\r\n	position: absolute;\r\n	top: 30px;\r\n	left: 330px;\r\n	width: 42px;\r\n	height: 20px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.info .emblem_edit input {\r\n	opacity: 0;\r\n}\r\n\r\n/*\r\n * Guild Members\r\n */\r\n#Guild .content.members table {\r\n	border-spacing: 0;\r\n	border-collapse: collapse;\r\n}\r\n#Guild .content.members tbody tr {\r\n	border-left: 1px solid #c2c2c2;\r\n	border-right: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.members td {\r\n	border-bottom: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.members tr.active td {\r\n	background-color: #739eef !important;\r\n}\r\n#Guild .content.members th {\r\n	border: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.members td,\r\n#Guild .content.members th {\r\n	text-align: left;\r\n	font-weight: normal;\r\n	padding-left: 2px;\r\n	height: 35px;\r\n	overflow: hidden;\r\n	text-overflow: ellipsis;\r\n	white-space: nowrap;\r\n}\r\n#Guild .content.members tr.online td {\r\n	background-color: #efe;\r\n}\r\n#Guild .content.members tr canvas {\r\n	display: inline;\r\n}\r\n#Guild .content.members .name {\r\n	width: 85px;\r\n	max-width: 85px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .name canvas {\r\n	vertical-align: -11px;\r\n}\r\n#Guild .content.members .position {\r\n	width: 70px;\r\n	max-width: 70px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .position select {\r\n	width: 65px;\r\n	max-width: 65px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .job {\r\n	width: 43px;\r\n	max-width: 43px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .level {\r\n	width: 30px;\r\n}\r\n#Guild .content.members .note {\r\n	width: 41px;\r\n}\r\n#Guild .content.members .devotion {\r\n	width: 42px;\r\n}\r\n#Guild .content.members .tax {\r\n	width: 63px;\r\n	max-width: 63px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n\r\n/*\r\n * Guild Positions\r\n */\r\n#Guild .content.positions table {\r\n	border-spacing: 0;\r\n	border-collapse: collapse;\r\n}\r\n#Guild .content.positions tr.active {\r\n	border: none;\r\n}\r\n#Guild .content.positions tr.active td {\r\n	background-color: #739eef;\r\n}\r\n#Guild .content.positions th,\r\n#Guild .content.positions td {\r\n	height: 20px;\r\n	font-weight: normal;\r\n	text-align: left;\r\n	padding: 2px 2px 0px 3px;\r\n	border: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.positions .id {\r\n	width: 57px;\r\n}\r\n#Guild .content.positions .title {\r\n	width: 158px;\r\n	padding: 0px;\r\n}\r\n#Guild .content.positions .invite {\r\n	width: 68px;\r\n}\r\n#Guild .content.positions .punish {\r\n	width: 68px;\r\n}\r\n#Guild .content.positions .tax {\r\n	width: 68px;\r\n	padding: 0;\r\n}\r\n#Guild .content.positions input {\r\n	border: none;\r\n	background-color: white;\r\n	padding: 0;\r\n	height: 18px;\r\n}\r\n#Guild .content.positions .title input {\r\n	padding-left: 2px;\r\n	width: 140px;\r\n	margin-left: 4px;\r\n}\r\n#Guild .content.positions .tax input {\r\n	width: 28px;\r\n	padding-left: 2px;\r\n	margin-left: 3px;\r\n}\r\n#Guild .content.positions ui-button {\r\n	border: none;\r\n	width: 10px;\r\n	height: 10px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n}\r\n\r\n/*\r\n * Guild Skills\r\n */\r\n#Guild .content.skills {\r\n	overflow-y: hidden;\r\n}\r\n#Guild .content.skills .skill_list {\r\n	overflow-y: auto;\r\n	padding: 5px;\r\n	border-top: 1px solid #c6c6c6;\r\n	width: 394px;\r\n	height: 215px;\r\n}\r\n#Guild .content.skills .skill_list table {\r\n	border: none;\r\n	border-spacing: 0px;\r\n	padding-top: 5px;\r\n	width: 100%;\r\n}\r\n#Guild .content.skills .skill_list td,\r\n#Guild .content.skills .skill_list .name {\r\n	padding: 0px;\r\n}\r\n\r\n#Guild .content.skills .levelup {\r\n	border: 0;\r\n	width: 24px;\r\n	height: 24px;\r\n	padding: 0;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n}\r\n#Guild .content.skills td.type {\r\n	vertical-align: bottom;\r\n}\r\n\r\n#Guild .content.skills .skill_list .icon {\r\n	padding-left: 15px;\r\n}\r\n#Guild .content.skills .skill_list .levelupcontainer {\r\n	padding-left: 5px;\r\n	padding-right: 5px;\r\n	width: 24px;\r\n}\r\n#Guild .content.skills .skill_list div.name {\r\n	line-height: 12px;\r\n	white-space: nowrap;\r\n	padding-left: 5px;\r\n	white-space: nowrap;\r\n	width: 120px;\r\n	padding-top: 4px;\r\n	height: 28px;\r\n}\r\n#Guild .content.skills .disabled .icon,\r\n#Guild .content.skills .disabled .name {\r\n	opacity: 0.5;\r\n}\r\n#Guild .content.skills .disabled .consume,\r\n#Guild .content.skills .disabled .level {\r\n	display: none;\r\n}\r\n#Guild .content.skills .currentDown,\r\n#Guild .content.skills .currentUp {\r\n	width: 11px;\r\n	height: 11px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	vertical-align: middle;\r\n}\r\n\r\n#Guild .content.skills .selected.disabled .selectable {\r\n	background-color: #b5b5b5;\r\n}\r\n#Guild .content.skills .selected.passive .selectable {\r\n	background-color: #73d5ee;\r\n}\r\n#Guild .content.skills .selected.active .selectable {\r\n	background-color: #739cee;\r\n}\r\n\r\n#Guild .content.skills .footer {\r\n	width: 100%;\r\n	height: 27px;\r\n	background-repeat: repeat-x;\r\n	background-color: transparent;\r\n	position: relative;\r\n}\r\n#Guild .content.skills .footer .text {\r\n	padding-top: 7px;\r\n	margin-left: 10px;\r\n}\r\n#Guild .content.skills .footer .btn {\r\n	position: absolute;\r\n	top: 5px;\r\n	border: 0;\r\n	width: 42px;\r\n	height: 20px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n	display: none;\r\n}\r\n#Guild .content.skills .footer .apply {\r\n	right: 70px;\r\n}\r\n#Guild .content.skills .footer .reset {\r\n	right: 20px;\r\n}\r\n\r\n/*\r\n * Guild History\r\n */\r\n#Guild .content.history table {\r\n	border-spacing: 0;\r\n	border-collapse: collapse;\r\n}\r\n#Guild .content.history th,\r\n#Guild .content.history td {\r\n	font-weight: normal;\r\n	text-align: left;\r\n	padding: 5px 5px 0px 5px;\r\n	border: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.history .name {\r\n	width: 90px;\r\n}\r\n#Guild .content.history .reason {\r\n	width: 275px;\r\n}\r\n\r\n/*\r\n * Guild Notice\r\n */\r\n#Guild .notice .subjectTitle {\r\n	position: absolute;\r\n	top: 13px;\r\n	left: 9px;\r\n}\r\n#Guild .notice .subject {\r\n	position: absolute;\r\n	top: 11px;\r\n	left: 50px;\r\n	padding-left: 5px;\r\n	height: 14px;\r\n	border: none;\r\n	width: 333px;\r\n	background-color: #eee;\r\n}\r\n#Guild .notice .noticeTitle {\r\n	position: absolute;\r\n	top: 36px;\r\n	left: 9px;\r\n}\r\n#Guild .notice .notice {\r\n	position: absolute;\r\n	top: 52px;\r\n	left: 9px;\r\n	padding-left: 5px;\r\n	margin: 0px;\r\n	width: 372px;\r\n	height: 168px;\r\n	background-color: #eee;\r\n	border: none;\r\n	resize: none;\r\n}\r\n";
+	Guild_default$1 = ":host {\r\n	top: 100px;\r\n	left: 100px;\r\n	width: 400px;\r\n	height: 317px;\r\n}\r\n\r\n#Guild {\r\n	position: absolute;\r\n}\r\n\r\n#Guild .titlebar {\r\n	width: 100%;\r\n	height: 17px;\r\n	background-color: white;\r\n	background-repeat: repeat-x;\r\n	border-radius: 3px 3px 0px 0px;\r\n	font-size: 11px;\r\n	font-weight: bold;\r\n}\r\n#Guild .titlebar .base {\r\n	width: 11px;\r\n	height: 11px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	vertical-align: middle;\r\n}\r\n#Guild .titlebar .right {\r\n	float: right;\r\n	margin-right: 3px;\r\n}\r\n#Guild .titlebar .clear {\r\n	clear: both;\r\n}\r\n\r\n#Guild .panel {\r\n	background-color: white;\r\n	padding-right: 2px;\r\n}\r\n#Guild .content {\r\n	overflow-y: auto;\r\n	padding: 2px;\r\n	border-top: 1px solid #c6c6c6;\r\n	height: 238px;\r\n}\r\n\r\n#Guild .tabs {\r\n	height: 23px;\r\n	background-color: #b5b6b5;\r\n	white-space: nowrap;\r\n}\r\n#Guild .tabs button.active {\r\n	background-color: #fff;\r\n}\r\n#Guild .tabs button {\r\n	width: 64px;\r\n	height: 23px;\r\n	margin-left: 1px;\r\n	margin-right: 1px;\r\n	margin-top: 1px;\r\n	padding: 0;\r\n	overflow: hidden;\r\n	text-overflow: ellipsis;\r\n	white-space: nowrap;\r\n	background-color: #cecece;\r\n	border: 0px;\r\n	padding: 3px;\r\n}\r\n#Guild .footer {\r\n	width: 100%;\r\n	height: 27px;\r\n	background-repeat: repeat-x;\r\n	background-color: transparent;\r\n	position: relative;\r\n	border-radius: 0px 0px 3px 3px;\r\n}\r\n#Guild .footer .btn_ok {\r\n	display: none;\r\n	position: absolute;\r\n	bottom: 4px;\r\n	right: 4px;\r\n	width: 42px;\r\n	height: 20px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n	border: none;\r\n}\r\n\r\n#Guild .content.members,\r\n#Guild .content.positions,\r\n#Guild .content.skills,\r\n#Guild .content.history,\r\n#Guild .content.notice {\r\n	display: none;\r\n}\r\n\r\n/*\r\n * Guild Info CSS\r\n */\r\n#Guild .content.info .exp,\r\n#Guild .content.info .emblem,\r\n#Guild .content.info .tax,\r\n#Guild .content.info .ally,\r\n#Guild .content.info .ally_list,\r\n#Guild .content.info .hostile,\r\n#Guild .content.info .hostile_list {\r\n	position: absolute;\r\n	left: 201px;\r\n}\r\n\r\n#Guild .content.info .name {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 13px;\r\n}\r\n#Guild .content.info .level {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 28px;\r\n}\r\n#Guild .content.info .master {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 45px;\r\n}\r\n#Guild .content.info .members {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 61px;\r\n}\r\n#Guild .content.info .avglevel {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 77px;\r\n}\r\n#Guild .content.info .territory {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 93px;\r\n}\r\n#Guild .content.info .tendency {\r\n	position: absolute;\r\n	left: 9px;\r\n	top: 114px;\r\n}\r\n#Guild .content.info .tendency .title {\r\n	position: absolute;\r\n	top: 0px;\r\n	left: 0px;\r\n}\r\n#Guild .content.info .tendency .righteous {\r\n	position: absolute;\r\n	left: 50px;\r\n	top: 16px;\r\n	text-align: center;\r\n}\r\n#Guild .content.info .tendency .wiked {\r\n	position: absolute;\r\n	left: 50px;\r\n	top: 120px;\r\n	text-align: center;\r\n}\r\n#Guild .content.info .tendency .vulgar {\r\n	position: absolute;\r\n	left: 0px;\r\n	top: 68px;\r\n}\r\n#Guild .content.info .tendency .famed {\r\n	position: absolute;\r\n	left: 102px;\r\n	top: 68px;\r\n}\r\n#Guild .content.info .tendency canvas {\r\n	position: absolute;\r\n	top: 30px;\r\n	left: 10px;\r\n}\r\n\r\n#Guild .content.info .members ui-button {\r\n	margin-left: 5px;\r\n	vertical-align: -4px;\r\n	border: none;\r\n	width: 15px;\r\n	height: 15px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n}\r\n\r\n#Guild .content.info .exp {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 13px;\r\n}\r\n#Guild .content.info .emblem {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 37px;\r\n}\r\n#Guild .content.info .tax {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 61px;\r\n}\r\n#Guild .content.info .ally {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 103px;\r\n}\r\n#Guild .content.info .ally_list {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 118px;\r\n	white-space: pre;\r\n	width: 168px;\r\n	height: 48px;\r\n	background: #cecece;\r\n}\r\n#Guild .content.info .hostile {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 177px;\r\n}\r\n#Guild .content.info .hostile_list {\r\n	position: absolute;\r\n	left: 201px;\r\n	top: 193px;\r\n	white-space: pre;\r\n	width: 168px;\r\n	height: 48px;\r\n	background: #cecece;\r\n}\r\n\r\n#Guild .content.info .ally_list div,\r\n#Guild .content.info .hostile_list div {\r\n	padding: 2px;\r\n}\r\n#Guild .content.info .ally_list div.active,\r\n#Guild .content.info .hostile_list div.active {\r\n	background-color: #739eef;\r\n	padding: 2px;\r\n}\r\n\r\n#Guild .content.info .emblem_container {\r\n	width: 24px;\r\n	height: 24px;\r\n	position: absolute;\r\n	top: 29px;\r\n	left: 300px;\r\n	background-color: #709ce7;\r\n	background-repeat: no-repeat;\r\n}\r\n#Guild .content.info .emblem_edit {\r\n	position: absolute;\r\n	top: 30px;\r\n	left: 330px;\r\n	width: 42px;\r\n	height: 20px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.info .emblem_edit input {\r\n	opacity: 0;\r\n}\r\n\r\n/*\r\n * Guild Members\r\n */\r\n#Guild .content.members table {\r\n	border-spacing: 0;\r\n	border-collapse: collapse;\r\n}\r\n#Guild .content.members tbody tr {\r\n	border-left: 1px solid #c2c2c2;\r\n	border-right: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.members td {\r\n	border-bottom: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.members tr.active td {\r\n	background-color: #739eef !important;\r\n}\r\n#Guild .content.members th {\r\n	border: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.members td,\r\n#Guild .content.members th {\r\n	text-align: left;\r\n	font-weight: normal;\r\n	padding-left: 2px;\r\n	height: 35px;\r\n	overflow: hidden;\r\n	text-overflow: ellipsis;\r\n	white-space: nowrap;\r\n}\r\n#Guild .content.members tr.online td {\r\n	background-color: #efe;\r\n}\r\n#Guild .content.members tr canvas {\r\n	display: inline;\r\n}\r\n#Guild .content.members .name {\r\n	width: 85px;\r\n	max-width: 85px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .name canvas {\r\n	vertical-align: -11px;\r\n}\r\n#Guild .content.members .position {\r\n	width: 70px;\r\n	max-width: 70px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .position select {\r\n	width: 65px;\r\n	max-width: 65px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .job {\r\n	width: 43px;\r\n	max-width: 43px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n#Guild .content.members .level {\r\n	width: 30px;\r\n}\r\n#Guild .content.members .note {\r\n	width: 41px;\r\n}\r\n#Guild .content.members .devotion {\r\n	width: 42px;\r\n}\r\n#Guild .content.members .tax {\r\n	width: 63px;\r\n	max-width: 63px;\r\n	text-overflow: ellipsis;\r\n	overflow: hidden;\r\n}\r\n\r\n/*\r\n * Guild Positions\r\n */\r\n#Guild .content.positions table {\r\n	border-spacing: 0;\r\n	border-collapse: collapse;\r\n}\r\n#Guild .content.positions tr.active {\r\n	border: none;\r\n}\r\n#Guild .content.positions tr.active td {\r\n	background-color: #739eef;\r\n}\r\n#Guild .content.positions th,\r\n#Guild .content.positions td {\r\n	height: 20px;\r\n	font-weight: normal;\r\n	text-align: left;\r\n	padding: 2px 2px 0px 3px;\r\n	border: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.positions .id {\r\n	width: 57px;\r\n}\r\n#Guild .content.positions .title {\r\n	width: 158px;\r\n	padding: 0px;\r\n}\r\n#Guild .content.positions .invite {\r\n	width: 68px;\r\n}\r\n#Guild .content.positions .punish {\r\n	width: 68px;\r\n}\r\n#Guild .content.positions .tax {\r\n	width: 68px;\r\n	padding: 0;\r\n}\r\n#Guild .content.positions input {\r\n	border: none;\r\n	background-color: white;\r\n	padding: 0;\r\n	height: 18px;\r\n}\r\n#Guild .content.positions .title input {\r\n	padding-left: 2px;\r\n	width: 140px;\r\n	margin-left: 4px;\r\n}\r\n#Guild .content.positions .tax input {\r\n	width: 28px;\r\n	padding-left: 2px;\r\n	margin-left: 3px;\r\n}\r\n#Guild .content.positions ui-button {\r\n	border: none;\r\n	width: 10px;\r\n	height: 10px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n}\r\n\r\n/*\r\n * Guild Skills\r\n */\r\n#Guild .content.skills {\r\n	overflow-y: hidden;\r\n}\r\n#Guild .content.skills .skill_list {\r\n	overflow-y: auto;\r\n	padding: 5px;\r\n	border-top: 1px solid #c6c6c6;\r\n	width: 394px;\r\n	height: 215px;\r\n}\r\n#Guild .content.skills .skill_list table {\r\n	border: none;\r\n	border-spacing: 0px;\r\n	padding-top: 5px;\r\n	width: 100%;\r\n}\r\n#Guild .content.skills .skill_list td,\r\n#Guild .content.skills .skill_list .name {\r\n	padding: 0px;\r\n}\r\n\r\n#Guild .content.skills .levelup {\r\n	border: 0;\r\n	width: 24px;\r\n	height: 24px;\r\n	padding: 0;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n}\r\n#Guild .content.skills td.type {\r\n	vertical-align: bottom;\r\n}\r\n\r\n#Guild .content.skills .skill_list .icon {\r\n	padding-left: 15px;\r\n}\r\n#Guild .content.skills .skill_list .levelupcontainer {\r\n	padding-left: 5px;\r\n	padding-right: 5px;\r\n	width: 24px;\r\n}\r\n#Guild .content.skills .skill_list div.name {\r\n	line-height: 12px;\r\n	white-space: nowrap;\r\n	padding-left: 5px;\r\n	white-space: nowrap;\r\n	width: 120px;\r\n	padding-top: 4px;\r\n	height: 28px;\r\n}\r\n#Guild .content.skills .disabled .icon,\r\n#Guild .content.skills .disabled .name {\r\n	opacity: 0.5;\r\n}\r\n#Guild .content.skills .disabled .consume,\r\n#Guild .content.skills .disabled .level {\r\n	display: none;\r\n}\r\n#Guild .content.skills .currentDown,\r\n#Guild .content.skills .currentUp {\r\n	width: 11px;\r\n	height: 11px;\r\n	border: none;\r\n	background-color: transparent;\r\n	background-repeat: no-repeat;\r\n	vertical-align: middle;\r\n}\r\n\r\n#Guild .content.skills .selected.disabled .selectable {\r\n	background-color: #b5b5b5;\r\n}\r\n#Guild .content.skills .selected.passive .selectable {\r\n	background-color: #73d5ee;\r\n}\r\n#Guild .content.skills .selected.active .selectable {\r\n	background-color: #739cee;\r\n}\r\n\r\n#Guild .content.skills .footer {\r\n	width: 100%;\r\n	height: 27px;\r\n	background-repeat: repeat-x;\r\n	background-color: transparent;\r\n	position: relative;\r\n}\r\n#Guild .content.skills .footer .text {\r\n	padding-top: 7px;\r\n	margin-left: 10px;\r\n}\r\n\r\n#Guild .footer .btn_disband {\r\n	display: none;\r\n	position: absolute;\r\n	bottom: 4px;\r\n	right: 4px;\r\n	padding: 2px 10px;\r\n	font-family: Arial, sans-serif;\r\n	font-size: 11px;\r\n	cursor: pointer;\r\n}\r\n\r\n#Guild .content.skills .footer .btn {\r\n	position: absolute;\r\n	top: 5px;\r\n	border: 0;\r\n	width: 42px;\r\n	height: 20px;\r\n	background-repeat: no-repeat;\r\n	background-color: transparent;\r\n	display: none;\r\n}\r\n#Guild .content.skills .footer .apply {\r\n	right: 70px;\r\n}\r\n#Guild .content.skills .footer .reset {\r\n	right: 20px;\r\n}\r\n\r\n/*\r\n * Guild History\r\n */\r\n#Guild .content.history table {\r\n	border-spacing: 0;\r\n	border-collapse: collapse;\r\n}\r\n#Guild .content.history th,\r\n#Guild .content.history td {\r\n	font-weight: normal;\r\n	text-align: left;\r\n	padding: 5px 5px 0px 5px;\r\n	border: 1px solid #c2c2c2;\r\n}\r\n#Guild .content.history .name {\r\n	width: 90px;\r\n}\r\n#Guild .content.history .reason {\r\n	width: 275px;\r\n}\r\n\r\n/*\r\n * Guild Notice\r\n */\r\n#Guild .notice .subjectTitle {\r\n	position: absolute;\r\n	top: 13px;\r\n	left: 9px;\r\n}\r\n#Guild .notice .subject {\r\n	position: absolute;\r\n	top: 11px;\r\n	left: 50px;\r\n	padding-left: 5px;\r\n	height: 14px;\r\n	border: none;\r\n	width: 333px;\r\n	background-color: #eee;\r\n}\r\n#Guild .notice .noticeTitle {\r\n	position: absolute;\r\n	top: 36px;\r\n	left: 9px;\r\n}\r\n#Guild .notice .notice {\r\n	position: absolute;\r\n	top: 52px;\r\n	left: 9px;\r\n	padding-left: 5px;\r\n	margin: 0px;\r\n	width: 372px;\r\n	height: 168px;\r\n	background-color: #eee;\r\n	border: none;\r\n	resize: none;\r\n}\r\n";
 }));
 //#endregion
 //#region src/UI/Components/WinStats/WinStats/WinStats.html?raw
@@ -227614,7 +227733,6 @@ function createWinStats({ name, htmlText, cssText, hasTraits }) {
 			case "crt3":
 				setText(".t_requirements ." + type.replace("3", ""), val);
 				setUpVisibility(".t_up ." + type.replace("3", ""), val > 0 && val <= this.t_statuspoint);
-				break;
 		}
 	};
 	function toggleTraits() {
@@ -227630,9 +227748,7 @@ function createWinStats({ name, htmlText, cssText, hasTraits }) {
 	}
 	Component.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				this.toggle();
-				break;
+			case "TOGGLE": this.toggle();
 		}
 	};
 	Component.onRemove = function onRemove() {
@@ -227857,6 +227973,7 @@ function onChangeTab(event) {
 	if (targetContent) targetContent.style.display = "block";
 	const btnOk = root.querySelector(".footer .btn_ok");
 	if (btnOk) btnOk.style.display = "none";
+	updateDisbandButton(root, targetClass);
 	if (targetClass === "members") Renderer.render(renderMemberFaces);
 	else Renderer.stop(renderMemberFaces);
 	this.classList.add("active");
@@ -227934,6 +228051,22 @@ function onValidate() {
 	const btnOk = root.querySelector(".footer .btn_ok");
 	if (btnOk) btnOk.style.display = "none";
 }
+function getActiveTab(root) {
+	const btn = root ? root.querySelector(".tabs button.active") : null;
+	return btn ? btn.className.replace(/\s*active\s*/g, "").trim() : "";
+}
+function updateDisbandButton(root, activeTab) {
+	if (!root) return;
+	const btn = root.querySelector(".footer .btn_disband");
+	if (!btn) return;
+	btn.style.display = activeTab === "info" && SessionStorage_default.isGuildMaster ? "block" : "none";
+	if (!btn.dataset.bound) {
+		btn.dataset.bound = "1";
+		btn.addEventListener("click", () => {
+			Guild.promptDisbandGuild();
+		});
+	}
+}
 var AccessTypeBit, Guild, _memberViewTemplate, _positionViewTemplate, _expelViewTemplate, _positions, _members, _skills, _btnIncSkillTemplate, _skpoints, _btnLevelUp, lArrow, rArrow, _totalExp, _guildAccess, _checkbox_off, _checkbox_on, renderMemberFaces, Guild_default;
 var init_Guild$1 = __esmMin((() => {
 	init_DBManager();
@@ -227952,6 +228085,7 @@ var init_Guild$1 = __esmMin((() => {
 	init_ContextMenu();
 	init_ChatBox();
 	init_InputBox();
+	init_GuildCompanion();
 	init_SkillTargetSelection();
 	init_SkillDescription();
 	init_Guild$3();
@@ -228171,7 +228305,10 @@ var init_Guild$1 = __esmMin((() => {
 		if (key.cmd === "TOGGLE") this.toggle();
 	};
 	Guild.toggle = function onToggle() {
-		if (!SessionStorage_default.hasGuild) return;
+		if (!SessionStorage_default.hasGuild) {
+			Guild.promptCreateGuild();
+			return;
+		}
 		if (this.ui.is(":visible")) {
 			this.hide();
 			if (_btnLevelUp && _btnLevelUp.parentNode) _btnLevelUp.remove();
@@ -228198,7 +228335,8 @@ var init_Guild$1 = __esmMin((() => {
 		Renderer.stop(renderMemberFaces);
 	};
 	Guild.setGuildInformations = function setGuildInformations(info) {
-		const general = _root$13(this).querySelector(".content.info");
+		const root = _root$13(this);
+		const general = root.querySelector(".content.info");
 		if (!general) return;
 		general.querySelector(".name .value").textContent = info.guildname;
 		general.querySelector(".level .value").textContent = info.level;
@@ -228213,6 +228351,7 @@ var init_Guild$1 = __esmMin((() => {
 		Guild.onRequestGuildEmblem(info.GDID, info.emblemVersion, Guild.setEmblem.bind(this));
 		const emblemEdit = general.querySelector(".emblem_edit");
 		if (emblemEdit) emblemEdit.style.display = SessionStorage_default.isGuildMaster ? "" : "none";
+		updateDisbandButton(root, getActiveTab(root));
 		WinStatsController.getUI().update("guildname", info.guildname);
 		renderTendency(info.honor, info.virtue);
 	};
@@ -228282,7 +228421,7 @@ var init_Guild$1 = __esmMin((() => {
 		}
 		if (_positions[member.GPositionID]) {
 			const positionCell = view.querySelector(".position");
-			if (SessionStorage_default.isGuildMaster && member.GPositionID !== 0) {
+			if (SessionStorage_default.isGuildMaster) {
 				let selectHTML = `<select class="changePosition member_${member.AID}_${member.GID}">`;
 				_positions.forEach((position, key) => {
 					selectHTML += `<option value="${position.positionID}" ${key === member.GPositionID ? "selected" : ""}>${_escapeHTML$3(position.posName)}</option>`;
@@ -228291,7 +228430,7 @@ var init_Guild$1 = __esmMin((() => {
 				positionCell.innerHTML = selectHTML;
 				const selectEl = positionCell.querySelector(`.member_${member.AID}_${member.GID}`);
 				if (selectEl) selectEl.addEventListener("change", (evt) => {
-					Guild.updateMemberPosition(member.AID, member.GID, evt.target.selectedIndex, true);
+					Guild.updateMemberPosition(member.AID, member.GID, parseInt(evt.target.value, 10), true);
 				});
 			} else {
 				positionCell.textContent = _positions[member.GPositionID].posName;
@@ -228347,13 +228486,13 @@ var init_Guild$1 = __esmMin((() => {
 		const nameValue = view?.querySelector(".name .value");
 		ChatBox_default.addText(DB.getMessage(485 + (member.status ? 0 : 1)).replace("%s", nameValue ? nameValue.textContent : ""), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.GUILD);
 	};
-	Guild.updateMemberPosition = function updateMemberPosition(AID, GID, positionID, validate) {
+	Guild.updateMemberPosition = function updateMemberPosition(AID, GID, positionID, fromDropdown) {
 		for (let i = 0, count = _members.length; i < count; ++i) if (_members[i].AID === AID && _members[i].GID === GID) {
 			_members[i].GPositionID = positionID;
-			Guild.setMember(_members[i]);
+			if (!fromDropdown) Guild.setMember(_members[i]);
 			break;
 		}
-		if (validate) onValidate();
+		if (fromDropdown) onValidate();
 	};
 	Guild.setPositions = function setPositions(positions, erase) {
 		let rank;
@@ -228555,7 +228694,18 @@ var init_Guild$1 = __esmMin((() => {
 			}
 		};
 	})();
+	Guild.promptCreateGuild = function promptCreateGuild() {
+		GuildCompanion_default.toggleCreate();
+	};
+	Guild.promptDisbandGuild = function promptDisbandGuild() {
+		if (!SessionStorage_default.isGuildMaster) return;
+		UIManager.showMessageBox("If you are using a guild storage, all items inside it will disappear.", "ok", () => {
+			GuildCompanion_default.openDisband();
+		});
+	};
 	Guild.onGuildInfoRequest = function() {};
+	Guild.onRequestCreateGuild = function() {};
+	Guild.onRequestBreakGuild = function() {};
 	Guild.onPositionUpdateRequest = function() {};
 	Guild.onChangeMemberPosRequest = function() {};
 	Guild.onNoticeUpdateRequest = function() {};
@@ -228566,6 +228716,7 @@ var init_Guild$1 = __esmMin((() => {
 	Guild.onRequestAccess = function() {};
 	Guild.updateSession = function(info) {
 		SessionStorage_default.hasGuild = true;
+		SessionStorage_default.guildName = info.guildname || "";
 		SessionStorage_default.Entity.GUID = info.GDID;
 		SessionStorage_default.Entity.GEmblemVer = info.emblemVersion;
 		if (SessionStorage_default.Character.name === info.masterName) SessionStorage_default.isGuildMaster = true;
@@ -228832,9 +228983,7 @@ var init_Bank$1 = __esmMin((() => {
 	*/
 	Bank.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				this.toggle();
-				break;
+			case "TOGGLE": this.toggle();
 		}
 	};
 	/**
@@ -230095,12 +230244,10 @@ var init_CheckAttendance = __esmMin((() => {
 	*/
 	CheckAttendance.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				if (this._host.style.display === "none") {
-					this._host.style.display = "";
-					this.focus();
-				} else this._host.style.display = "none";
-				break;
+			case "TOGGLE": if (this._host.style.display === "none") {
+				this._host.style.display = "";
+				this.focus();
+			} else this._host.style.display = "none";
 		}
 	};
 	/**
@@ -230142,7 +230289,7 @@ var init_CheckAttendance = __esmMin((() => {
 				const total_days_string = attendance_count >= 20 || already_requested ? `${attendance_count} Day attendance success` : `Click the item to claim day ${current_day} reward`;
 				const end_date = /* @__PURE__ */ new Date(`${end[1]}-${end[2]}-${end[3]}`);
 				const now_date = /* @__PURE__ */ new Date();
-				const remaining_days = Math.round(Math.abs((end_date.getTime() - now_date.getTime()) / (1e3 * 3600 * 24)));
+				const remaining_days = Math.round(Math.abs((end_date.getTime() - now_date.getTime()) / 864e5));
 				const totalDaysEl = root.querySelector(".total-days");
 				if (totalDaysEl) totalDaysEl.innerHTML = total_days_string;
 				const remainingEl = root.querySelector(".remaining-day-text");
@@ -230432,9 +230579,7 @@ function createSkillList({ name, htmlText, cssText, hasTabs = false, needSkillLi
 	};
 	Component.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				this.toggle();
-				break;
+			case "TOGGLE": this.toggle();
 		}
 		onResetChoice(this);
 	};
@@ -231383,13 +231528,11 @@ function createQuest(config) {
 	*/
 	Quest.onShortCut = function onShurtCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				if ((this._host ? getComputedStyle(this._host).display : "none") !== "none") this.ui.hide();
-				else {
-					this.ui.show();
-					this.focus();
-				}
-				break;
+			case "TOGGLE": if ((this._host ? getComputedStyle(this._host).display : "none") !== "none") this.ui.hide();
+			else {
+				this.ui.show();
+				this.focus();
+			}
 		}
 	};
 	/**
@@ -233424,9 +233567,7 @@ function createBasicInfo(config) {
 			case "achievment":
 				if (Configs.get("enableAchievements") && PacketVerManager_default.value >= 20150513) Achievement_default.toggle();
 				break;
-			case "repute":
-				Reputation_default.toggle();
-				break;
+			case "repute": Reputation_default.toggle();
 		}
 	}
 	/**
@@ -233540,9 +233681,7 @@ function createBasicInfo(config) {
 	*/
 	Component.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "EXTEND":
-				this.toggleMode();
-				break;
+			case "EXTEND": this.toggleMode();
 		}
 	};
 	/**
@@ -233711,7 +233850,6 @@ function createBasicInfo(config) {
 			case "ap":
 				if (!hasApBar) break;
 				updateBar(root, type, val1, val2, Math.floor(val1 * 100 / val2) === 100 ? "red" : "blue");
-				break;
 		}
 	};
 	/**
@@ -234419,9 +234557,7 @@ function showMessage$3(messageID, timeout, type) {
 		case "info":
 			messageClass = "blue";
 			break;
-		default:
-			messageClass = "red";
-			break;
+		default: messageClass = "red";
 	}
 	if (Refine.messageTimeOut) clearTimeout(Refine.messageTimeOut);
 	const infoMsg = root.querySelector(".info_msg");
@@ -234502,9 +234638,7 @@ function onAnimateResult(result, callback) {
 		case "fail":
 			runFailSequence();
 			break;
-		default:
-			if (callback) callback();
-			break;
+		default: if (callback) callback();
 	}
 }
 /**
@@ -234568,7 +234702,6 @@ function onUpdateRefineUI(result) {
 			ChatBox_default.addText(DB.getMessage(1537), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
 		}
-		default: break;
 	}
 	const refineTextCont = root.querySelector(".refine_text_cont");
 	if (refineTextCont) refineTextCont.style.display = "block";
@@ -234724,10 +234857,7 @@ function onBroadcastRefineResult(pkt) {
 			case 0:
 				messageID = 3272;
 				break;
-			case 1:
-				messageID = 3271;
-				break;
-			default: break;
+			case 1: messageID = 3271;
 		}
 		const message = DB.getMessage(messageID).replace("%s", pkt.charName).replace("%d", pkt.refineLevel).replace("%s", itemName);
 		ChatBox_default.addText(message, ChatBox_default.TYPE.ANNOUNCE, ChatBox_default.FILTER.PUBLIC_CHAT, "#FFB563");
@@ -235028,9 +235158,7 @@ var init_Refine = __esmMin((() => {
 				case 3:
 					onShowFailure(pkt.result);
 					break;
-				case 2:
-					onShowFailure(pkt.result);
-					break;
+				case 2: onShowFailure(pkt.result);
 			}
 		}
 	};
@@ -235478,12 +235606,9 @@ function onEnchantGradeResult(pkt) {
 						onRemoveItem();
 					});
 					break;
-				case 1:
-					playEffect$1(EffectConst_default.EF_NEW_FAILURE, 2e3, () => {
-						onRemoveItem();
-					});
-					break;
-				default: break;
+				case 1: playEffect$1(EffectConst_default.EF_NEW_FAILURE, 2e3, () => {
+					onRemoveItem();
+				});
 			}
 		});
 		const item = InventoryController.getUI().removeItem(pkt.index, 1);
@@ -235566,10 +235691,7 @@ function onBroadcastEnchantGradeResult(pkt) {
 			case 0:
 				messageID = 3719;
 				break;
-			case 1:
-				messageID = 3718;
-				break;
-			default: break;
+			case 1: messageID = 3718;
 		}
 		const message = DB.getMessage(messageID).replace("%s", pkt.char_name).replace("%s", GradeMapping[pkt.grade]).replace("%s", itemName);
 		ChatBox_default.addText(message, ChatBox_default.TYPE.ANNOUNCE, ChatBox_default.FILTER.PUBLIC_CHAT, "#FFB563");
@@ -235897,9 +236019,7 @@ function calculateAnimation(layer, keyIndex, result) {
 		case 3:
 			result.aniframe = (from.aniframe + to.delay * delta) % layer.texcnt;
 			break;
-		case 4:
-			result.aniframe = (from.aniframe - to.delay * delta) % layer.texcnt;
-			break;
+		case 4: result.aniframe = (from.aniframe - to.delay * delta) % layer.texcnt;
 	}
 	return true;
 }
@@ -237715,19 +237835,13 @@ function onDrop$10(event) {
 		InputBox_default.onSubmitRequest = function OnSubmitRequest(count) {
 			InputBox_default.remove();
 			switch (data.from) {
-				case "Inventory":
-					InventoryController.reqMoveItemToWriteRodex(item.index, parseInt(count, 10));
-					break;
-				default:
+				case "Inventory": InventoryController.reqMoveItemToWriteRodex(item.index, parseInt(count, 10));
 			}
 		};
 		return;
 	}
 	switch (data.from) {
-		case "Inventory":
-			InventoryController.reqMoveItemToWriteRodex(item.index, 1);
-			break;
-		default:
+		case "Inventory": InventoryController.reqMoveItemToWriteRodex(item.index, 1);
 	}
 }
 /**
@@ -238218,19 +238332,17 @@ function createInventory(config) {
 	*/
 	Component.onShortCut = function onShurtCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				if (this._host.style.display === "none") {
-					this._host.style.display = "";
-					this.focus();
-				} else {
-					this._host.dispatchEvent(new Event("mouseleave"));
-					this.clearNewItems();
-					Component.getRoot().querySelectorAll(".new_item").forEach((el) => {
-						el.style.backgroundImage = "";
-					});
-					this._host.style.display = "none";
-				}
-				break;
+			case "TOGGLE": if (this._host.style.display === "none") {
+				this._host.style.display = "";
+				this.focus();
+			} else {
+				this._host.dispatchEvent(new Event("mouseleave"));
+				this.clearNewItems();
+				Component.getRoot().querySelectorAll(".new_item").forEach((el) => {
+					el.style.backgroundImage = "";
+				});
+				this._host.style.display = "none";
+			}
 		}
 		const basicInfoUI = BasicInfoController.getUI();
 		if (basicInfoUI._host) {
@@ -238567,9 +238679,7 @@ function createInventory(config) {
 				}
 			}
 			case ItemType_default.PETARMOR:
-			case ItemType_default.AMMO:
-				if (item.IsIdentified && !item.IsDamaged) Component.onEquipItem(item.index, item.location);
-				break;
+			case ItemType_default.AMMO: if (item.IsIdentified && !item.IsDamaged) Component.onEquipItem(item.index, item.location);
 		}
 	};
 	/**
@@ -238696,9 +238806,7 @@ function createInventory(config) {
 					case "Mail":
 						Mail_default.reqRemoveItem(item.index, parseInt(count, 10));
 						break;
-					case "WriteRodex":
-						WriteRodex_default.requestRemoveItemRodex(item.index, parseInt(count, 10));
-						break;
+					case "WriteRodex": WriteRodex_default.requestRemoveItemRodex(item.index, parseInt(count, 10));
 				}
 			};
 			return false;
@@ -238713,9 +238821,7 @@ function createInventory(config) {
 			case "Mail":
 				Mail_default.reqRemoveItem(item.index, 1);
 				break;
-			case "WriteRodex":
-				WriteRodex_default.requestRemoveItemRodex(item.index, 1);
-				break;
+			case "WriteRodex": WriteRodex_default.requestRemoveItemRodex(item.index, 1);
 		}
 		return false;
 	}
@@ -238896,10 +239002,7 @@ function createInventory(config) {
 				case ItemType_default.ARMOR:
 				case ItemType_default.SHADOWGEAR:
 				case ItemType_default.PETEGG:
-				case ItemType_default.PETARMOR:
-					favoriteval = 4;
-					break;
-				default: break;
+				case ItemType_default.PETARMOR: favoriteval = 4;
 			}
 			item.PlaceETCTab = favoriteval;
 		} else item.PlaceETCTab = newValue;
@@ -239050,10 +239153,7 @@ function createInventory(config) {
 				case 3:
 					ChatBox_default.addText(DB.getMessage(3564), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 					break;
-				case 4:
-					ChatBox_default.addText(DB.getMessage(3565), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-					break;
-				default: break;
+				case 4: ChatBox_default.addText(DB.getMessage(3565), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			}
 		};
 		function InventoryExpandReq() {
@@ -239078,10 +239178,7 @@ function createInventory(config) {
 				case 3:
 					ChatBox_default.addText(DB.getMessage(3564), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 					break;
-				case 4:
-					ChatBox_default.addText(DB.getMessage(3565), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-					break;
-				default: break;
+				case 4: ChatBox_default.addText(DB.getMessage(3565), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			}
 		};
 		Network.hookPacket(PACKET.ZC.ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE, onRequestInventoryExpandResult);
@@ -240152,9 +240249,7 @@ function onDrop$9(event) {
 				case "Storage":
 					StorageController.reqMoveItemToCart(item.index, parseInt(count, 10));
 					break;
-				case "Inventory":
-					InventoryController.getUI().reqMoveItemToCart(item.index, parseInt(count, 10));
-					break;
+				case "Inventory": InventoryController.getUI().reqMoveItemToCart(item.index, parseInt(count, 10));
 			}
 		};
 		return false;
@@ -240163,9 +240258,7 @@ function onDrop$9(event) {
 		case "Storage":
 			StorageController.reqMoveItemToCart(item.index, 1);
 			break;
-		case "Inventory":
-			InventoryController.getUI().reqMoveItemToCart(item.index, 1);
-			break;
+		case "Inventory": InventoryController.getUI().reqMoveItemToCart(item.index, 1);
 	}
 	return false;
 }
@@ -240416,15 +240509,13 @@ var init_CartItems = __esmMin((() => {
 	CartItems.onShortCut = function onShurtCut(key) {
 		if (SessionStorage_default.Entity.hasCart === false) return;
 		switch (key.cmd) {
-			case "TOGGLE":
-				if (this._host.style.display === "none") {
-					this._host.style.display = "";
-					this.focus();
-				} else {
-					this._host.style.display = "none";
-					this._host.dispatchEvent(new Event("mouseleave"));
-				}
-				break;
+			case "TOGGLE": if (this._host.style.display === "none") {
+				this._host.style.display = "";
+				this.focus();
+			} else {
+				this._host.style.display = "none";
+				this._host.dispatchEvent(new Event("mouseleave"));
+			}
 		}
 	};
 	CartItems.onKeyDown = function onKeyDown(event) {
@@ -240922,9 +241013,7 @@ function createEquipment({ name, htmlText, cssText, entityRender = true, enchant
 	};
 	Component.onShortCut = function onShurtCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				this.toggle();
-				break;
+			case "TOGGLE": this.toggle();
 		}
 	};
 	Component.setEquipConfig = function setEquipConfig(on) {
@@ -241662,9 +241751,7 @@ function addEvent(item) {
 			});
 			break;
 		}
-		default:
-			if (viewBtn) viewBtn.style.display = "none";
-			break;
+		default: if (viewBtn) viewBtn.style.display = "none";
 	}
 }
 function updatePreviewButton(item) {
@@ -242022,14 +242109,10 @@ var init_ItemInfo = __esmMin((() => {
 			switch (item.slot["card1"]) {
 				case 255:
 				case 254:
-				case 65280:
-					hideslots = true;
-					break;
+				case 65280: hideslots = true;
 			}
 			switch (item.slot["card4"]) {
-				case 1:
-					hideslots = true;
-					break;
+				case 1: hideslots = true;
 			}
 		}
 		const cardListParent = cardList ? cardList.parentElement : null;
@@ -242051,9 +242134,7 @@ var init_ItemInfo = __esmMin((() => {
 				if (!item.IsIdentified && cardListParent) cardListParent.style.display = "none";
 				break;
 			}
-			case ItemType_default.PETEGG:
-				if (cardListParent) cardListParent.style.display = "none";
-				break;
+			case ItemType_default.PETEGG: if (cardListParent) cardListParent.style.display = "none";
 		}
 		if (descInner) resize$3(descInner.offsetHeight + 45);
 	};
@@ -242503,9 +242584,7 @@ var init_ChatRoomCreate = __esmMin((() => {
 	*/
 	ChatRoomCreate.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				ChatRoomCreate.toggle();
-				break;
+			case "TOGGLE": ChatRoomCreate.toggle();
 		}
 	};
 	ChatRoomCreate.toggle = function toggle() {
@@ -242915,9 +242994,7 @@ function onPartyCreate(pkt) {
 		case 2:
 			ChatBox_default.addText(DB.getMessage(79), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PARTY_SETUP);
 			break;
-		case 3:
-			ChatBox_default.addText(DB.getMessage(1387), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PARTY_SETUP);
-			break;
+		case 3: ChatBox_default.addText(DB.getMessage(1387), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PARTY_SETUP);
 	}
 }
 /**
@@ -243090,9 +243167,7 @@ function onPartyInvitationAnswer(pkt) {
 		case 8:
 			id = 1388;
 			break;
-		case 9:
-			id = 1871;
-			break;
+		case 9: id = 1871;
 	}
 	ChatBox_default.addText(DB.getMessage(id).replace("%s", pkt.characterName), color, ChatBox_default.FILTER.PARTY_SETUP);
 }
@@ -244125,10 +244200,12 @@ function onGuildAccess(pkt) {
 * @param {object} pkt - PACKET.ZC.UPDATE_GDID
 */
 function onGuildOwnInfo(pkt) {
+	if (pkt.GDID === void 0) return;
 	GuildEngine.guild_id = pkt.GDID;
 	SessionStorage_default.hasGuild = true;
 	SessionStorage_default.guildRight = pkt.right;
 	SessionStorage_default.isGuildMaster = !!pkt.isMaster;
+	if (pkt.GName) SessionStorage_default.guildName = pkt.GName;
 	SessionStorage_default.Entity.GUID = pkt.GDID;
 	SessionStorage_default.Entity.GEmblemVer = pkt.emblemVersion;
 	if (pkt.GDID && pkt.emblemVersion) GuildEngine.requestGuildEmblem(pkt.GDID, pkt.emblemVersion, (image, gif) => {
@@ -244222,6 +244299,10 @@ function onGuildExpelList(pkt) {
 * @param {object} pkt - PACKET.ZC.RESULT_MAKE_GUILD
 */
 function onGuildCreationResult(pkt) {
+	const createFailed = (message) => {
+		ChatBox_default.addText(message, ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
+		UIManager.showMessageBox(message, "ok");
+	};
 	switch (pkt.result) {
 		case 0:
 			SessionStorage_default.hasGuild = true;
@@ -244229,14 +244310,12 @@ function onGuildCreationResult(pkt) {
 			Guild_default.show();
 			break;
 		case 1:
-			ChatBox_default.addText(DB.getMessage(375), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
+			createFailed(DB.getMessage(375, "You are already in a Guild."));
 			break;
 		case 2:
-			ChatBox_default.addText(DB.getMessage(376), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
+			createFailed(DB.getMessage(376, "That Guild Name already exists."));
 			break;
-		case 3:
-			ChatBox_default.addText(DB.getMessage(405), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
-			break;
+		case 3: createFailed(DB.getMessage(405, "You need the necessary item to create a Guild."));
 	}
 }
 /**
@@ -244245,18 +244324,27 @@ function onGuildCreationResult(pkt) {
 * @param {object} pkt - PACKET.ZC.ACK_DISORGANIZE_GUILD_RESULT
 */
 function onGuildDestroy(pkt) {
+	const fail = (message) => {
+		ChatBox_default.addText(message, ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
+		UIManager.showMessageBox(message, "ok", () => {
+			GuildCompanion_default.closeDisband();
+		});
+	};
 	switch (pkt.reason) {
 		case 0:
+			GuildCompanion_default.closeDisband();
 			Guild_default.hide();
 			SessionStorage_default.hasGuild = false;
+			SessionStorage_default.guildName = "";
+			SessionStorage_default.isGuildMaster = false;
+			SessionStorage_default.guildRight = 0;
+			SessionStorage_default.Entity.GUID = 0;
 			ChatBox_default.addText(DB.getMessage(400), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.GUILD);
 			break;
 		case 1:
-			ChatBox_default.addText(DB.getMessage(401), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
+			fail(DB.getMessage(401, "You have failed to disband the guild."));
 			break;
-		case 2:
-			ChatBox_default.addText(DB.getMessage(402), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
-			break;
+		case 2: fail(DB.getMessage(402, "There are still members in the guild."));
 	}
 }
 /**
@@ -244292,9 +244380,7 @@ function onGuildInviteResult(pkt) {
 		case 2:
 			ChatBox_default.addText(DB.getMessage(380), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.GUILD);
 			break;
-		case 3:
-			ChatBox_default.addText(DB.getMessage(381), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
-			break;
+		case 3: ChatBox_default.addText(DB.getMessage(381), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
 	}
 }
 /**
@@ -244316,6 +244402,7 @@ function onGuildMemberExpulsion(pkt) {
 	if (pkt.charName === SessionStorage_default.Entity.display.name) {
 		Guild_default.hide();
 		SessionStorage_default.hasGuild = false;
+		SessionStorage_default.guildName = "";
 		SessionStorage_default.isGuildMaster = false;
 		SessionStorage_default.guildRight = 0;
 		SessionStorage_default.Entity.GUID = 0;
@@ -244332,6 +244419,7 @@ function onGuildMemberLeave(pkt) {
 	if (pkt.charName === SessionStorage_default.Entity.display.name) {
 		Guild_default.hide();
 		SessionStorage_default.hasGuild = false;
+		SessionStorage_default.guildName = "";
 		SessionStorage_default.isGuildMaster = false;
 		SessionStorage_default.guildRight = 0;
 		SessionStorage_default.Entity.GUID = 0;
@@ -244392,9 +244480,7 @@ function onGuildAllianceResult(pkt) {
 		case 4:
 			ChatBox_default.addText(DB.getMessage(398), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
 			break;
-		case 5:
-			ChatBox_default.addText(DB.getMessage(1717), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
-			break;
+		case 5: ChatBox_default.addText(DB.getMessage(1717), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
 	}
 }
 /**
@@ -244413,9 +244499,7 @@ function onGuildHostilityResult(pkt) {
 		case 2:
 			ChatBox_default.addText(DB.getMessage(497), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
 			break;
-		case 3:
-			ChatBox_default.addText(DB.getMessage(1718), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
-			break;
+		case 3: ChatBox_default.addText(DB.getMessage(1718), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.GUILD);
 	}
 }
 function onGuildCastleInfo(pkt) {}
@@ -244432,6 +244516,7 @@ var init_Guild = __esmMin((() => {
 	init_EntityManager();
 	init_ChatBox();
 	init_Guild$1();
+	init_GuildCompanion();
 	init_UIManager();
 	init_Configs();
 	init_MiniMap();
@@ -244466,6 +244551,7 @@ var init_Guild = __esmMin((() => {
 			Network.hookPacket(PACKET.ZC.ACK_GUILD_MENUINTERFACE, onGuildAccess);
 			Network.hookPacket(PACKET.ZC.RESULT_MAKE_GUILD, onGuildCreationResult);
 			Network.hookPacket(PACKET.ZC.UPDATE_GDID, onGuildOwnInfo);
+			Network.hookPacket(PACKET.ZC.UPDATE_GDID2, onGuildOwnInfo);
 			Network.hookPacket(PACKET.ZC.BAN_LIST, onGuildExpelList);
 			Network.hookPacket(PACKET.ZC.ACK_DISORGANIZE_GUILD_RESULT, onGuildDestroy);
 			Network.hookPacket(PACKET.ZC.REQ_JOIN_GUILD, onGuildInviteRequest);
@@ -244490,6 +244576,10 @@ var init_Guild = __esmMin((() => {
 			Guild_default.onRequestMemberInfo = GuildEngine.requestMemberInfo;
 			Guild_default.onRequestDeleteRelation = GuildEngine.requestDeleteRelatedGuild;
 			Guild_default.onRequestAccess = GuildEngine.requestAccess;
+			Guild_default.onRequestCreateGuild = GuildEngine.createGuild;
+			GuildCompanion_default.onRequestCreateGuild = GuildEngine.createGuild;
+			GuildCompanion_default.onRequestBreakGuild = GuildEngine.breakGuild;
+			Guild_default.onRequestBreakGuild = GuildEngine.breakGuild;
 			Guild_default.onRequestGuildEmblem = GuildEngine.requestGuildEmblem;
 			Guild_default.onSendEmblem = GuildEngine.sendEmblem;
 		}
@@ -244815,7 +244905,7 @@ var init_Guild = __esmMin((() => {
 		}
 	};
 	onGuildEmblem = (function onGuildEmblemClosure() {
-		const data = new Uint8Array(2 * 1024);
+		const data = /* @__PURE__ */ new Uint8Array(2048);
 		return function(pkt) {
 			if (!_emblems[pkt.GDID]) _emblems[pkt.GDID] = {
 				version: -1,
@@ -245319,7 +245409,7 @@ var init_HomunInformations = __esmMin((() => {
 	init_Elements();
 	init_HomunInformations$2();
 	init_HomunInformations$1();
-	autoFeedIntervalMs = 1e3 * 60 * 1;
+	autoFeedIntervalMs = 6e4;
 	autoFeedPercent = 30;
 	HomunInformations = new GUIComponent("HomunInformations", HomunInformations_default$1);
 	HomunInformations.render = () => HomunInformations_default$2;
@@ -245425,9 +245515,7 @@ var init_HomunInformations = __esmMin((() => {
 					this._host.style.display = "none";
 				}
 				break;
-			case "AGGRESSIVE":
-				this.toggleAggressive();
-				break;
+			case "AGGRESSIVE": this.toggleAggressive();
 		}
 	};
 	/**
@@ -245593,12 +245681,11 @@ var init_HomunInformations = __esmMin((() => {
 		const canvas = root.querySelector(".block2 canvas.life.title_exp");
 		if (!canvas) return;
 		const ctx = canvas.getContext("2d");
-		const width = 60, height = 5;
 		const exp_per = exp / maxEXP;
 		ctx.fillStyle = "#424242";
-		ctx.fillRect(1, 1, width - 2, height - 2);
+		ctx.fillRect(1, 1, 58, 3);
 		ctx.fillStyle = "#205cc3";
-		ctx.fillRect(1, 1, Math.round((width - 2) * exp_per), 3);
+		ctx.fillRect(1, 1, Math.round(58 * exp_per), 3);
 		const expEl = root.querySelector(".exp");
 		if (expEl) expEl.textContent = `${exp}/${maxEXP}`;
 	};
@@ -245613,12 +245700,11 @@ var init_HomunInformations = __esmMin((() => {
 		const canvas = root.querySelector(".block2 canvas.life.title_hunger");
 		if (!canvas) return;
 		const ctx = canvas.getContext("2d");
-		const width = 60, height = 5;
 		const hunger_per = val / 100;
 		ctx.fillStyle = "#424242";
-		ctx.fillRect(1, 1, width - 2, height - 2);
+		ctx.fillRect(1, 1, 58, 3);
 		ctx.fillStyle = hunger_per < .25 ? "#ff1e00" : "#205cc3";
-		ctx.fillRect(1, 1, Math.round((width - 2) * hunger_per), 3);
+		ctx.fillRect(1, 1, Math.round(58 * hunger_per), 3);
 		const hungerEl = root.querySelector(".hunger");
 		if (hungerEl) hungerEl.textContent = `${val}/100`;
 	};
@@ -245773,9 +245859,7 @@ var init_MercenaryInformations = __esmMin((() => {
 					this._host.style.display = "none";
 				}
 				break;
-			case "AGGRESSIVE":
-				this.toggleAggressive();
-				break;
+			case "AGGRESSIVE": this.toggleAggressive();
 		}
 	};
 	/**
@@ -245815,11 +245899,10 @@ var init_MercenaryInformations = __esmMin((() => {
 		const canvas = root.querySelector("canvas.life.title_timeleft");
 		if (canvas) {
 			const ctx = canvas.getContext("2d");
-			const width = 60, height = 5;
 			ctx.fillStyle = "#424242";
-			ctx.fillRect(1, 1, width - 2, height - 2);
+			ctx.fillRect(1, 1, 58, 3);
 			ctx.fillStyle = time_per < .25 ? "#ff1e00" : "#205cc3";
-			ctx.fillRect(1, 1, Math.round((width - 2) * time_per), 3);
+			ctx.fillRect(1, 1, Math.round(58 * time_per), 3);
 		}
 	};
 	/**
@@ -245838,12 +245921,11 @@ var init_MercenaryInformations = __esmMin((() => {
 		const canvas = root.querySelector("canvas.life.title_kills");
 		if (canvas) {
 			const ctx = canvas.getContext("2d");
-			const width = 60, height = 5;
 			const kills_per = kills % 50 / 50;
 			ctx.fillStyle = "#424242";
-			ctx.fillRect(1, 1, width - 2, height - 2);
+			ctx.fillRect(1, 1, 58, 3);
 			ctx.fillStyle = "#205cc3";
-			ctx.fillRect(1, 1, Math.round((width - 2) * kills_per), 3);
+			ctx.fillRect(1, 1, Math.round(58 * kills_per), 3);
 		}
 	};
 	/**
@@ -246329,7 +246411,7 @@ function renderLayer$2(layer, spr, pal, sizeScale, pos, alpha) {
 	SpriteRenderer.image.texture = frame.texture;
 	SpriteRenderer.render(false);
 }
-var RAG_TICK_MS$2, FADEOUT_TAIL_MS$3, EMIT_STOP_BEFORE_END_MS$2, FLAKE_LIFE_MS, FLAKE_FADEIN_MS, FLAKE_FADEOUT_START_MS, SCATTER_RADIUS_CELLS$2, SPAWN_HEIGHT_MIN_CELLS$2, SPAWN_HEIGHT_MAX_CELLS$2, FALL_SPEED_CELLS_PER_MS, _instance$4, _mapName$5, _isStopping$2, SnowWeatherEffect;
+var RAG_TICK_MS$2, FADEOUT_TAIL_MS$3, EMIT_STOP_BEFORE_END_MS$2, FLAKE_LIFE_MS, FLAKE_FADEIN_MS, FLAKE_FADEOUT_START_MS, SCATTER_RADIUS_CELLS$2, SPAWN_HEIGHT_MIN_CELLS$2, FALL_SPEED_CELLS_PER_MS, _instance$4, _mapName$5, _isStopping$2, SnowWeatherEffect;
 var init_SnowWeather = __esmMin((() => {
 	init_Client();
 	init_Renderer();
@@ -246339,13 +246421,12 @@ var init_SnowWeather = __esmMin((() => {
 	init_SessionStorage();
 	RAG_TICK_MS$2 = 25;
 	FADEOUT_TAIL_MS$3 = 1e3 * RAG_TICK_MS$2;
-	EMIT_STOP_BEFORE_END_MS$2 = 160 * RAG_TICK_MS$2;
+	EMIT_STOP_BEFORE_END_MS$2 = 4e3;
 	FLAKE_LIFE_MS = 320 * RAG_TICK_MS$2;
-	FLAKE_FADEIN_MS = 10 * RAG_TICK_MS$2;
+	FLAKE_FADEIN_MS = 250;
 	FLAKE_FADEOUT_START_MS = FLAKE_LIFE_MS * 4 / 5;
 	SCATTER_RADIUS_CELLS$2 = 60;
 	SPAWN_HEIGHT_MIN_CELLS$2 = 18;
-	SPAWN_HEIGHT_MAX_CELLS$2 = 22;
 	FALL_SPEED_CELLS_PER_MS = .1 / RAG_TICK_MS$2;
 	_instance$4 = null;
 	_mapName$5 = "";
@@ -246452,7 +246533,7 @@ var init_SnowWeather = __esmMin((() => {
 			const oy = Math.sin(theta) * radius;
 			const x = px + ox;
 			const y = py + oy;
-			const z = Altitude.getCellHeight(x, y) + (SPAWN_HEIGHT_MIN_CELLS$2 + Math.random() * (SPAWN_HEIGHT_MAX_CELLS$2 - SPAWN_HEIGHT_MIN_CELLS$2));
+			const z = Altitude.getCellHeight(x, y) + (SPAWN_HEIGHT_MIN_CELLS$2 + Math.random() * 4);
 			this.flakes.push({
 				spawnTick,
 				x,
@@ -246502,7 +246583,7 @@ var init_SnowWeather = __esmMin((() => {
 				flake._lastTick = tick;
 				let alpha = 1;
 				if (age < FLAKE_FADEIN_MS) alpha = age / FLAKE_FADEIN_MS;
-				else if (age > FLAKE_FADEOUT_START_MS) alpha = Math.max(0, 1 - (age - FLAKE_FADEOUT_START_MS) / (FLAKE_LIFE_MS - FLAKE_FADEOUT_START_MS));
+				else if (age > FLAKE_FADEOUT_START_MS) alpha = Math.max(0, 1 - (age - FLAKE_FADEOUT_START_MS) / 1600);
 				SpriteRenderer.position[0] = flake.x;
 				SpriteRenderer.position[1] = flake.y;
 				SpriteRenderer.position[2] = flake.z;
@@ -246567,7 +246648,7 @@ function renderLayer$1(layer, spr, pal, sizeScale, pos, alpha) {
 	SpriteRenderer.image.texture = frame.texture;
 	SpriteRenderer.render(false);
 }
-var RAG_TICK_MS$1, FADEOUT_TAIL_MS$2, EMIT_INTERVAL_MS, EMIT_STOP_BEFORE_END_MS$1, LEAVE_LIFE_MS, LEAVE_FADEIN_MS, LEAVE_FADEOUT_START_MS, SCATTER_RADIUS_CELLS$1, SPAWN_HEIGHT_MIN_CELLS$1, SPAWN_HEIGHT_MAX_CELLS$1, EF_MAPLE, PATH_SAKURA, PATH_MAPLE, _instance$3, _mapName$4, _isStopping$1, SakuraWeatherEffect;
+var RAG_TICK_MS$1, FADEOUT_TAIL_MS$2, EMIT_INTERVAL_MS, EMIT_STOP_BEFORE_END_MS$1, LEAVE_LIFE_MS, LEAVE_FADEIN_MS, LEAVE_FADEOUT_START_MS, SCATTER_RADIUS_CELLS$1, SPAWN_HEIGHT_MIN_CELLS$1, EF_MAPLE, PATH_SAKURA, PATH_MAPLE, _instance$3, _mapName$4, _isStopping$1, SakuraWeatherEffect;
 var init_SakuraWeatherEffect = __esmMin((() => {
 	init_Client();
 	init_Renderer();
@@ -246578,13 +246659,12 @@ var init_SakuraWeatherEffect = __esmMin((() => {
 	RAG_TICK_MS$1 = 25;
 	FADEOUT_TAIL_MS$2 = 1e3 * RAG_TICK_MS$1;
 	EMIT_INTERVAL_MS = 150;
-	EMIT_STOP_BEFORE_END_MS$1 = 160 * RAG_TICK_MS$1;
+	EMIT_STOP_BEFORE_END_MS$1 = 4e3;
 	LEAVE_LIFE_MS = 600 * RAG_TICK_MS$1;
-	LEAVE_FADEIN_MS = 20 * RAG_TICK_MS$1;
+	LEAVE_FADEIN_MS = 500;
 	LEAVE_FADEOUT_START_MS = LEAVE_LIFE_MS * 4 / 5;
 	SCATTER_RADIUS_CELLS$1 = 70;
 	SPAWN_HEIGHT_MIN_CELLS$1 = 32;
-	SPAWN_HEIGHT_MAX_CELLS$1 = 42;
 	EF_MAPLE = 333;
 	PATH_SAKURA = "data/sprite/ÀÌÆÑÆ®/sakura01";
 	PATH_MAPLE = "data/sprite/ÀÌÆÑÆ®/´ÜÇ³";
@@ -246680,7 +246760,7 @@ var init_SakuraWeatherEffect = __esmMin((() => {
 			const radius = Math.random() * SCATTER_RADIUS_CELLS$1;
 			const x = px + Math.cos(theta) * radius;
 			const y = py + Math.sin(theta) * radius;
-			const z = Altitude.getCellHeight(x, y) + (SPAWN_HEIGHT_MIN_CELLS$1 + Math.random() * (SPAWN_HEIGHT_MAX_CELLS$1 - SPAWN_HEIGHT_MIN_CELLS$1));
+			const z = Altitude.getCellHeight(x, y) + (SPAWN_HEIGHT_MIN_CELLS$1 + Math.random() * 10);
 			const fallSpeed = (this.isMaple ? (2 + Math.random() * 4) * .03 : (2 + Math.random() * 2) * .1) * .5;
 			const swayFactorX = this.isMaple ? .12 : .24;
 			const swayFactorY = this.isMaple ? .15 : .3;
@@ -246751,7 +246831,7 @@ var init_SakuraWeatherEffect = __esmMin((() => {
 				let alphaCap = 1;
 				if (!this.isMaple) alphaCap = .5;
 				if (age < LEAVE_FADEIN_MS) alpha = age / LEAVE_FADEIN_MS * alphaCap;
-				else if (age > LEAVE_FADEOUT_START_MS) alpha = Math.max(0, (1 - (age - LEAVE_FADEOUT_START_MS) / (LEAVE_LIFE_MS - LEAVE_FADEOUT_START_MS)) * alphaCap);
+				else if (age > LEAVE_FADEOUT_START_MS) alpha = Math.max(0, (1 - (age - LEAVE_FADEOUT_START_MS) / 3e3) * alphaCap);
 				SpriteRenderer.position[0] = leave.x;
 				SpriteRenderer.position[1] = leave.y;
 				SpriteRenderer.position[2] = leave.z;
@@ -246820,7 +246900,7 @@ var init_PokJukWeatherEffect = __esmMin((() => {
 			canvas.height = PARTICLE_SIZE;
 			const ctx = canvas.getContext("2d");
 			const center = PARTICLE_SIZE / 2;
-			const radius = center - 1;
+			const radius = 2;
 			ctx.clearRect(0, 0, PARTICLE_SIZE, PARTICLE_SIZE);
 			const gradient = ctx.createRadialGradient(center, center, 0, center, center, radius);
 			gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
@@ -246978,7 +247058,6 @@ var init_PokJukWeatherEffect = __esmMin((() => {
 							r = 255;
 							g = 255;
 							b = 255;
-							break;
 					}
 					this.renderParticle(p.pos, p.alpha, r, g, b, fw.size);
 				}
@@ -248976,7 +249055,6 @@ var init_Model = __esmMin((() => {
 					this.calcNormal_FLAT(face_normal, normalMat, shadeGroupUsed);
 					this.calcNormal_SMOOTH(face_normal, shadeGroupUsed, shadeGroup);
 					this.generate_mesh_SMOOTH(vert, shadeGroup, mesh);
-					break;
 			}
 			return mesh;
 		}
@@ -249050,7 +249128,6 @@ var init_Model = __esmMin((() => {
 					this.calcNormal_FLAT(face_normal, normalMat, shadeGroupUsed);
 					this.calcNormal_SMOOTH(face_normal, shadeGroupUsed, shadeGroup);
 					this.generate_mesh_SMOOTH(vert, shadeGroup, mesh);
-					break;
 			}
 			return mesh;
 		}
@@ -249737,7 +249814,6 @@ function compileNodeAtFrame(node, instanceMatrix, frame, animLen) {
 			calcNormal_FLAT(node, face_normal, normalMat, shadeGroupUsed);
 			calcNormal_SMOOTH(node, face_normal, shadeGroupUsed, shadeGroup);
 			generate_mesh_SMOOTH(node, vert, shadeGroup, mesh);
-			break;
 	}
 	return mesh;
 }
@@ -250410,7 +250486,8 @@ var init_TwoDEffect = __esmMin((() => {
 			if (this.rotate) {
 				const step = (this.toAngle - this.angle) / 100;
 				const startAngle = this.angle;
-				SpriteRenderer.angle = steps * step + startAngle;
+				const angle = steps * step + startAngle;
+				SpriteRenderer.angle = angle;
 			} else SpriteRenderer.angle = this.angle;
 			SpriteRenderer.runWithDepth(this.overlay === false, this.overlay === false, this.overlay === true, () => {
 				SpriteRenderer.render();
@@ -251706,11 +251783,9 @@ var init_EffectManager = __esmMin((() => {
 				case "QuadHorn":
 					EffectManager.add(new QuadHorn(Params.effect, Params.Inst, Params.Init), Params);
 					break;
-				case "FUNC":
-					if (Params.effect.func) if (Params.effect.attachedEntity) {
-						if (Params.Init.ownerEntity) Params.effect.func.call(this, Params);
-					} else Params.effect.func.call(this, Params);
-					break;
+				case "FUNC": if (Params.effect.func) if (Params.effect.attachedEntity) {
+					if (Params.Init.ownerEntity) Params.effect.func.call(this, Params);
+				} else Params.effect.func.call(this, Params);
 			}
 		}
 		/**
@@ -253369,7 +253444,6 @@ var init_Damage = __esmMin((() => {
 						default:
 							SpriteRenderer.position[0] = damage.entity.position[0] + perc * 4;
 							SpriteRenderer.position[1] = damage.entity.position[1] - perc * 4;
-							break;
 					}
 					SpriteRenderer.position[2] = damage.entity.position[2] + 2 + zArc;
 					if (damage.soundFile) {
@@ -253682,7 +253756,6 @@ function onDrop$8(event, target) {
 			ShortCut.removeElement(element.isSkill, element.ID, row, element.isSkill ? element.count : null);
 			ShortCut.addElement(index, element.isSkill, element.ID, element.count);
 			ShortCut.onChange(index, element.isSkill, element.ID, element.count);
-			break;
 	}
 }
 /**
@@ -254086,7 +254159,6 @@ var init_ShortCut = __esmMin((() => {
 				_preferences$19.size = (_preferences$19.size + 1) % (_rowCount + 1);
 				_preferences$19.save();
 				this._host.style.height = `${_preferences$19.size * 34}px`;
-				break;
 		}
 	};
 	ShortCut.useSkill = function useSkill(id, level) {
@@ -254888,9 +254960,7 @@ function navigateDraggableItems(direction) {
 			case "left":
 				keyCode = 37;
 				break;
-			case "right":
-				keyCode = 39;
-				break;
+			case "right": keyCode = 39;
 		}
 		_dispatchKeyEvent(document, "keydown", keyCode);
 		return;
@@ -254919,9 +254989,7 @@ function navigateDraggableItems(direction) {
 		case "left":
 			newIndex = currentIndex - 1;
 			break;
-		case "right":
-			newIndex = currentIndex + 1;
-			break;
+		case "right": newIndex = currentIndex + 1;
 	}
 	newIndex = Math.max(0, Math.min(allDraggables.length - 1, newIndex));
 	if (newIndex !== currentIndex && newIndex < allDraggables.length) {
@@ -255621,7 +255689,7 @@ var init_JoystickUI$2 = __esmMin((() => {
 //#region src/UI/Components/JoystickUI/JoystickUI.css?raw
 var JoystickUI_default$1;
 var init_JoystickUI$1 = __esmMin((() => {
-	JoystickUI_default$1 = ":host {\r\n	position: absolute;\r\n	bottom: 20px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	z-index: 1000;\r\n	pointer-events: none;\r\n}\r\n\r\n#JoystickUI {\r\n	display: flex;\r\n	flex-direction: column;\r\n	align-items: center;\r\n}\r\n\r\n#JoystickUI .set-indicator {\r\n	margin-bottom: 5px;\r\n	background: rgba(0, 0, 0, 0.5);\r\n	border-radius: 4px;\r\n	padding: 2px;\r\n	pointer-events: auto;\r\n}\r\n\r\n#JoystickUI .set-btn {\r\n	display: inline-block;\r\n	padding: 2px 10px;\r\n	color: #ccc;\r\n	font-family: sans-serif;\r\n	border-radius: 3px;\r\n	cursor: pointer;\r\n}\r\n\r\n#JoystickUI .set-btn.active {\r\n	background-color: #d32f2f;\r\n	color: white;\r\n	font-weight: bold;\r\n}\r\n\r\n#JoystickUI .hotkey-bar {\r\n	display: flex;\r\n	gap: 4px;\r\n	align-items: flex-end;\r\n}\r\n\r\n#JoystickUI .group-container {\r\n	background: linear-gradient(to bottom, rgba(60, 60, 60, 0.9), rgba(30, 30, 30, 0.9));\r\n	border: 1px solid #555;\r\n	border-radius: 6px;\r\n	width: 110px;\r\n	height: 100px;\r\n	position: relative;\r\n	pointer-events: auto;\r\n	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);\r\n}\r\n\r\n#JoystickUI .group-header {\r\n	background: rgba(255, 255, 255, 0.1);\r\n	color: #e0e0e0;\r\n	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n	font-size: 14px;\r\n	font-weight: bold;\r\n	text-align: center;\r\n	padding: 2px 0;\r\n	border-bottom: 1px solid #555;\r\n	text-shadow: 1px 1px 2px black;\r\n}\r\n\r\n#JoystickUI .cross-layout {\r\n	position: relative;\r\n	width: 100%;\r\n	height: 75px;\r\n}\r\n\r\n#JoystickUI .slot {\r\n	position: absolute;\r\n	width: 32px;\r\n	height: 32px;\r\n	background-color: rgba(0, 0, 0, 0.6);\r\n	border: 1px solid #777;\r\n	border-radius: 3px;\r\n	display: flex;\r\n	justify-content: center;\r\n	align-items: center;\r\n	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);\r\n	transition: background 0.2s;\r\n}\r\n\r\n#JoystickUI .slot:active {\r\n	background-color: rgba(144, 238, 144, 0.3);\r\n	border-color: #90ee90;\r\n}\r\n\r\n#JoystickUI .slot.top {\r\n	top: 2px;\r\n	left: 50%;\r\n	transform: translateX(-60%);\r\n}\r\n\r\n#JoystickUI .slot.bottom {\r\n	bottom: 2px;\r\n	left: 50%;\r\n	transform: translateX(-60%);\r\n}\r\n\r\n#JoystickUI .slot.left {\r\n	top: 50%;\r\n	left: 2px;\r\n	transform: translateY(-60%);\r\n}\r\n\r\n#JoystickUI .slot.right {\r\n	top: 50%;\r\n	right: 4px;\r\n	transform: translateY(-60%);\r\n}\r\n\r\n#JoystickUI .key-label {\r\n	position: absolute;\r\n	top: 1px;\r\n	left: 3px;\r\n	font-weight: bold;\r\n	color: #fff;\r\n	text-shadow: 1px 1px 0 #000;\r\n	z-index: 2;\r\n	pointer-events: none;\r\n}\r\n\r\n#JoystickUI .group-container.active {\r\n	border-color: #00ff00;\r\n	background: linear-gradient(to bottom, rgba(80, 100, 80, 0.95), rgba(40, 60, 40, 0.95));\r\n	box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);\r\n	transform: translateY(-2px);\r\n	z-index: 10;\r\n}\r\n\r\n#JoystickUI .icon {\r\n	position: relative;\r\n}\r\n\r\n#JoystickUI .icon .img {\r\n	width: 24px;\r\n	height: 24px;\r\n	background-repeat: no-repeat;\r\n	border: none;\r\n	background-color: transparent;\r\n}\r\n\r\n#JoystickUI .icon .name {\r\n	display: none;\r\n	z-index: 1;\r\n	position: absolute;\r\n	top: 0px;\r\n	left: 0px;\r\n	background-color: rgba(0, 0, 0, 0.6);\r\n	text-shadow: 1px 1px black;\r\n	color: white;\r\n	padding: 5px;\r\n	white-space: nowrap;\r\n}\r\n\r\n#JoystickUI .icon:hover .name {\r\n	display: block;\r\n}\r\n\r\n#JoystickUI .icon.hide .name {\r\n	display: none;\r\n}\r\n\r\n#JoystickUI .icon .amount {\r\n	position: absolute;\r\n	right: 1px;\r\n	top: 20px;\r\n	text-shadow: 1px 1px 0px white;\r\n	text-align: right;\r\n	font-weight: bold;\r\n}\r\n";
+	JoystickUI_default$1 = ":host {\r\n	position: absolute;\r\n	bottom: 20px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	z-index: 1000;\r\n	pointer-events: none;\r\n}\r\n\r\n#JoystickUI {\r\n	display: flex;\r\n	flex-direction: column;\r\n	align-items: center;\r\n}\r\n\r\n#JoystickUI .set-indicator {\r\n	margin-bottom: 5px;\r\n	background: rgba(0, 0, 0, 0.5);\r\n	border-radius: 4px;\r\n	padding: 2px;\r\n	pointer-events: auto;\r\n}\r\n\r\n#JoystickUI .set-btn {\r\n	display: inline-block;\r\n	padding: 2px 10px;\r\n	color: #ccc;\r\n	font-family: sans-serif;\r\n	border-radius: 3px;\r\n	cursor: pointer;\r\n}\r\n\r\n#JoystickUI .set-btn.active {\r\n	background-color: #d32f2f;\r\n	color: white;\r\n	font-weight: bold;\r\n}\r\n\r\n#JoystickUI .hotkey-bar {\r\n	display: flex;\r\n	gap: 4px;\r\n	align-items: flex-end;\r\n}\r\n\r\n#JoystickUI .group-container {\r\n	background: linear-gradient(to bottom, rgba(60, 60, 60, 0.9), rgba(30, 30, 30, 0.9));\r\n	border: 1px solid #555;\r\n	border-radius: 6px;\r\n	width: 110px;\r\n	height: 100px;\r\n	position: relative;\r\n	pointer-events: auto;\r\n	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);\r\n}\r\n\r\n#JoystickUI .group-header {\r\n	background: rgba(255, 255, 255, 0.1);\r\n	color: #e0e0e0;\r\n	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n	/* Opt out of Common.css's font-size-adjust: keep Segoe UI's native x-height. Scoped to this\r\n	   header only — the .set-btn above uses generic sans-serif and stays normalized. */\r\n	font-size-adjust: none;\r\n	font-size: 14px;\r\n	font-weight: bold;\r\n	text-align: center;\r\n	padding: 2px 0;\r\n	border-bottom: 1px solid #555;\r\n	text-shadow: 1px 1px 2px black;\r\n}\r\n\r\n#JoystickUI .cross-layout {\r\n	position: relative;\r\n	width: 100%;\r\n	height: 75px;\r\n}\r\n\r\n#JoystickUI .slot {\r\n	position: absolute;\r\n	width: 32px;\r\n	height: 32px;\r\n	background-color: rgba(0, 0, 0, 0.6);\r\n	border: 1px solid #777;\r\n	border-radius: 3px;\r\n	display: flex;\r\n	justify-content: center;\r\n	align-items: center;\r\n	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8);\r\n	transition: background 0.2s;\r\n}\r\n\r\n#JoystickUI .slot:active {\r\n	background-color: rgba(144, 238, 144, 0.3);\r\n	border-color: #90ee90;\r\n}\r\n\r\n#JoystickUI .slot.top {\r\n	top: 2px;\r\n	left: 50%;\r\n	transform: translateX(-60%);\r\n}\r\n\r\n#JoystickUI .slot.bottom {\r\n	bottom: 2px;\r\n	left: 50%;\r\n	transform: translateX(-60%);\r\n}\r\n\r\n#JoystickUI .slot.left {\r\n	top: 50%;\r\n	left: 2px;\r\n	transform: translateY(-60%);\r\n}\r\n\r\n#JoystickUI .slot.right {\r\n	top: 50%;\r\n	right: 4px;\r\n	transform: translateY(-60%);\r\n}\r\n\r\n#JoystickUI .key-label {\r\n	position: absolute;\r\n	top: 1px;\r\n	left: 3px;\r\n	font-weight: bold;\r\n	color: #fff;\r\n	text-shadow: 1px 1px 0 #000;\r\n	z-index: 2;\r\n	pointer-events: none;\r\n}\r\n\r\n#JoystickUI .group-container.active {\r\n	border-color: #00ff00;\r\n	background: linear-gradient(to bottom, rgba(80, 100, 80, 0.95), rgba(40, 60, 40, 0.95));\r\n	box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);\r\n	transform: translateY(-2px);\r\n	z-index: 10;\r\n}\r\n\r\n#JoystickUI .icon {\r\n	position: relative;\r\n}\r\n\r\n#JoystickUI .icon .img {\r\n	width: 24px;\r\n	height: 24px;\r\n	background-repeat: no-repeat;\r\n	border: none;\r\n	background-color: transparent;\r\n}\r\n\r\n#JoystickUI .icon .name {\r\n	display: none;\r\n	z-index: 1;\r\n	position: absolute;\r\n	top: 0px;\r\n	left: 0px;\r\n	background-color: rgba(0, 0, 0, 0.6);\r\n	text-shadow: 1px 1px black;\r\n	color: white;\r\n	padding: 5px;\r\n	white-space: nowrap;\r\n}\r\n\r\n#JoystickUI .icon:hover .name {\r\n	display: block;\r\n}\r\n\r\n#JoystickUI .icon.hide .name {\r\n	display: none;\r\n}\r\n\r\n#JoystickUI .icon .amount {\r\n	position: absolute;\r\n	right: 1px;\r\n	top: 20px;\r\n	text-shadow: 1px 1px 0px white;\r\n	text-align: right;\r\n	font-weight: bold;\r\n}\r\n";
 }));
 //#endregion
 //#region src/UI/Components/JoystickUI/JoystickUI.js
@@ -257302,9 +257370,9 @@ function ensureDropFrame(gl) {
 	const tex = gl.createTexture();
 	gl.bindTexture(gl.TEXTURE_2D, tex);
 	const h = 16;
-	const data = new Uint8Array(h * 4);
+	const data = /* @__PURE__ */ new Uint8Array(64);
 	for (let i = 0; i < h; i++) {
-		const t = i / (h - 1);
+		const t = i / 15;
 		let a = Math.min(1, t / .7);
 		if (t > .7) a *= 1 - (t - .7) / .3 * .35;
 		const alphaByte = Math.max(0, Math.min(255, Math.floor(a * 255)));
@@ -257352,9 +257420,9 @@ function ensureSplashFrame(gl) {
 	if (_splashFrame && _splashFrame.texture && gl.isTexture(_splashFrame.texture)) return;
 	_splashFrame = null;
 	const w = 16, h = 16;
-	const data = new Uint8Array(w * h * 4);
-	const cx = (w - 1) / 2;
-	const cy = (h - 1) / 2;
+	const data = /* @__PURE__ */ new Uint8Array(1024);
+	const cx = 15 / 2;
+	const cy = 15 / 2;
 	const maxR = Math.min(cx, cy);
 	for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
 		const dx = x - cx;
@@ -257391,9 +257459,9 @@ function ensurePuddleFrame(gl) {
 	if (_puddleFrame && _puddleFrame.texture && gl.isTexture(_puddleFrame.texture)) return;
 	_puddleFrame = null;
 	const w = 64, h = 64;
-	const data = new Uint8Array(w * h * 4);
-	const cx = (w - 1) / 2;
-	const cy = (h - 1) / 2;
+	const data = /* @__PURE__ */ new Uint8Array(16384);
+	const cx = 63 / 2;
+	const cy = 63 / 2;
 	const maxR = Math.min(cx, cy) * .85;
 	for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
 		const dx = x - cx;
@@ -257527,7 +257595,7 @@ var init_RainWeather = __esmMin((() => {
 	RAG_TICK_MS = 25;
 	FADEOUT_TAIL_MS = 1e3 * RAG_TICK_MS;
 	EMIT_PER_TICK = 10;
-	EMIT_STOP_BEFORE_END_MS = 160 * RAG_TICK_MS;
+	EMIT_STOP_BEFORE_END_MS = 4e3;
 	MAX_DROPS = 1100;
 	SCATTER_RADIUS_CELLS = 70;
 	SPAWN_HEIGHT_MIN_CELLS = 22;
@@ -258128,7 +258196,7 @@ var init_SwirlingAura$1 = __esmMin((() => {
 }));
 //#endregion
 //#region src/Renderer/Effects/SwirlingAura.js
-var mat4$8, _program$8, _modelMatrix, E_DIVISION, FULL_DISPLAY_ANGLE, DEG_TO_RAD$1, STRIDE, VERTICES_PER_BAND, SwirlingAura;
+var mat4$8, _program$8, _modelMatrix, E_DIVISION, FULL_DISPLAY_ANGLE, DEG_TO_RAD$1, SwirlingAura;
 var init_SwirlingAura = __esmMin((() => {
 	init_SwirlingAura$2();
 	init_SwirlingAura$1();
@@ -258142,8 +258210,6 @@ var init_SwirlingAura = __esmMin((() => {
 	E_DIVISION = 21;
 	FULL_DISPLAY_ANGLE = 315;
 	DEG_TO_RAD$1 = Math.PI / 180;
-	STRIDE = 5;
-	VERTICES_PER_BAND = E_DIVISION * 2;
 	SwirlingAura = class {
 		constructor(position, textureName, tick, sizeType) {
 			this.position = position;
@@ -258175,8 +258241,8 @@ var init_SwirlingAura = __esmMin((() => {
 				height: new Float32Array(E_DIVISION),
 				flag1: new Uint8Array(E_DIVISION)
 			});
-			this.basicAngle = FULL_DISPLAY_ANGLE / (E_DIVISION - 1);
-			this.vertices = new Float32Array(VERTICES_PER_BAND * STRIDE);
+			this.basicAngle = FULL_DISPLAY_ANGLE / 20;
+			this.vertices = /* @__PURE__ */ new Float32Array(210);
 			this.buffers = null;
 			this.indexBuffer = null;
 			this.indexCount = 0;
@@ -258220,7 +258286,7 @@ var init_SwirlingAura = __esmMin((() => {
 				const topX = baseX + Rx * cosAngle;
 				const topY = -Ry;
 				const topZ = baseZ + Rx * sinAngle;
-				const u = k / (E_DIVISION - 1);
+				const u = k / 20;
 				verts[offset++] = baseX;
 				verts[offset++] = 0;
 				verts[offset++] = baseZ;
@@ -258238,7 +258304,7 @@ var init_SwirlingAura = __esmMin((() => {
 		*/
 		generateIndices() {
 			const indices = [];
-			for (let k = 0; k < E_DIVISION - 1; k++) {
+			for (let k = 0; k < 20; k++) {
 				const i0 = k * 2;
 				const i1 = k * 2 + 1;
 				const i2 = k * 2 + 2;
@@ -258312,8 +258378,8 @@ var init_SwirlingAura = __esmMin((() => {
 					self.fillBandMesh(band);
 					gl.bindBuffer(gl.ARRAY_BUFFER, self.buffers[ec]);
 					gl.bufferSubData(gl.ARRAY_BUFFER, 0, self.vertices);
-					gl.vertexAttribPointer(attribute.aPosition, 3, gl.FLOAT, false, STRIDE * 4, 0);
-					gl.vertexAttribPointer(attribute.aTextureCoord, 2, gl.FLOAT, false, STRIDE * 4, 12);
+					gl.vertexAttribPointer(attribute.aPosition, 3, gl.FLOAT, false, 20, 0);
+					gl.vertexAttribPointer(attribute.aTextureCoord, 2, gl.FLOAT, false, 20, 12);
 					gl.uniform4f(uniform.uColor, self.color.r, self.color.g, self.color.b, self.alphaB);
 					gl.uniform1f(uniform.uZIndex, .01 + ec * .001);
 					gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, self.indexBuffer);
@@ -264267,9 +264333,7 @@ var init_EffectTable = __esmMin((() => {
 							return false;
 						}
 						if (time < 400) {
-							const progress = (time - 200) / 200;
-							const startVal = 5 / 255;
-							const val = startVal + (1 - startVal) * progress;
+							const val = 5 / 255 + .9803921568627451 * ((time - 200) / 200);
 							entity._flashColor[0] = val;
 							entity._flashColor[1] = val;
 							entity._flashColor[2] = 1;
@@ -264304,9 +264368,7 @@ var init_EffectTable = __esmMin((() => {
 							return false;
 						}
 						if (time < 400) {
-							const progress = (time - 200) / 200;
-							const startVal = 5 / 255;
-							const val = startVal + (1 - startVal) * progress;
+							const val = 5 / 255 + .9803921568627451 * ((time - 200) / 200);
 							entity._flashColor[0] = val;
 							entity._flashColor[1] = val;
 							entity._flashColor[2] = 1;
@@ -267524,9 +267586,7 @@ var init_EffectTable = __esmMin((() => {
 						return false;
 					}
 					if (time < 400) {
-						const progress = (time - 200) / 200;
-						const startVal = 5 / 255;
-						const val = startVal + (1 - startVal) * progress;
+						const val = 5 / 255 + .9803921568627451 * ((time - 200) / 200);
 						entity._flashColor[0] = val;
 						entity._flashColor[1] = val;
 						entity._flashColor[2] = 1;
@@ -267683,9 +267743,7 @@ var init_EffectTable = __esmMin((() => {
 							return false;
 						}
 						if (tick < 500) {
-							const progress = (tick - 200) / 300;
-							const startVal = 5 / 255;
-							const val = startVal + (1 - startVal) * progress;
+							const val = 5 / 255 + .9803921568627451 * ((tick - 200) / 300);
 							entity._flashColor[0] = 1;
 							entity._flashColor[1] = 1;
 							entity._flashColor[2] = val;
@@ -268866,7 +268924,7 @@ var init_EffectTable = __esmMin((() => {
 				for (let i = 0; i < count; i++) {
 					let delta = 1;
 					if (i <= 15) delta = 12 * (8 / 360);
-					else if (i <= 30) delta = 18 * (8 / 360);
+					else if (i <= 30) delta = .4;
 					else if (i <= 40) delta = 24 * (8 / 360);
 					else delta = 48 * (8 / 360);
 					Events.setTimeout(function() {
@@ -275254,7 +275312,7 @@ var require_lodash = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 				var data = this.__data__;
 				if (data instanceof ListCache) {
 					var pairs = data.__data__;
-					if (!Map || pairs.length < LARGE_ARRAY_SIZE - 1) {
+					if (!Map || pairs.length < 199) {
 						pairs.push([key, value]);
 						this.size = ++data.size;
 						return this;
@@ -278019,9 +278077,7 @@ var require_lodash = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 						case "take":
 							end = nativeMin(end, start + size);
 							break;
-						case "takeRight":
-							start = nativeMax(start, end - size);
-							break;
+						case "takeRight": start = nativeMax(start, end - size);
 					}
 				}
 				return {
@@ -288897,9 +288953,7 @@ var init_wasmoon_lua5_1 = __esmMin((() => {
 				case exports$1.LuaLibraries.Debug:
 					this.luaApi.luaopen_debug(this.address);
 					break;
-				case exports$1.LuaLibraries.Package:
-					this.luaApi.luaopen_package(this.address);
-					break;
+				case exports$1.LuaLibraries.Package: this.luaApi.luaopen_package(this.address);
 			}
 			this.luaApi.lua_setglobal(this.address, library);
 		}
@@ -292803,15 +292857,11 @@ function loadFontFromClient(fontPath) {
 							}  								
 						`;
 			document.head.appendChild(style);
-		}, function(error) {
-			console.warn("[loadFontFromClient] - Failed loading client font:", fontPath, "- Using Arial");
-			document.body.style.fontFamily = "Arial, Helvetica, sans-serif";
-			document.body.style.fontSize = "10px";
+		}, function() {
+			console.warn("[loadFontFromClient] - Failed to load client font:", fontPath);
 		});
-	}, function(error) {
-		console.warn("[loadFontFromClient] - Failed loading client font:", fontPath, "- Using Arial");
-		document.body.style.fontFamily = "Arial, Helvetica, sans-serif";
-		document.body.style.fontSize = "10px";
+	}, function() {
+		console.warn("[loadFontFromClient] - Failed to load client font:", fontPath);
 	});
 }
 function arrayBufferToBase64(buffer) {
@@ -292892,7 +292942,8 @@ function loadCSV(filename, targetTable, keyIndex, valueIndex, onEnd) {
 			const parts = isBase64 ? line.split(",") : line.split("	");
 			if (parts.length <= Math.max(keyIndex, valueIndex)) continue;
 			try {
-				targetTable[index] = isBase64 ? base64DecodeUtf8(parts[valueIndex].trim()) : parts[valueIndex].trim();
+				const value = isBase64 ? base64DecodeUtf8(parts[valueIndex].trim()) : parts[valueIndex].trim();
+				targetTable[index] = value;
 				index++;
 			} catch (e) {
 				console.error("Base64 decode failed on line", i + 1, ":", line, e);
@@ -294489,11 +294540,13 @@ function loadWeaponTable(filename, callback, onEnd) {
 			const buffer = file instanceof ArrayBuffer ? new Uint8Array(file) : file;
 			const ctx = lua.ctx;
 			ctx.AddWeaponName = (weaponID, weaponName) => {
-				WeaponName[weaponID] = weaponName && weaponName.length > 0 ? userStringDecoder.decode(weaponName) : "";
+				const decoded_weaponName = weaponName && weaponName.length > 0 ? userStringDecoder.decode(weaponName) : "";
+				WeaponName[weaponID] = decoded_weaponName;
 				return 1;
 			};
 			ctx.AddWeaponHitSound = (weaponID, soundFile) => {
-				WeaponSound[weaponID] = soundFile && soundFile.length > 0 ? userStringDecoder.decode(soundFile) : "";
+				const decoded_soundFile = soundFile && soundFile.length > 0 ? userStringDecoder.decode(soundFile) : "";
+				WeaponSound[weaponID] = decoded_soundFile;
 				return 1;
 			};
 			ctx.AddExpansionWeapon = (weaponID, expansionWeaponID) => {
@@ -296024,12 +296077,10 @@ var init_DBManager = __esmMin((() => {
 				case "4062_WUG":
 				case "4098_WUG": return "data/sprite/¸ó½ºÅÍ/¿ö±×";
 				case "4257_WUG": return "data/sprite/ÀÌÆÑÆ®/windhawk_wolf";
-				default:
-					if (typeof id === "string") {
-						if (id.includes("_FALCON")) return "data/sprite/ÀÌÆÑÆ®/¸Å";
-						else if (id.includes("_WUG")) return "data/sprite/¸ó½ºÅÍ/¿ö±×";
-					}
-					break;
+				default: if (typeof id === "string") {
+					if (id.includes("_FALCON")) return "data/sprite/ÀÌÆÑÆ®/¸Å";
+					else if (id.includes("_WUG")) return "data/sprite/¸ó½ºÅÍ/¿ö±×";
+				}
 			}
 			return "data/sprite/¸ó½ºÅÍ/" + (MonsterTable_default[id] || MonsterTable_default[1001]).toLowerCase();
 		}
@@ -296155,17 +296206,15 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.GUILLOTINE_CROSS:
 				case JobConst_default.GUILLOTINE_CROSS_H:
 				case JobConst_default.GUILLOTINE_CROSS_B:
-				case JobConst_default.SHADOW_CROSS:
-					switch (DB.getWeaponType(itemID)) {
-						case WeaponType_default.KATAR:
-						case WeaponType_default.SHORTSWORD_SHORTSWORD:
-						case WeaponType_default.SWORD_SWORD:
-						case WeaponType_default.AXE_AXE:
-						case WeaponType_default.SHORTSWORD_SWORD:
-						case WeaponType_default.SHORTSWORD_AXE:
-						case WeaponType_default.SWORD_AXE: return 3;
-					}
-					break;
+				case JobConst_default.SHADOW_CROSS: switch (DB.getWeaponType(itemID)) {
+					case WeaponType_default.KATAR:
+					case WeaponType_default.SHORTSWORD_SHORTSWORD:
+					case WeaponType_default.SWORD_SWORD:
+					case WeaponType_default.AXE_AXE:
+					case WeaponType_default.SHORTSWORD_SWORD:
+					case WeaponType_default.SHORTSWORD_AXE:
+					case WeaponType_default.SWORD_AXE: return 3;
+				}
 			}
 			return 6;
 		}
@@ -296181,9 +296230,7 @@ var init_DBManager = __esmMin((() => {
 						case WeaponType_default.GUN_RIFLE:
 						case WeaponType_default.GUN_GATLING:
 						case WeaponType_default.GUN_SHOTGUN:
-						case WeaponType_default.GUN_GRANADE:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.GUN_GRANADE: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.NINJA:
@@ -296195,9 +296242,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.OBORO_B:
 				case JobConst_default.SHIRANUI:
 					switch (weaponType) {
-						case WeaponType_default.SYURIKEN:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.SYURIKEN: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.GANGSI:
@@ -296225,9 +296270,7 @@ var init_DBManager = __esmMin((() => {
 							if (sex == 1) dualWeapon = true;
 							break;
 						case WeaponType_default.ROD:
-						case WeaponType_default.TWOHANDROD:
-							if (sex == 0) dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDROD: if (sex == 0) dualWeapon = true;
 					}
 					break;
 				case JobConst_default.SWORDMAN:
@@ -296235,9 +296278,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.SWORDMAN_B:
 					switch (weaponType) {
 						case WeaponType_default.TWOHANDSWORD:
-						case WeaponType_default.TWOHANDSPEAR:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDSPEAR: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.ARCHER:
@@ -296245,36 +296286,28 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.ARCHER_B:
 					switch (weaponType) {
 						case WeaponType_default.BOW: break;
-						default:
-							dualWeapon = true;
-							break;
+						default: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.THIEF:
 				case JobConst_default.THIEF_H:
 				case JobConst_default.THIEF_B:
 					switch (weaponType) {
-						case WeaponType_default.BOW:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.BOW: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.MAGICIAN:
 				case JobConst_default.MAGICIAN_H:
 				case JobConst_default.MAGICIAN_B:
 					switch (weaponType) {
-						case WeaponType_default.TWOHANDROD:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDROD: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.MERCHANT:
 				case JobConst_default.MERCHANT_H:
 				case JobConst_default.MERCHANT_B:
 					switch (weaponType) {
-						case WeaponType_default.TWOHANDAXE:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDAXE: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.ACOLYTE:
@@ -296295,22 +296328,18 @@ var init_DBManager = __esmMin((() => {
 								case WeaponType_default.TWOHANDAXE:
 								case WeaponType_default.TWOHANDROD:
 								case WeaponType_default.TWOHANDMACE: break;
-								case WeaponType_default.SHORTSWORD:
-									dualWeapon = true;
-									break;
+								case WeaponType_default.SHORTSWORD: dualWeapon = true;
 							}
 							break;
-						case 1:
-							switch (weaponType) {
-								case WeaponType_default.TWOHANDSWORD:
-								case WeaponType_default.TWOHANDAXE:
-								case WeaponType_default.TWOHANDROD:
-								case WeaponType_default.TWOHANDMACE:
-									dualWeapon = true;
-									break;
-								case WeaponType_default.SHORTSWORD: break;
-							}
-							break;
+						case 1: switch (weaponType) {
+							case WeaponType_default.TWOHANDSWORD:
+							case WeaponType_default.TWOHANDAXE:
+							case WeaponType_default.TWOHANDROD:
+							case WeaponType_default.TWOHANDMACE:
+								dualWeapon = true;
+								break;
+							case WeaponType_default.SHORTSWORD:
+						}
 					}
 					break;
 				case JobConst_default.KNIGHT:
@@ -296332,9 +296361,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.DRAGON_KNIGHT2:
 					switch (weaponType) {
 						case WeaponType_default.TWOHANDSPEAR:
-						case WeaponAction.TWOHANDSWORD:
-							dualWeapon = true;
-							break;
+						case WeaponAction.TWOHANDSWORD: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.PRIEST:
@@ -296345,9 +296372,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.ARCHBISHOP_B:
 				case JobConst_default.CARDINAL:
 					switch (weaponType) {
-						case WeaponType_default.BOOK:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.BOOK: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.WIZARD:
@@ -296362,9 +296387,7 @@ var init_DBManager = __esmMin((() => {
 							if (sex == 1) dualWeapon = true;
 							break;
 						case WeaponType_default.ROD:
-						case WeaponType_default.TWOHANDROD:
-							if (sex == 0) dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDROD: if (sex == 0) dualWeapon = true;
 					}
 					break;
 				case JobConst_default.BLACKSMITH:
@@ -296382,9 +296405,7 @@ var init_DBManager = __esmMin((() => {
 						case WeaponType_default.SWORD:
 						case WeaponType_default.AXE:
 						case WeaponType_default.TWOHANDAXE:
-						case WeaponType_default.MACE:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.MACE: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.ASSASSIN:
@@ -296401,9 +296422,7 @@ var init_DBManager = __esmMin((() => {
 						case WeaponType_default.SHORTSWORD_AXE:
 						case WeaponType_default.SWORD_SWORD:
 						case WeaponType_default.SWORD_AXE:
-						case WeaponType_default.AXE_AXE:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.AXE_AXE: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.HUNTER:
@@ -296418,9 +296437,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.WINDHAWK:
 				case JobConst_default.WINDHAWK2:
 					switch (weaponType) {
-						case WeaponType_default.BOW:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.BOW: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.SAGE:
@@ -296434,9 +296451,7 @@ var init_DBManager = __esmMin((() => {
 						case WeaponType_default.BOOK:
 						case WeaponType_default.ROD:
 						case WeaponType_default.TWOHANDROD:
-						case WeaponType_default.TWOHANDSPEAR:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDSPEAR: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.ALCHEMIST:
@@ -296450,9 +296465,7 @@ var init_DBManager = __esmMin((() => {
 						case WeaponType_default.SWORD:
 						case WeaponType_default.AXE:
 						case WeaponType_default.TWOHANDAXE:
-						case WeaponType_default.MACE:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.MACE: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.CRUSADER:
@@ -296474,9 +296487,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.IMPERIAL_GUARD2:
 					switch (weaponType) {
 						case WeaponType_default.SPEAR:
-						case WeaponType_default.TWOHANDSPEAR:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.TWOHANDSPEAR: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.MONK:
@@ -296488,9 +296499,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.INQUISITOR:
 					switch (weaponType) {
 						case WeaponType_default.KNUKLE:
-						case WeaponType_default.NONE:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.NONE: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.ROGUE:
@@ -296501,9 +296510,7 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.SHADOW_CHASER_B:
 				case JobConst_default.ABYSS_CHASER:
 					switch (weaponType) {
-						case WeaponType_default.BOW:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.BOW: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.BARD:
@@ -296521,14 +296528,12 @@ var init_DBManager = __esmMin((() => {
 				case JobConst_default.WANDERER_B:
 				case JobConst_default.TROUVERE:
 					switch (weaponType) {
-						case WeaponType_default.BOW:
-							dualWeapon = true;
-							break;
+						case WeaponType_default.BOW: dualWeapon = true;
 					}
 					break;
 				case JobConst_default.DO_SUMMONER1:
 				case JobConst_default.DO_SUMMONER_B1:
-				case JobConst_default.SPIRIT_HANDLER: break;
+				case JobConst_default.SPIRIT_HANDLER:
 			}
 			return dualWeapon;
 		}
@@ -296762,14 +296767,16 @@ var init_DBManager = __esmMin((() => {
 		* @param {number} weapon id
 		*/
 		static getWeaponSound(id) {
-			return WeaponSound$1[DB.getWeaponType(id, true)];
+			const type = DB.getWeaponType(id, true);
+			return WeaponSound$1[type];
 		}
 		/**
 		* @return {string} Path to eapon sound
 		* @param {number} weapon id
 		*/
 		static getWeaponHitSound(id) {
-			const hitSound = WeaponSound[DB.getWeaponType(id, true, true)];
+			const type = DB.getWeaponType(id, true, true);
+			const hitSound = WeaponSound[type];
 			if (Array.isArray(hitSound)) return hitSound[Math.floor(Math.random() * hitSound.length)];
 			return hitSound;
 		}
@@ -296831,9 +296838,7 @@ var init_DBManager = __esmMin((() => {
 				case 12:
 					weapon = WeaponType_default.AXE_AXE;
 					break;
-				default:
-					weapon = viewId;
-					break;
+				default: weapon = viewId;
 			}
 			return weapon;
 		}
@@ -296926,9 +296931,7 @@ var init_DBManager = __esmMin((() => {
 							case 4:
 								elem = MsgStringTable[453];
 								break;
-							default:
-								elem = MsgStringTable[450];
-								break;
+							default: elem = MsgStringTable[450];
 						}
 						const GID = (item.slot.card4 << 16) + item.slot.card3;
 						name = "<font color=\"red\" class=\"owner-" + GID + "\">Unknown</font>";
@@ -296991,7 +296994,6 @@ var init_DBManager = __esmMin((() => {
 					case 1:
 						showslots = false;
 						str = DB.getMessage(756) + " " + str;
-						break;
 				}
 			}
 			if (showprefix && showItemPrefix) str += prefix;
@@ -298188,10 +298190,7 @@ var init_PetInformations = __esmMin((() => {
 				case "release":
 					PetInformations.reqBackToEgg();
 					break;
-				case "unequip":
-					PetInformations.reqUnEquipPet();
-					break;
-				default:
+				case "unequip": PetInformations.reqUnEquipPet();
 			}
 			this.value = "default";
 		});
@@ -298229,12 +298228,10 @@ var init_PetInformations = __esmMin((() => {
 	*/
 	PetInformations.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				if (this._host.style.display === "none") {
-					this._host.style.display = "";
-					this.focus();
-				} else this._host.style.display = "none";
-				break;
+			case "TOGGLE": if (this._host.style.display === "none") {
+				this._host.style.display = "";
+				this.focus();
+			} else this._host.style.display = "none";
 		}
 	};
 	/**
@@ -298827,9 +298824,7 @@ var init_EntityControl = __esmMin((() => {
 				case Entity.TYPE_WARP:
 					Cursor.setType(Cursor.ACTION.WARP);
 					return;
-				case Entity.TYPE_ITEM:
-					Cursor.setType(Cursor.ACTION.PICK, true, 0);
-					break;
+				case Entity.TYPE_ITEM: Cursor.setType(Cursor.ACTION.PICK, true, 0);
 			}
 			switch (this.display.load) {
 				case this.display.TYPE.NONE: {
@@ -298846,7 +298841,6 @@ var init_EntityControl = __esmMin((() => {
 					mat4$1.multiply(_matrix, Camera.projection, this.matrix);
 					this.display.render(_matrix);
 					this.display.add();
-					break;
 			}
 		}
 		/**
@@ -299130,21 +299124,19 @@ var init_EntityControl = __esmMin((() => {
 						});
 					}
 					break;
-				case Entity.TYPE_MERC:
-					if (SessionStorage_default.mercId === this.GID) {
-						ContextMenu_default.remove();
-						ContextMenu_default.append();
-						ContextMenu_default.addElement("View Status", () => {
-							MercenaryInformations_default.ui.toggle();
-						});
-						if (localStorage.getItem("MER_AGGRESSIVE") == 0) ContextMenu_default.addElement("Assist", () => {
-							MercenaryInformations_default.toggleAggressive();
-						});
-						else ContextMenu_default.addElement("Stand By", () => {
-							MercenaryInformations_default.toggleAggressive();
-						});
-					}
-					break;
+				case Entity.TYPE_MERC: if (SessionStorage_default.mercId === this.GID) {
+					ContextMenu_default.remove();
+					ContextMenu_default.append();
+					ContextMenu_default.addElement("View Status", () => {
+						MercenaryInformations_default.ui.toggle();
+					});
+					if (localStorage.getItem("MER_AGGRESSIVE") == 0) ContextMenu_default.addElement("Assist", () => {
+						MercenaryInformations_default.toggleAggressive();
+					});
+					else ContextMenu_default.addElement("Stand By", () => {
+						MercenaryInformations_default.toggleAggressive();
+					});
+				}
 			}
 			return false;
 		}
@@ -299345,7 +299337,6 @@ function Init$10() {
 		case Entity.TYPE_FALCON:
 			this.ACTION.IDLE = 0;
 			this.ACTION.WALK = 1;
-			break;
 	}
 }
 var init_EntityAction = __esmMin((() => {
@@ -299418,9 +299409,9 @@ var init_EntityCast = __esmMin((() => {
 			ctx.fillStyle = "#10189c";
 			ctx.fillRect(0, 0, width, height);
 			ctx.fillStyle = "#424242";
-			ctx.fillRect(1, 1, width - 2, 4);
+			ctx.fillRect(1, 1, 58, 4);
 			ctx.fillStyle = this.color;
-			ctx.fillRect(1, 1, Math.round((width - 2) * perc), 4);
+			ctx.fillRect(1, 1, Math.round(58 * perc), 4);
 		}
 		/**
 		* Rendering cast
@@ -299532,29 +299523,29 @@ var init_EntityLife = __esmMin((() => {
 			ctx.fillStyle = "#10189c";
 			ctx.fillRect(0, 0, width, height);
 			ctx.fillStyle = "#424242";
-			ctx.fillRect(1, 1, width - 2, height - 2);
+			ctx.fillRect(1, 1, 58, height - 2);
 			this.canvas.style.zIndex = this.entity.objecttype === Entity.TYPE_PC ? 2 : 1;
 			if (this.entity.objecttype === Entity.TYPE_MOB || this.entity.objecttype === Entity.TYPE_NPC_ABR || this.entity.objecttype === Entity.TYPE_NPC_BIONIC) ctx.fillStyle = hp_per < .25 ? "#FFFF00" : "#FF00E7";
 			else if (this.entity.objecttype === Entity.TYPE_PET) ctx.fillStyle = hp_per < .25 ? "#FFFF00" : "#FFE7E7";
 			else ctx.fillStyle = hp_per < .25 ? "#FF0000" : "#10ef21";
-			ctx.fillRect(1, 1, Math.round((width - 2) * hp_per), 3);
+			ctx.fillRect(1, 1, Math.round(58 * hp_per), 3);
 			if (sp) {
 				ctx.fillStyle = "#10189c";
 				ctx.fillRect(0, 4, width, 1);
 				ctx.fillStyle = "#1863de";
-				ctx.fillRect(1, 5, Math.round((width - 2) * sp_per), 3);
+				ctx.fillRect(1, 5, Math.round(58 * sp_per), 3);
 			}
 			if (ap) {
 				ctx.fillStyle = "#424242";
 				ctx.fillRect(1, 9, width, 1);
 				ctx.fillStyle = "#ffc663";
-				ctx.fillRect(1, 9, Math.round((width - 2) * ap_per), 3);
+				ctx.fillRect(1, 9, Math.round(58 * ap_per), 3);
 			}
 			if (hunger) {
 				ctx.fillStyle = "#424242";
 				ctx.fillRect(1, 9, width, 1);
 				ctx.fillStyle = hunger_per < .25 ? "#FFFF00" : "#FFE7E7";
-				ctx.fillRect(1, 9, Math.round((width - 2) * hunger_per), 3);
+				ctx.fillRect(1, 9, Math.round(58 * hunger_per), 3);
 			}
 		}
 		/**
@@ -299737,9 +299728,7 @@ var init_EntityDisplay = __esmMin((() => {
 				case this.STYLE.ITEM:
 					color = "#FFEF94";
 					break;
-				case this.STYLE.ADMIN:
-					color = "#ffff00";
-					break;
+				case this.STYLE.ADMIN: color = "#ffff00";
 			}
 			ctx.font = (Map_default.showname ? "bold " : "") + fontSize + "px Arial";
 			ctx.textBaseline = "top";
@@ -300733,9 +300722,7 @@ function UpdateBody(job) {
 			case DB.isBionic(job):
 				objecttype = Entity.TYPE_NPC_BIONIC;
 				break;
-			default:
-				objecttype = Entity.TYPE_UNKNOWN;
-				break;
+			default: objecttype = Entity.TYPE_UNKNOWN;
 		}
 		if (objecttype !== this.objecttype) {
 			this.objecttype = objecttype;
@@ -300888,9 +300875,7 @@ function getBodyVal() {
 		case JobConst_default.TROUVERE_B:
 		case JobConst_default.WANDERER:
 		case JobConst_default.WANDERER_H:
-		case JobConst_default.WANDERER_B:
-			job = JobConst_default.WANDERER_2ND;
-			break;
+		case JobConst_default.WANDERER_B: job = JobConst_default.WANDERER_2ND;
 	}
 	return job || this._job;
 }
@@ -301001,9 +300986,7 @@ function UpdateGeneric(type, func, fallback) {
 			case "robe":
 				path = DB[func](val, this.job, this._sex);
 				break;
-			default:
-				path = DB[func](val, this._sex);
-				break;
+			default: path = DB[func](val, this._sex);
 		}
 		if (!path) {
 			this.files[type].spr = null;
@@ -301540,25 +301523,23 @@ function entitiesWalkProcess() {
 	const ownerCellX = this.position[0];
 	const ownerCellY = this.position[1];
 	if (this.falcon && !this.falcon.isAttacking && (!this.falcon.walk.lastWalkTick || this.falcon.walk.lastWalkTick + 1e3 < Date.now())) {
-		const range = 2;
-		if (Math.floor(this.distance(this, this.falcon)) < range) return;
+		if (Math.floor(this.distance(this, this.falcon)) < 2) return;
 		if (this.falcon._followTargetX !== ownerCellX || this.falcon._followTargetY !== ownerCellY) {
 			this.falcon.walk.speed = Math.max(this.walk.speed - 50, 1);
 			this.falcon._followTargetX = ownerCellX;
 			this.falcon._followTargetY = ownerCellY;
 			this.falcon.walk.lastWalkTick = Date.now();
-			this.falcon.walkToNonWalkableGround(this.falcon.position[0], this.falcon.position[1], ownerCellX, ownerCellY, range - 1, false, false, Date.now());
+			this.falcon.walkToNonWalkableGround(this.falcon.position[0], this.falcon.position[1], ownerCellX, ownerCellY, 1, false, false, Date.now());
 		}
 	}
 	if (this.wug && !this.wug.isAttacking && (!this.wug.walk.lastWalkTick || this.wug.walk.lastWalkTick + 1e3 < Date.now())) {
-		const range = 4;
-		if (Math.floor(this.distance(this, this.wug)) < range) return;
+		if (Math.floor(this.distance(this, this.wug)) < 4) return;
 		if (this.wug._followTargetX !== ownerCellX || this.wug._followTargetY !== ownerCellY) {
 			this.wug.walk.speed = Math.max(this.walk.speed - 50, 1);
 			this.wug._followTargetX = ownerCellX;
 			this.wug._followTargetY = ownerCellY;
 			this.wug.walk.lastWalkTick = Date.now();
-			this.wug.walkToNonWalkableGround(this.wug.position[0], this.wug.position[1], ownerCellX, ownerCellY, range - 1, false, false, Date.now());
+			this.wug.walkToNonWalkableGround(this.wug.position[0], this.wug.position[1], ownerCellX, ownerCellY, 3, false, false, Date.now());
 		}
 	}
 }
@@ -301962,7 +301943,7 @@ var init_EntityRender = __esmMin((() => {
 	init_DBManager();
 	init_Graphics();
 	init_GR2ModelRenderer();
-	WALK_DIST_TO_MOTION = 4.6 * .37 * 4 * 25;
+	WALK_DIST_TO_MOTION = 170.2;
 	renderGUI = (function renderGUIClosure() {
 		const mat4 = gl_matrix_default.mat4;
 		const vec4 = gl_matrix_default.vec4;
@@ -302102,9 +302083,7 @@ var init_EntityRender = __esmMin((() => {
 						const RIDING_STATUS = self.effectState & (StatusState_default.EffectState.RIDING | StatusState_default.EffectState.DRAGON1 | StatusState_default.EffectState.DRAGON2 | StatusState_default.EffectState.DRAGON3 | StatusState_default.EffectState.DRAGON4 | StatusState_default.EffectState.DRAGON5 | StatusState_default.EffectState.WUGRIDER) || self.allRidingState;
 						function robeCorrection(lookingFront) {
 							if (self.robe > 0 && self.robeHeight && self.bodyHeight) {
-								const HEAD_SIZE = 64;
-								const COMPENSATION = 25;
-								if (self.robeHeight + (self.action === self.ACTION.SIT ? 0 : RIDING_STATUS && lookingFront ? COMPENSATION * 2 : COMPENSATION) > self.bodyHeight + HEAD_SIZE) {
+								if (self.robeHeight + (self.action === self.ACTION.SIT ? 0 : RIDING_STATUS && lookingFront ? 50 : 25) > self.bodyHeight + 64) {
 									if (self.action === self.ACTION.SIT) return lookingFront ? -450 : RIDING_STATUS ? 1 : -100;
 									return lookingFront ? -300 : RIDING_STATUS ? 100 : 1;
 								}
@@ -302198,7 +302177,6 @@ var init_EntityRender = __esmMin((() => {
 					SpriteRenderer.runWithDepth(true, false, false, function() {
 						renderElement(self, self.files.body, "body", _position, true);
 					});
-					break;
 			}
 			SpriteRenderer.zIndex = 1;
 		};
@@ -302255,7 +302233,6 @@ var init_EntityRender = __esmMin((() => {
 				case 7:
 					_position[0] = -30;
 					_position[1] = -10;
-					break;
 			}
 			if (type !== "shadow" && entity.getOpt3(StatusState_default.Status.BERSERK) || entity.getOpt3(StatusState_default.Status.MARIONETTE)) isBlendModeOne = true;
 			const isBUNSIN = entity.getOpt3(StatusState_default.Status.NJ_BUNSINJYUTSU);
@@ -302446,9 +302423,7 @@ var init_EntityRoom = __esmMin((() => {
 					case Room.Type.BUY_SHOP:
 						filename = "shop";
 						break;
-					case Room.Type.PRIVATE_CHAT:
-						filename = "chat_close";
-						break;
+					case Room.Type.PRIVATE_CHAT: filename = "chat_close";
 				}
 				self.type = type;
 				self.id = id;
@@ -302624,9 +302599,7 @@ function updateBodyState(value) {
 			SoundManager.playPosition("_stone_explosion.wav", this.position);
 			this.animation.play = true;
 			break;
-		case StatusState_default.BodyState.STUN:
-			this.attachments.remove("status-stun");
-			break;
+		case StatusState_default.BodyState.STUN: this.attachments.remove("status-stun");
 	}
 	switch (value) {
 		case StatusState_default.BodyState.STONE:
@@ -302676,7 +302649,6 @@ function updateBodyState(value) {
 				file: "status-stun",
 				head: true
 			});
-			break;
 	}
 	this._bodyState = value;
 	recalculateBlendingColor.call(this);
@@ -303641,9 +303613,7 @@ var init_Entity$1 = __esmMin((() => {
 				case "hideShadow":
 					this.hideShadow = unit.hideShadow;
 					break;
-				default:
-					if (Entity.prototype.hasOwnProperty(keys[i]) || Entity.prototype.hasOwnProperty(`_${keys[i]}`)) this[keys[i]] = unit[keys[i]];
-					break;
+				default: if (Entity.prototype.hasOwnProperty(keys[i]) || Entity.prototype.hasOwnProperty(`_${keys[i]}`)) this[keys[i]] = unit[keys[i]];
 			}
 			if (this.life.hp > -1 && this.life.hp_max > -1) {
 				this.life.update();
@@ -303707,7 +303677,6 @@ var init_Entity$1 = __esmMin((() => {
 					this.clean();
 					this.remove_tick = Date.now();
 					this.remove_delay = 0;
-					break;
 			}
 		}
 		/**
@@ -304615,8 +304584,6 @@ var init_CursorManager = __esmMin((() => {
 						if (!Controls_default.itemsnap) break;
 						x += Math.floor(Mouse.screen.x - (entity.boundingRect.x1 + (entity.boundingRect.x2 - entity.boundingRect.x1) / 2));
 						y += Math.floor(Mouse.screen.y - (entity.boundingRect.y1 + (entity.boundingRect.y2 - entity.boundingRect.y1) / 2));
-						break;
-					default: break;
 				}
 			}
 			if (animation.compiledStyleIndex !== _lastStyleId || x !== _lastX || y !== _lastY) {
@@ -304936,7 +304903,10 @@ var init_Scrollbar = __esmMin((() => {
 			let startY = 0;
 			let startThumbY = 0;
 			/**
-			* Update thumb position relative to scroll position
+			* Update thumb position relative to scroll position.
+			* Reads scrollTop/scrollHeight/clientHeight and writes only the thumb,
+			* wrapper and paddingRight styles — it never writes element.scrollTop,
+			* so a 'scroll' listener calling this cannot trigger a re-entrant scroll.
 			*/
 			const updateThumb = () => {
 				const h = element.clientHeight;
@@ -304978,6 +304948,9 @@ var init_Scrollbar = __esmMin((() => {
 				}, 300);
 			};
 			element._roScrollbarRestart();
+			if (element._roScrollHandler) element.removeEventListener("scroll", element._roScrollHandler);
+			element._roScrollHandler = updateThumb;
+			element.addEventListener("scroll", updateThumb);
 			element.addEventListener("wheel", (e) => {
 				const h = element.clientHeight;
 				if (element.scrollHeight <= h) return;
@@ -307677,9 +307650,7 @@ var init_MobileUI = __esmMin((() => {
 			case "AT":
 				toggleAutoTargeting();
 				break;
-			case "ATK":
-				attackTargeted();
-				break;
+			case "ATK": attackTargeted();
 		}
 	};
 	/**
@@ -307944,9 +307915,7 @@ var init_html2canvas = __esmMin((() => {
 					case "medium":
 						val = "0px";
 						break;
-					case "thick":
-						val = "5px";
-						break;
+					case "thick": val = "5px";
 				}
 			}
 			return val;
@@ -308043,7 +308012,6 @@ var init_html2canvas = __esmMin((() => {
 								case "left":
 									gradient.x0 = 0;
 									gradient.x1 = bounds.width;
-									break;
 							}
 						}
 						if (gradient.x0 === null && gradient.x1 === null) gradient.x0 = gradient.x1 = bounds.width / 2;
@@ -308178,14 +308146,12 @@ var init_html2canvas = __esmMin((() => {
 								}
 								break;
 							case "closest-side":
-							case "contain":
-								if (m2[0] === "circle") gradient.rx = gradient.ry = Math.min(gradient.cx, gradient.cy, gradient.x1 - gradient.cx, gradient.y1 - gradient.cy);
-								else {
-									gradient.type = m2[0];
-									gradient.rx = Math.min(gradient.cx, gradient.x1 - gradient.cx);
-									gradient.ry = Math.min(gradient.cy, gradient.y1 - gradient.cy);
-								}
-								break;
+							case "contain": if (m2[0] === "circle") gradient.rx = gradient.ry = Math.min(gradient.cx, gradient.cy, gradient.x1 - gradient.cx, gradient.y1 - gradient.cy);
+							else {
+								gradient.type = m2[0];
+								gradient.rx = Math.min(gradient.cx, gradient.x1 - gradient.cx);
+								gradient.ry = Math.min(gradient.cy, gradient.y1 - gradient.cy);
+							}
 						}
 						m2 = m1[5].match(/((?:rgb|rgba)\(\d{1,3},\s\d{1,3},\s\d{1,3}(?:,\s[0-9\.]+)?\)(?:\s\d{1,3}(?:%|px))?)+/g);
 						if (m2) {
@@ -308204,7 +308170,6 @@ var init_html2canvas = __esmMin((() => {
 								});
 							}
 						}
-						break;
 				}
 				return gradient;
 			};
@@ -308462,9 +308427,7 @@ var init_html2canvas = __esmMin((() => {
 						case 401:
 							bold = "bold";
 							break;
-						case 400:
-							bold = "normal";
-							break;
+						case 400: bold = "normal";
 					}
 					ctx.setVariable("fillStyle", color);
 					ctx.setVariable("font", font_style + " " + font_variant + " " + bold + " " + size + " " + family);
@@ -308504,9 +308467,7 @@ var init_html2canvas = __esmMin((() => {
 							case "overline":
 								renderRect(ctx, bounds.left, bounds.top, bounds.width, 1, color);
 								break;
-							case "line-through":
-								renderRect(ctx, bounds.left, Math.ceil(bounds.top + metrics.middle + metrics.lineWidth), bounds.width, 1, color);
-								break;
+							case "line-through": renderRect(ctx, bounds.left, Math.ceil(bounds.top + metrics.middle + metrics.lineWidth), bounds.width, 1, color);
 						}
 						textOffset += renderList[c].length;
 					}
@@ -308552,9 +308513,7 @@ var init_html2canvas = __esmMin((() => {
 						case "lower-alpha":
 							text = _html2canvas.Generate.ListAlpha(currentIndex).toLowerCase();
 							break;
-						case "upper-alpha":
-							text = _html2canvas.Generate.ListAlpha(currentIndex);
-							break;
+						case "upper-alpha": text = _html2canvas.Generate.ListAlpha(currentIndex);
 					}
 					text += ". ";
 					listBounds = listPosition(element, text);
@@ -308562,9 +308521,7 @@ var init_html2canvas = __esmMin((() => {
 						case 401:
 							bold = "bold";
 							break;
-						case 400:
-							bold = "normal";
-							break;
+						case 400: bold = "normal";
 					}
 					ctx.setVariable("fillStyle", getCSS(element, "color"));
 					ctx.setVariable("font", getCSS(element, "fontVariant") + " " + bold + " " + getCSS(element, "fontStyle") + " " + getCSS(element, "fontSize") + " " + getCSS(element, "fontFamily"));
@@ -308733,7 +308690,6 @@ var init_html2canvas = __esmMin((() => {
 									bx,
 									by + bh + borders[2].width
 								];
-								break;
 						}
 						borderBounds = {
 							left: bx,
@@ -308875,7 +308831,6 @@ var init_html2canvas = __esmMin((() => {
 								if (add > 0) bgp.top += add;
 								bgy = Math.floor(bgy + image.height) - add;
 							}
-							break;
 					}
 					else h2clog("html2canvas: Error loading background:" + background_image);
 				}
@@ -308944,7 +308899,6 @@ var init_html2canvas = __esmMin((() => {
 						paddingRight = getCSSInt(el, "paddingRight");
 						paddingBottom = getCSSInt(el, "paddingBottom");
 						renderImage(ctx, el, 0, 0, el.width, el.height, x + paddingLeft + borders[3].width, y + paddingTop + borders[0].width, bounds.width - (borders[1].width + borders[3].width + paddingLeft + paddingRight), bounds.height - (borders[0].width + borders[2].width + paddingTop + paddingBottom));
-						break;
 				}
 				return zindex.children[stackLength - 1];
 			}
@@ -309415,38 +309369,35 @@ var init_html2canvas = __esmMin((() => {
 							case "variable":
 								ctx[renderItem.name] = renderItem["arguments"];
 								break;
-							case "function":
-								if (renderItem.name === "fillRect") {
-									if (!usingFlashcanvas || renderItem["arguments"][0] + renderItem["arguments"][2] < flashMaxSize && renderItem["arguments"][1] + renderItem["arguments"][3] < flashMaxSize) ctx.fillRect.apply(ctx, renderItem["arguments"]);
-								} else if (renderItem.name === "drawShape") (function(args) {
-									let i, len = args.length;
-									ctx.beginPath();
-									for (i = 0; i < len; i++) ctx[args[i].name].apply(ctx, args[i]["arguments"]);
-									ctx.closePath();
-									ctx.fill();
-								})(renderItem["arguments"]);
-								else if (renderItem.name === "fillText") {
-									if (!usingFlashcanvas || renderItem["arguments"][1] < flashMaxSize && renderItem["arguments"][2] < flashMaxSize) ctx.fillText.apply(ctx, renderItem["arguments"]);
-								} else if (renderItem.name === "drawImage") {
-									if (renderItem["arguments"][8] > 0 && renderItem["arguments"][7]) {
-										if (hasCTX && options.taintTest) {
-											if (safeImages.indexOf(renderItem["arguments"][0].src) === -1) {
-												testctx.drawImage(renderItem["arguments"][0], 0, 0);
-												try {
-													testctx.getImageData(0, 0, 1, 1);
-												} catch (e) {
-													testCanvas = doc.createElement("canvas");
-													testctx = testCanvas.getContext("2d");
-													continue;
-												}
-												safeImages.push(renderItem["arguments"][0].src);
+							case "function": if (renderItem.name === "fillRect") {
+								if (!usingFlashcanvas || renderItem["arguments"][0] + renderItem["arguments"][2] < flashMaxSize && renderItem["arguments"][1] + renderItem["arguments"][3] < flashMaxSize) ctx.fillRect.apply(ctx, renderItem["arguments"]);
+							} else if (renderItem.name === "drawShape") (function(args) {
+								let i, len = args.length;
+								ctx.beginPath();
+								for (i = 0; i < len; i++) ctx[args[i].name].apply(ctx, args[i]["arguments"]);
+								ctx.closePath();
+								ctx.fill();
+							})(renderItem["arguments"]);
+							else if (renderItem.name === "fillText") {
+								if (!usingFlashcanvas || renderItem["arguments"][1] < flashMaxSize && renderItem["arguments"][2] < flashMaxSize) ctx.fillText.apply(ctx, renderItem["arguments"]);
+							} else if (renderItem.name === "drawImage") {
+								if (renderItem["arguments"][8] > 0 && renderItem["arguments"][7]) {
+									if (hasCTX && options.taintTest) {
+										if (safeImages.indexOf(renderItem["arguments"][0].src) === -1) {
+											testctx.drawImage(renderItem["arguments"][0], 0, 0);
+											try {
+												testctx.getImageData(0, 0, 1, 1);
+											} catch (e) {
+												testCanvas = doc.createElement("canvas");
+												testctx = testCanvas.getContext("2d");
+												continue;
 											}
+											safeImages.push(renderItem["arguments"][0].src);
 										}
-										ctx.drawImage.apply(ctx, renderItem["arguments"]);
 									}
+									ctx.drawImage.apply(ctx, renderItem["arguments"]);
 								}
-								break;
-							default:
+							}
 						}
 					}
 					if (storageContext.clip) ctx.restore();
@@ -309489,55 +309440,52 @@ var init_html2canvas = __esmMin((() => {
 							case "variable":
 								settings[renderItem.name] = renderItem["arguments"];
 								break;
-							case "function":
-								if (renderItem.name === "fillRect") {
-									el = doc.createElementNS(svgNS, "rect");
-									el.setAttribute("x", renderItem["arguments"][0]);
-									el.setAttribute("y", renderItem["arguments"][1]);
-									el.setAttribute("width", renderItem["arguments"][2]);
-									el.setAttribute("height", renderItem["arguments"][3]);
-									el.setAttribute("fill", settings.fillStyle);
-									svg.appendChild(el);
-								} else if (renderItem.name === "fillText") {
-									el = doc.createElementNS(svgNS, "text");
-									fontStyle = settings.font.split(" ");
-									el.style.fontVariant = fontStyle.splice(0, 1)[0];
-									el.style.fontWeight = fontStyle.splice(0, 1)[0];
-									el.style.fontStyle = fontStyle.splice(0, 1)[0];
-									el.style.fontSize = fontStyle.splice(0, 1)[0];
-									el.setAttribute("x", renderItem["arguments"][1]);
-									el.setAttribute("y", renderItem["arguments"][2] - (parseInt(el.style.fontSize, 10) + 3));
-									el.setAttribute("fill", settings.fillStyle);
-									el.style.dominantBaseline = "text-before-edge";
-									el.style.fontFamily = fontStyle.join(" ");
-									text = doc.createTextNode(renderItem["arguments"][0]);
+							case "function": if (renderItem.name === "fillRect") {
+								el = doc.createElementNS(svgNS, "rect");
+								el.setAttribute("x", renderItem["arguments"][0]);
+								el.setAttribute("y", renderItem["arguments"][1]);
+								el.setAttribute("width", renderItem["arguments"][2]);
+								el.setAttribute("height", renderItem["arguments"][3]);
+								el.setAttribute("fill", settings.fillStyle);
+								svg.appendChild(el);
+							} else if (renderItem.name === "fillText") {
+								el = doc.createElementNS(svgNS, "text");
+								fontStyle = settings.font.split(" ");
+								el.style.fontVariant = fontStyle.splice(0, 1)[0];
+								el.style.fontWeight = fontStyle.splice(0, 1)[0];
+								el.style.fontStyle = fontStyle.splice(0, 1)[0];
+								el.style.fontSize = fontStyle.splice(0, 1)[0];
+								el.setAttribute("x", renderItem["arguments"][1]);
+								el.setAttribute("y", renderItem["arguments"][2] - (parseInt(el.style.fontSize, 10) + 3));
+								el.setAttribute("fill", settings.fillStyle);
+								el.style.dominantBaseline = "text-before-edge";
+								el.style.fontFamily = fontStyle.join(" ");
+								text = doc.createTextNode(renderItem["arguments"][0]);
+								el.appendChild(text);
+								svg.appendChild(el);
+							} else if (renderItem.name === "drawImage") {
+								if (renderItem["arguments"][8] > 0 && renderItem["arguments"][7]) {
+									el = doc.createElementNS(svgNS, "clipPath");
+									el.setAttribute("id", "clipId" + clipId);
+									text = doc.createElementNS(svgNS, "rect");
+									text.setAttribute("x", renderItem["arguments"][5]);
+									text.setAttribute("y", renderItem["arguments"][6]);
+									text.setAttribute("width", renderItem["arguments"][3]);
+									text.setAttribute("height", renderItem["arguments"][4]);
 									el.appendChild(text);
+									defs.appendChild(el);
+									el = doc.createElementNS(svgNS, "image");
+									el.setAttributeNS(xlinkNS, "xlink:href", renderItem["arguments"][0].src);
+									el.setAttribute("width", renderItem["arguments"][7]);
+									el.setAttribute("height", renderItem["arguments"][8]);
+									el.setAttribute("x", renderItem["arguments"][5]);
+									el.setAttribute("y", renderItem["arguments"][6]);
+									el.setAttribute("clip-path", "url(#clipId" + clipId + ")");
+									el.setAttribute("preserveAspectRatio", "none");
 									svg.appendChild(el);
-								} else if (renderItem.name === "drawImage") {
-									if (renderItem["arguments"][8] > 0 && renderItem["arguments"][7]) {
-										el = doc.createElementNS(svgNS, "clipPath");
-										el.setAttribute("id", "clipId" + clipId);
-										text = doc.createElementNS(svgNS, "rect");
-										text.setAttribute("x", renderItem["arguments"][5]);
-										text.setAttribute("y", renderItem["arguments"][6]);
-										text.setAttribute("width", renderItem["arguments"][3]);
-										text.setAttribute("height", renderItem["arguments"][4]);
-										el.appendChild(text);
-										defs.appendChild(el);
-										el = doc.createElementNS(svgNS, "image");
-										el.setAttributeNS(xlinkNS, "xlink:href", renderItem["arguments"][0].src);
-										el.setAttribute("width", renderItem["arguments"][7]);
-										el.setAttribute("height", renderItem["arguments"][8]);
-										el.setAttribute("x", renderItem["arguments"][5]);
-										el.setAttribute("y", renderItem["arguments"][6]);
-										el.setAttribute("clip-path", "url(#clipId" + clipId + ")");
-										el.setAttribute("preserveAspectRatio", "none");
-										svg.appendChild(el);
-										clipId += 1;
-									}
+									clipId += 1;
 								}
-								break;
-							default:
+							}
 						}
 					}
 				}
@@ -309682,7 +309630,6 @@ function onMouseDown(event) {
 				Cursor.setType(Cursor.ACTION.ROTATE);
 				Camera.rotate(true);
 			}
-			break;
 	}
 }
 /**
@@ -309716,7 +309663,6 @@ function onMouseUp(event) {
 				entity = EntityManager.getOverEntity();
 				if (entity && entity !== SessionStorage_default.Entity) entity.onContextMenu();
 			}
-			break;
 	}
 }
 /**
@@ -310369,7 +310315,6 @@ var init_Vending = __esmMin((() => {
 				root.querySelector(".zenySpan").textContent = prettyZeny$3(SessionStorage_default.zeny);
 				root.querySelector(".weightSpan").textContent = `${BasicInfoController.getUI().weight}/${BasicInfoController.getUI().weight_max}`;
 				root.querySelector(".limitZeny").value = "0";
-				break;
 		}
 		_type$3 = type;
 	};
@@ -311791,12 +311736,10 @@ var init_Emoticons = __esmMin((() => {
 	*/
 	Emoticons.onShortCut = function onShortCut(key) {
 		switch (key.cmd) {
-			case "TOGGLE":
-				if (this._host.style.display === "none") {
-					this.ui.show();
-					this.focus();
-				} else this._host.style.display = "none";
-				break;
+			case "TOGGLE": if (this._host.style.display === "none") {
+				this.ui.show();
+				this.focus();
+			} else this._host.style.display = "none";
 		}
 	};
 	Emoticons.mouseMode = GUIComponent.MouseMode.STOP;
@@ -312076,9 +312019,7 @@ var init_ShortCuts = __esmMin((() => {
 			case "EXECUTE_FLAG_8":
 				executeFlag(8);
 				break;
-			case "EXECUTE_FLAG_9":
-				executeFlag(9);
-				break;
+			case "EXECUTE_FLAG_9": executeFlag(9);
 		}
 	};
 	/**
@@ -312428,7 +312369,6 @@ function onClickPagination(target) {
 			CashShop.currentPage = CashShop.totalPage;
 			CashShop.pageOffset = (CashShop.currentPage - 1) * CashShop.pageLimit;
 			CashShop.isLastPage = true;
-			break;
 	}
 	CashShop.paginationOffsetLimit();
 	const arrowsL = CashShop.isFirstPage ? "off" : "on";
@@ -313080,7 +313020,6 @@ var init_CashShop$1 = __esmMin((() => {
 				default:
 					UIManager.showMessageBox("Something went wrong while using cashshop!", "ok");
 					ChatBox_default.addText("Something went wrong while using cashshop!", ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-					break;
 			}
 		}
 	};
@@ -313489,7 +313428,6 @@ function onItemReformResult(pkt) {
 			onRequestReformClose();
 			break;
 		}
-		default: break;
 	}
 }
 /**
@@ -313863,12 +313801,7 @@ function onAddMaterialItem$1(item, inventory_count, source_needcount, source_ico
 */
 function onLaphineSysResult(pkt) {
 	if (pkt) switch (pkt.result) {
-		case 0:
-			onRequestLaphineClose();
-			break;
-		case 5:
-		case 7: break;
-		default: break;
+		case 0: onRequestLaphineClose();
 	}
 }
 /**
@@ -314489,10 +314422,7 @@ function onAddMaterialItem(item, target_iconname) {
 */
 function onLaphineUpgResult(pkt) {
 	if (pkt) switch (pkt.result) {
-		case 0:
-			onRequestLaphineUpgClose();
-			break;
-		default: break;
+		case 0: onRequestLaphineUpgClose();
 	}
 }
 /**
@@ -315224,7 +315154,7 @@ var init_Roulette$1 = __esmMin((() => {
 			if (btnSpin) btnSpin.disabled = false;
 			return;
 		}
-		const targetRotation = 360 * 5 + resultIndex * (360 / (_rouletteInfo.items.length || 10));
+		const targetRotation = 1800 + resultIndex * (360 / (_rouletteInfo.items.length || 10));
 		wheelSlots.style.transform = `translate(-50%, -50%) rotate(${targetRotation}deg)`;
 		setTimeout(() => {
 			_isSpinning = false;
@@ -315356,7 +315286,7 @@ var init_PCGoldTimer$1 = __esmMin((() => {
 	PCGoldTimer.startTimer = function startTimer() {
 		const root = this.getRoot();
 		this.timer = setInterval(function() {
-			const millisecondsMissing = 3600 * 1e3 - (Date.now() - _data.startTime + _data.playedTime * 1e3);
+			const millisecondsMissing = 36e5 - (Date.now() - _data.startTime + _data.playedTime * 1e3);
 			let text = PCGoldTimer.formatTime(millisecondsMissing);
 			if (text.includes("-")) {
 				text = "00:00";
@@ -315916,7 +315846,7 @@ function renderTimer(seconds) {
 	const s = seconds % 60;
 	const text = m === 0 ? String(s).padStart(2, "0") : `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 	const digitWidth = 50;
-	let x = TIMER_W - (m === 0 ? 2 * digitWidth : 5 * digitWidth) >> 1;
+	let x = TIMER_W - (m === 0 ? 100 : 250) >> 1;
 	for (let i = 0; i < text.length; i++) {
 		const a = timerCharToAction(text[i]);
 		if (!isNaN(a)) {
@@ -316091,7 +316021,7 @@ function renderRankText(text) {
 	for (i = 0; i < rankingStr.length; i++) {
 		a = rankCharToAction(rankingStr[i]);
 		if (!isNaN(a)) {
-			drawActionToCanvas(_rankCtx, _rankfontAct, _rankfontSpr, a, x, RANK_Y - 6);
+			drawActionToCanvas(_rankCtx, _rankfontAct, _rankfontSpr, a, x, 46);
 			x += step;
 		}
 	}
@@ -317149,9 +317079,7 @@ function onStatusParameterUpdateAnswer(pkt) {
 		case StatusProperty_default.VAR_SP_CON:
 			WinStatsController.getUI().update("con", pkt.value);
 			break;
-		case StatusProperty_default.VAR_SP_CRT:
-			WinStatsController.getUI().update("crt", pkt.value);
-			break;
+		case StatusProperty_default.VAR_SP_CRT: WinStatsController.getUI().update("crt", pkt.value);
 	}
 }
 /**
@@ -317476,9 +317404,7 @@ function onActionFailure(pkt) {
 		case 2:
 			ChatBox_default.addText(DB.getMessage(244), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.ITEM);
 			break;
-		case 3:
-			ChatBox_default.addText(DB.getMessage(245), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.ITEM);
-			break;
+		case 3: ChatBox_default.addText(DB.getMessage(245), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.ITEM);
 	}
 }
 /**
@@ -317903,9 +317829,7 @@ function onDynamicNPCCreateRequest(pkt) {
 		case 3:
 			ChatBox_default.addText("[Dynamic NPC] Duplicate NPC", ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		case 4:
-			ChatBox_default.addText("[Dynamic NPC] Out of time", ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		case 4: ChatBox_default.addText("[Dynamic NPC] Out of time", ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -317945,7 +317869,6 @@ function onInputAppear(pkt) {
 			case "number":
 				_pkt = new PACKET.CZ.INPUT_EDITDLG();
 				_pkt.value = data;
-				break;
 		}
 		_pkt.NAID = id;
 		Network.sendPacket(_pkt);
@@ -318037,7 +317960,6 @@ function onCutin(pkt) {
 				img.style.left = "50%";
 				img.style.marginLeft = "-" + Math.floor(img.width / 2) + "px";
 				img.style.marginTop = "-" + Math.floor(img.height / 2) + "px";
-				break;
 		}
 		document.body.appendChild(img);
 	});
@@ -318054,9 +317976,7 @@ function onMinimapMarker(pkt) {
 		case 1:
 			Controller$5.getUI().addNpcMark(pkt.id, pkt.xPos, pkt.yPos, pkt.color, Infinity);
 			break;
-		case 2:
-			Controller$5.getUI().removeNpcMark(pkt.id);
-			break;
+		case 2: Controller$5.getUI().removeNpcMark(pkt.id);
 	}
 }
 /**
@@ -318095,9 +318015,7 @@ function onSound(pkt) {
 		case 1:
 			SoundManager.play(pkt.fileName);
 			break;
-		case 2:
-			SoundManager.stop(pkt.fileName);
-			break;
+		case 2: SoundManager.stop(pkt.fileName);
 	}
 }
 /**
@@ -319131,16 +319049,14 @@ function onEntityAction(pkt) {
 						} else Damage.add(pkt.damage / div, target, Renderer.tick + pkt.attackMT + C_MULTIHIT_DELAY, srcWeapon, type);
 						break;
 					}
-					case 11:
-						dstEntity.attachments.add({
-							frame: 3,
-							file: "msg",
-							uid: "lucky",
-							play: true,
-							head: true,
-							repeat: false
-						});
-						break;
+					case 11: dstEntity.attachments.add({
+						frame: 3,
+						file: "msg",
+						uid: "lucky",
+						play: true,
+						head: true,
+						repeat: false
+					});
 				}
 			}
 			srcEntity.attack_speed = pkt.attackMT;
@@ -319211,14 +319127,12 @@ function onEntityAction(pkt) {
 				play: true
 			});
 			break;
-		case 3:
-			srcEntity.setAction({
-				action: srcEntity.ACTION.IDLE,
-				frame: 0,
-				repeat: true,
-				play: true
-			});
-			break;
+		case 3: srcEntity.setAction({
+			action: srcEntity.ACTION.IDLE,
+			frame: 0,
+			repeat: true,
+			play: true
+		});
 	}
 	if (pkt?.damage > 0) {
 		if (srcEntity.GID === SessionStorage_default.Character.GID) ChatBox_default.addText(DB.getMessage(1607).replace("%s", dstEntity.display.name).replace("%d", pkt.damage), ChatBox_default.TYPE.INFO, ChatBox_default.FILTER.BATTLE);
@@ -319507,10 +319421,7 @@ function onEntityViewChange(pkt) {
 		case 12:
 			entity.robe = pkt.value;
 			break;
-		case 13:
-			entity.body = pkt.value;
-			break;
-		case 14: break;
+		case 13: entity.body = pkt.value;
 	}
 }
 /**
@@ -319782,9 +319693,7 @@ function onEntityCastSkill(pkt) {
 			case 8:
 				EF_Init_Par.effectId = EffectConst_default.EF_BEGINSPELL6;
 				break;
-			case 9:
-				EF_Init_Par.effectId = EffectConst_default.EF_DARKCASTING;
-				break;
+			case 9: EF_Init_Par.effectId = EffectConst_default.EF_DARKCASTING;
 		}
 		EffectManager.spam(EF_Init_Par);
 	}
@@ -320155,13 +320064,11 @@ function onEntityStatusChange(pkt) {
 			});
 			break;
 		}
-		case StatusConst_default.CLAN_INFO:
-			DB.loadClanEmblem(pkt.val[1], (image) => {
-				entity.clanId = pkt.val[1];
-				entity.setEntityGuildEmblem(image);
-				updateEntityStyle(entity);
-			});
-			break;
+		case StatusConst_default.CLAN_INFO: DB.loadClanEmblem(pkt.val[1], (image) => {
+			entity.clanId = pkt.val[1];
+			entity.setEntityGuildEmblem(image);
+			updateEntityStyle(entity);
+		});
 	}
 	processBlockStatus(entity, pkt);
 	if (entity === SessionStorage_default.Entity) StatusIcons_default.update(pkt.index, pkt.state, pkt.RemainMS);
@@ -320267,9 +320174,7 @@ function onEntityCreateRoom(pkt) {
 					break;
 				case 1: break;
 				case 2: break;
-				case 3:
-					title = pkt.title;
-					break;
+				case 3: title = pkt.title;
 			}
 			entity.room.title = pkt.title;
 			entity.room.limit = pkt.maxcount;
@@ -320342,10 +320247,8 @@ function onNotifyExp(pkt) {
 			if (pkt.varID === 1) ChatBox_default.addText(DB.getMessage(1613).replace("%d", pkt.amount), ChatBox_default.TYPE.INFO, ChatBox_default.FILTER.EXP);
 			else if (pkt.varID === 2) ChatBox_default.addText(DB.getMessage(1614).replace("%d", pkt.amount), ChatBox_default.TYPE.INFO, ChatBox_default.FILTER.EXP);
 			break;
-		case 1:
-			if (pkt.varID === 1) ChatBox_default.addText("Experience gained from Quest, Base:" + pkt.amount, null, ChatBox_default.FILTER.EXP, "#A442DC");
-			else if (pkt.varID === 2) ChatBox_default.addText("Experience gained from Quest, Job:" + pkt.amount, null, ChatBox_default.FILTER.EXP, "#A442DC");
-			break;
+		case 1: if (pkt.varID === 1) ChatBox_default.addText("Experience gained from Quest, Base:" + pkt.amount, null, ChatBox_default.FILTER.EXP, "#A442DC");
+		else if (pkt.varID === 2) ChatBox_default.addText("Experience gained from Quest, Job:" + pkt.amount, null, ChatBox_default.FILTER.EXP, "#A442DC");
 	}
 }
 /**
@@ -320785,7 +320688,7 @@ var init_ItemObtain = __esmMin((() => {
 	*/
 	ItemObtain.needFocus = false;
 	_timer = 0;
-	_life = 5 * 1e3;
+	_life = 5e3;
 	/**
 	* Initialize component
 	*/
@@ -321276,9 +321179,7 @@ var init_MakeItemSelection = __esmMin((() => {
 		if (this.material.length < 3 && (validMultipleMaterials.includes(item.ITID) || validSingleMaterials.includes(item.ITID) && !singleMatUsed)) {
 			if (this.addItemSub(item)) {
 				switch (from) {
-					case "Inventory":
-						InventoryController.getUI().removeItem(item.index, 1);
-						break;
+					case "Inventory": InventoryController.getUI().removeItem(item.index, 1);
 				}
 				this.material.push(item);
 			}
@@ -322307,7 +322208,6 @@ function onItemCompositionResult(pkt) {
 			}
 			break;
 		}
-		case 1: break;
 	}
 }
 /**
@@ -322330,9 +322230,7 @@ function onRefineResult(pkt) {
 			case 1:
 				ChatBox_default.addText(DB.getMessage(499), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.PUBLIC_LOG);
 				break;
-			case 2:
-				ChatBox_default.addText(DB.getMessage(1537), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.PUBLIC_LOG);
-				break;
+			case 2: ChatBox_default.addText(DB.getMessage(1537), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.PUBLIC_LOG);
 		}
 	}
 }
@@ -322370,9 +322268,7 @@ function onAckAddItemToCart(pkt) {
 		case 0:
 			ChatBox_default.addText(DB.getMessage(220), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.ITEM);
 			break;
-		case 1:
-			ChatBox_default.addText(DB.getMessage(221), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.ITEM);
-			break;
+		case 1: ChatBox_default.addText(DB.getMessage(221), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.ITEM);
 	}
 }
 /**
@@ -324004,9 +323900,7 @@ function onSkillResult(pkt) {
 		case SkillConst_default.TF_STEAL:
 			error = 205;
 			break;
-		case SkillConst_default.TF_POISON:
-			error = 207;
-			break;
+		case SkillConst_default.TF_POISON: error = 207;
 	}
 	if (pkt.SKID == SkillConst_default.CG_TAROTCARD) error = 204;
 	else switch (pkt.cause) {
@@ -324043,9 +323937,7 @@ function onSkillResult(pkt) {
 		case 13:
 			error = 1398;
 			break;
-		case 83:
-			error = 661;
-			break;
+		case 83: error = 661;
 	}
 	if (error) ChatBox_default.addText(DB.getMessage(error), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
 }
@@ -324125,9 +324017,7 @@ function onIdentifyResult(pkt) {
 			}
 			break;
 		}
-		case 1:
-			ChatBox_default.addText(DB.getMessage(492), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.ITEM);
-			break;
+		case 1: ChatBox_default.addText(DB.getMessage(492), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.ITEM);
 	}
 }
 /**
@@ -324217,9 +324107,7 @@ function onTeleportResult(pkt) {
 		case 0:
 			ChatBox_default.addText(DB.getMessage(500), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
 			break;
-		case 1:
-			ChatBox_default.addText(DB.getMessage(501), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
-			break;
+		case 1: ChatBox_default.addText(DB.getMessage(501), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
 	}
 }
 /**
@@ -324235,9 +324123,7 @@ function onMemoResult(pkt) {
 		case 1:
 			ChatBox_default.addText(DB.getMessage(214), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
 			break;
-		case 2:
-			ChatBox_default.addText(DB.getMessage(216), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
-			break;
+		case 2: ChatBox_default.addText(DB.getMessage(216), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.SKILL_FAIL);
 	}
 }
 /**
@@ -324603,9 +324489,7 @@ function onCreateRoomResult(pkt) {
 		case 1:
 			ChatBox_default.addText(DB.getMessage(65), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		case 2:
-			ChatBox_default.addText(DB.getMessage(66), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		case 2: ChatBox_default.addText(DB.getMessage(66), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -324642,9 +324526,7 @@ function onEnterRoomResult(pkt) {
 		case 6:
 			error = 433;
 			break;
-		case 7:
-			error = 434;
-			break;
+		case 7: error = 434;
 	}
 	ChatBox_default.addText(DB.getMessage(error), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 }
@@ -324999,10 +324881,7 @@ function onPetEvolveResult(pkt) {
 		case 5:
 			ChatBox_default.addText(DB.getMessage(2576), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		case 6:
-			if (PetEvolution._host) PetEvolution._host.style.display = "none";
-			break;
-		default: break;
+		case 6: if (PetEvolution._host) PetEvolution._host.style.display = "none";
 	}
 }
 var PetEvolution, currentMaterials, targetEvoPetEggId, _preferences$3, PetEvolution_default;
@@ -325335,7 +325214,6 @@ function onPetInformationUpdate(pkt) {
 			});
 			break;
 		}
-		case 5:
 	}
 }
 /**
@@ -325565,7 +325443,6 @@ function onHomunInformationUpdate(pkt) {
 			entity.life.hunger = pkt.data;
 			entity.life.hunger_max = 100;
 			entity.life.update();
-			break;
 	}
 }
 /**
@@ -325773,7 +325650,6 @@ function onParameterChange(pkt) {
 			entity.life.sp_max = pkt.value;
 			entity.life.update();
 			EntityManager.storeLife(SessionStorage_default.mercId, { sp_max: pkt.value });
-			break;
 	}
 }
 /**
@@ -326443,7 +326319,6 @@ var init_NpcStore = __esmMin((() => {
 			case NpcStore.Type.CASH_SHOP:
 				_hideAll(root, ".WinSell, .WinVendingStore, .WinBuyingStore, .AvailableItemsWindow, .PurchaseResult, .total");
 				_showAll(root, ".WinBuy");
-				break;
 		}
 		_type = type;
 		const currentPref = getCurrentPref();
@@ -326919,9 +326794,7 @@ function onBuyResult(pkt) {
 		case 14:
 			ChatBox_default.addText(DB.getMessage(3556), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		default:
-			ChatBox_default.addText(DB.getMessage(57), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		default: ChatBox_default.addText(DB.getMessage(57), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 	if (NpcStore_default.getCurrentType() >= 4 && NpcStore_default.getCurrentType() != NpcStore_default.Type.CASH_SHOP) NpcStore_default.closeStore();
 }
@@ -326958,9 +326831,7 @@ function onBuyCashResult(pkt) {
 		case 7:
 			ChatBox_default.addText(DB.getMessage(1813), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		default:
-			ChatBox_default.addText(DB.getMessage(1814), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		default: ChatBox_default.addText(DB.getMessage(1814), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 	NpcStore_default.ui.find(".cashuser .cashpoints").text(pkt.KafraPoint);
 }
@@ -326977,9 +326848,7 @@ function onSellToBuyingStoreResult(pkt) {
 		case 7:
 			ChatBox_default.addText(DB.getMessage(1740), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		default:
-			ChatBox_default.addText(DB.getMessage(57), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		default: ChatBox_default.addText(DB.getMessage(57), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -327142,8 +327011,6 @@ function onMarketShopResult(pkt) {
 		case 1:
 			ChatBox_default.addText(DB.getMessage(54), ChatBox_default.TYPE.BLUE, ChatBox_default.FILTER.PUBLIC_LOG);
 			NpcStore_default.onMarketShopResultUI(pkt.itemList);
-			break;
-		default: break;
 	}
 }
 /**
@@ -327247,10 +327114,7 @@ function onTradeRequestAnswer(pkt) {
 			if ("level" in pkt && "GID" in pkt) Trade_default.title += `  Lv${pkt.level} (${tradeGIDEncoding(pkt.GID)})`;
 			Trade_default.append();
 			break;
-		case 4:
-			ChatBox_default.addText(DB.getMessage(74), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
-		case 5: break;
+		case 4: ChatBox_default.addText(DB.getMessage(74), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -327263,9 +327127,7 @@ function onAddItemResult(pkt) {
 		case 1:
 			ChatBox_default.addText(DB.getMessage(73), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		case 2:
-			ChatBox_default.addText(DB.getMessage(74), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		case 2: ChatBox_default.addText(DB.getMessage(74), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 	Trade_default.addItemFromInventory(pkt.Index, pkt.result === 0);
 }
@@ -328202,9 +328064,7 @@ function onRecvRouletteItem(pkt) {
 			case 2:
 				errorMsg = "Item count exceeded";
 				break;
-			case 3:
-				errorMsg = "Overweight";
-				break;
+			case 3: errorMsg = "Overweight";
 		}
 		console.error("[Roulette]", errorMsg);
 	}
@@ -328302,9 +328162,7 @@ function onAckApply(pkt) {
 		case 2:
 			ChatBox_default.addText(DB.getMessage(2879), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 			break;
-		default:
-			ChatBox_default.addText("Unknown status: " + pkt.status, ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
+		default: ChatBox_default.addText("Unknown status: " + pkt.status, ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -328357,9 +328215,7 @@ function onClose(pkt) {
 	switch (pkt.status) {
 		case 0: break;
 		case 1: break;
-		case 2:
-			CaptchaAnswer_default.showSuccessMessage();
-			break;
+		case 2: CaptchaAnswer_default.showSuccessMessage();
 	}
 }
 /**
@@ -328682,8 +328538,6 @@ function onBankDepoUpdate(pkt) {
 		case 3:
 			Bank_default.setError(DB.getMessage(2783));
 			ChatBox_default.addText(DB.getMessage(2787), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
-		default: break;
 	}
 	Bank_default.clearInput();
 }
@@ -328698,9 +328552,6 @@ function onBankWithdrawUpdate(pkt) {
 		case 1:
 			Bank_default.setError(DB.getMessage(2786));
 			ChatBox_default.addText(DB.getMessage(2455), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
-		case 2: break;
-		default: break;
 	}
 }
 var BankEngine;
@@ -329158,10 +329009,7 @@ function onDisconnectAnswer(pkt) {
 			Renderer.stop();
 			onExitSuccess();
 			break;
-		case 1:
-			ChatBox_default.addText(DB.getMessage(502), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
-			break;
-		default:
+		case 1: ChatBox_default.addText(DB.getMessage(502), ChatBox_default.TYPE.ERROR, ChatBox_default.FILTER.PUBLIC_LOG);
 	}
 }
 /**
@@ -329860,9 +329708,7 @@ function success() {
 		case 2:
 			PincodeWindow.onPincodeReset(passEnc, newPassEnc);
 			break;
-		default:
-			PincodeWindow.onPincodeCheckRequest(passEnc);
-			break;
+		default: PincodeWindow.onPincodeCheckRequest(passEnc);
 	}
 	PincodeWindow.resetPins();
 }
@@ -329883,9 +329729,7 @@ function keyNum(num) {
 		default:
 			PincodeWindow._pass += num;
 			break;
-		case 2:
-			PincodeWindow._checkpass += num;
-			break;
+		case 2: PincodeWindow._checkpass += num;
 	}
 }
 function render() {
@@ -329935,9 +329779,7 @@ var init_PincodeWindow = __esmMin((() => {
 			default:
 				PincodeWindow._pass = "";
 				break;
-			case 2:
-				PincodeWindow._checkpass = "";
-				break;
+			case 2: PincodeWindow._checkpass = "";
 		}
 	};
 	PincodeWindow.resetPins = function resetPins() {
@@ -330053,7 +329895,6 @@ var init_PincodeWindow = __esmMin((() => {
 				newpassEl.style.backgroundColor = inactive;
 				checkpassEl.style.backgroundColor = inactive;
 				passEl.style.backgroundColor = active;
-				break;
 		}
 	};
 	/**
@@ -330537,9 +330378,7 @@ function createCharSelect(config) {
 				return;
 			}
 			default:
-			case 0:
-				UIManager.showMessageBox(DB.getMessage(301), "ok");
-				break;
+			case 0: UIManager.showMessageBox(DB.getMessage(301), "ok");
 		}
 	};
 	/**
@@ -331577,7 +331416,6 @@ function createCharCreate(config) {
 			case "headpalette":
 				_chargen.entity.headpalette += increment;
 				_chargen.entity.headpalette %= 10;
-				break;
 		}
 		render();
 	}
@@ -331822,7 +331660,6 @@ function createCharCreate(config) {
 				updateCharacterCap(TYPE.RACE, RACE.HUMAN);
 				updateCharacterCap(TYPE.GENDER, GENDER.MALE);
 				_model.entity.headpalette = 0;
-				break;
 		}
 	}
 	function initRaceGrid(root) {
@@ -331933,10 +331770,8 @@ function createCharCreate(config) {
 				if (value === 1) _gender = "male";
 				else _gender = "female";
 				break;
-			case "race":
-				if (value === 0) _race = "human";
-				else _race = "doram";
-				break;
+			case "race": if (value === 0) _race = "human";
+			else _race = "doram";
 		}
 		Client.loadFile(`${DB.INTERFACE_PATH}make_character_ver2/bt_male_off.bmp`, (dataURI) => {
 			root.querySelector("#male_container").style.backgroundImage = `url(${dataURI})`;
@@ -332009,7 +331844,6 @@ function createCharCreate(config) {
 				_model.entity.job = 0;
 				_model.entity.head = 1;
 				_model.entity.headpalette = 0;
-				break;
 		}
 	}
 	/**
@@ -332362,9 +332196,7 @@ function onSelectionRefused(pkt) {
 		case 5:
 			msg_id = 1364;
 			break;
-		default:
-			msg_id = 2;
-			break;
+		default: msg_id = 2;
 	}
 	UIManager.showErrorBox(DB.getMessage(msg_id));
 }
@@ -332388,9 +332220,7 @@ function onConnectionRefused$1(pkt) {
 		case 119:
 			msg_id = 2929;
 			break;
-		default:
-			msg_id = 2;
-			break;
+		default: msg_id = 2;
 	}
 	UIManager.showErrorBox(DB.getMessage(msg_id));
 }
@@ -332614,9 +332444,7 @@ function onCreationFail(pkt) {
 			msg_id = 1355;
 			break;
 		default:
-		case 255:
-			msg_id = 11;
-			break;
+		case 255: msg_id = 11;
 	}
 	UIManager.showMessageBox(DB.getMessage(msg_id), "ok");
 }
@@ -332737,7 +332565,6 @@ function onPincodeCheckSuccess(pkt) {
 		default:
 			console.log("PINCODE: Received unknown state from server: " + pkt.State);
 			PincodeWindow_default.append();
-			break;
 	}
 }
 /**
@@ -332985,9 +332812,7 @@ var init_WinList = __esmMin((() => {
 			case KEYS.UP:
 				this.setIndex(this.index - 1);
 				break;
-			case KEYS.DOWN:
-				this.setIndex(this.index + 1);
-				break;
+			case KEYS.DOWN: this.setIndex(this.index + 1);
 		}
 		event.stopImmediatePropagation();
 	};
@@ -335632,7 +335457,6 @@ var require_rijndael_block = /* @__PURE__ */ __commonJSMin(((exports, module) =>
 						for (let j = 0; j < blockSize; j++) ciphertext[start + j] = encrypted[j];
 						iv = encrypted.slice();
 					}
-					break;
 			}
 			return ciphertext;
 		}
@@ -335672,7 +335496,6 @@ var require_rijndael_block = /* @__PURE__ */ __commonJSMin(((exports, module) =>
 						for (let j = 0; j < blockSize; j++) plaintext[start + j] = decrypted[j] ^ iv[j];
 						iv = block.slice();
 					}
-					break;
 			}
 			return plaintext;
 		}
@@ -336145,9 +335968,7 @@ function onTarenConnectionRefused(pkt) {
 		case 9:
 			msg_id = 3911;
 			break;
-		default:
-			msg_id = 3202;
-			break;
+		default: msg_id = 3202;
 	}
 	UIManager.showMessageBox(DB.getMessage(msg_id), "ok", () => {
 		UIManager.removeComponents();
@@ -336195,9 +336016,7 @@ function onTarenConnectionRefused2(pkt) {
 		case 101:
 			msg_id = 449;
 			break;
-		default:
-			msg_id = 3202;
-			break;
+		default: msg_id = 3202;
 	}
 	UIManager.showMessageBox(DB.getMessage(msg_id).replace("%s", pkt.blockDate), "ok", () => {
 		UIManager.removeComponents();
@@ -336255,9 +336074,7 @@ function onInternationalConnectionRefused(pkt) {
 		case 5213:
 			msg_id = 3327;
 			break;
-		case 5214:
-			msg_id = 3328;
-			break;
+		case 5214: msg_id = 3328;
 	}
 	UIManager.showMessageBox(DB.getMessage(msg_id).replace("%d", pkt.blockDate), "ok", () => {
 		UIManager.removeComponents();
@@ -336457,9 +336274,7 @@ function onConnectionRefused(pkt) {
 		case 5300:
 			error = 3534;
 			break;
-		case 5301:
-			error = 3539;
-			break;
+		case 5301: error = 3539;
 	}
 	UIManager.showMessageBox(DB.getMessage(error).replace("%s", pkt.blockDate), "ok", () => {
 		UIManager.removeComponents();
@@ -336560,9 +336375,7 @@ function onServerClosed(pkt) {
 		case 109:
 			msg_id = 1583;
 			break;
-		case 110:
-			msg_id = 1589;
-			break;
+		case 110: msg_id = 1589;
 	}
 	UIManager.showMessageBox(DB.getMessage(msg_id), "ok", () => {
 		UIManager.removeComponents();
@@ -336714,7 +336527,7 @@ var init_Intro$2 = __esmMin((() => {
 //#region src/UI/Components/Intro/Intro.css?raw
 var Intro_default$1;
 var init_Intro$1 = __esmMin((() => {
-	Intro_default$1 = "/* ── Design Tokens ── */\r\n#intro {\r\n	--gold: #e8b84b;\r\n	--gold-bright: #f5d47c;\r\n	--gold-dark: #9a7030;\r\n	--bg-void: #060810;\r\n	--bg-deep: #0b0f1e;\r\n	--bg-panel: #111827;\r\n	--bg-card: #151d2e;\r\n	--border-dim: rgba(232, 184, 75, 0.15);\r\n	--border-glow: rgba(232, 184, 75, 0.5);\r\n	--text-light: #e2e8f0;\r\n	--text-muted: #64748b;\r\n	--radius: 12px;\r\n	--radius-sm: 8px;\r\n}\r\n\r\n/* ── Reset ── */\r\n#intro *,\r\n#intro *::before,\r\n#intro *::after {\r\n	box-sizing: border-box;\r\n}\r\n#intro button {\r\n	cursor: pointer;\r\n	font-family: inherit;\r\n}\r\n#intro .clear {\r\n	clear: both;\r\n}\r\n\r\n/* ── Main container ── */\r\n#intro .intro {\r\n	width: 800px;\r\n	height: 600px;\r\n	position: absolute;\r\n	top: 50%;\r\n	left: 50%;\r\n	margin-top: -300px;\r\n	margin-left: -400px;\r\n	overflow: hidden;\r\n	transform-origin: center center;\r\n	backface-visibility: hidden;\r\n	font-family: 'Inter', sans-serif;\r\n	color: var(--text-light);\r\n}\r\n\r\n/* ── Canvas ── */\r\n#intro canvas {\r\n	position: absolute;\r\n	top: 0;\r\n	left: 0;\r\n	z-index: -1;\r\n}\r\n\r\n/* ── Hidden file input ── */\r\n#intro input[type='file'] {\r\n	visibility: hidden;\r\n	position: absolute;\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   RIBBON — top-right corner  \r\n   ══════════════════════════════════════════ */\r\n#intro .ribbon {\r\n	width: 200px;\r\n	height: 200px;\r\n	position: absolute;\r\n	top: 0;\r\n	right: 0;\r\n	overflow: hidden;\r\n	pointer-events: none;\r\n	z-index: 10;\r\n}\r\n#intro .ribbon span {\r\n	display: block;\r\n	position: absolute;\r\n	top: 60px;\r\n	right: -80px;\r\n	width: 300px;\r\n	text-align: center;\r\n	transform: rotate(45deg);\r\n	background: linear-gradient(to bottom, var(--gold-bright), var(--gold-dark));\r\n	color: var(--bg-void);\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 10px;\r\n	font-weight: 700;\r\n	letter-spacing: 2px;\r\n	padding: 5px 0;\r\n	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   BUTTON ABOUT  \r\n   ══════════════════════════════════════════ */\r\n#intro .btn_about {\r\n	position: absolute;\r\n	top: 12px;\r\n	left: 12px;\r\n	background: rgba(60, 9, 90, 0.8);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-muted);\r\n	font-size: 20px;\r\n	width: 40px;\r\n	height: 40px;\r\n	line-height: 38px;\r\n	text-align: center;\r\n	z-index: 5;\r\n	transition:\r\n		color 0.3s,\r\n		border-color 0.3s,\r\n		transform 0.15s;\r\n	padding: 0;\r\n}\r\n#intro .btn_about:hover {\r\n	color: var(--gold);\r\n	border-color: var(--border-glow);\r\n	transform: scale(1.1);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   BUTTON SETTINGS  \r\n   ══════════════════════════════════════════ */\r\n#intro .btn_settings {\r\n	position: absolute;\r\n	bottom: 12px;\r\n	right: 12px;\r\n	background: rgba(60, 9, 90, 0.8);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-muted);\r\n	font-size: 28px;\r\n	width: 44px;\r\n	height: 44px;\r\n	line-height: 42px;\r\n	text-align: center;\r\n	z-index: 5;\r\n	transition:\r\n		color 0.3s,\r\n		border-color 0.3s,\r\n		transform 0.4s ease-out;\r\n	padding: 0;\r\n}\r\n#intro .btn_settings:hover {\r\n	color: var(--gold);\r\n	border-color: var(--border-glow);\r\n	transform: rotate(360deg);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   DROP ZONE (replaces old .box)  \r\n   ══════════════════════════════════════════ */\r\n#intro .drop-zone {\r\n	position: absolute;\r\n	top: 300px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	width: 320px;\r\n	border: 2px dashed rgba(232, 184, 75, 0.25);\r\n	border-radius: var(--radius);\r\n	padding: 30px 24px;\r\n	background: rgba(21, 29, 46, 0.6);\r\n	backdrop-filter: blur(10px);\r\n	transition:\r\n		border-color 0.3s,\r\n		box-shadow 0.3s,\r\n		background 0.3s;\r\n	cursor: pointer;\r\n	text-align: center;\r\n	z-index: 5;\r\n}\r\n#intro .drop-zone:hover,\r\n#intro .drop-zone.dragover {\r\n	border-color: rgba(232, 184, 75, 0.6);\r\n	box-shadow: 0 0 30px rgba(232, 184, 75, 0.12);\r\n	background: rgba(21, 29, 46, 0.8);\r\n}\r\n#intro .drop-zone-icon {\r\n	font-size: 36px;\r\n	margin-bottom: 8px;\r\n}\r\n#intro .drop-zone-text {\r\n	color: var(--text-muted);\r\n	font-size: 13px;\r\n	line-height: 1.6;\r\n}\r\n#intro .drop-zone-text strong {\r\n	color: var(--text-light);\r\n}\r\n\r\n/* ── File status message ── */\r\n#intro .msg {\r\n	position: absolute;\r\n	top: 440px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	text-align: center;\r\n	font-size: 14px;\r\n	color: var(--gold);\r\n	z-index: 6;\r\n	pointer-events: none;\r\n	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);\r\n	white-space: nowrap;\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   BUTTON PLAY  \r\n   ══════════════════════════════════════════ */\r\n#intro .btn_play {\r\n	position: absolute;\r\n	top: 470px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	display: inline-flex;\r\n	align-items: center;\r\n	justify-content: center;\r\n	gap: 8px;\r\n	padding: 14px 44px;\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 14px;\r\n	font-weight: 600;\r\n	letter-spacing: 0.1em;\r\n	text-transform: uppercase;\r\n	color: var(--bg-void);\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	border: none;\r\n	border-radius: var(--radius-sm);\r\n	z-index: 5;\r\n	transition:\r\n		transform 0.2s,\r\n		box-shadow 0.3s;\r\n	box-shadow: 0 4px 20px rgba(232, 184, 75, 0.3);\r\n}\r\n#intro .btn_play:hover {\r\n	transform: translateX(-50%) translateY(-2px);\r\n	box-shadow: 0 6px 30px rgba(232, 184, 75, 0.45);\r\n}\r\n#intro .btn_play:active {\r\n	transform: translateX(-50%) translateY(0);\r\n	box-shadow: 0 2px 10px rgba(232, 184, 75, 0.2);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   OVERLAYS  \r\n   ══════════════════════════════════════════ */\r\n#intro .overlay {\r\n	background: rgba(6, 8, 16, 0.92);\r\n	position: absolute;\r\n	z-index: 100;\r\n	top: 0;\r\n	left: 0;\r\n	width: 100%;\r\n	height: 100%;\r\n	color: var(--text-light);\r\n	opacity: 0;\r\n	display: none;\r\n	overflow-y: auto;\r\n	transition: opacity 0.2s ease;\r\n}\r\n\r\n/* ── Loading ── */\r\n#intro .loading-content {\r\n	position: absolute;\r\n	top: 50%;\r\n	left: 50%;\r\n	transform: translate(-50%, -50%);\r\n	text-align: center;\r\n	color: var(--gold, #e8b84b);\r\n}\r\n\r\n#intro .loading-spinner {\r\n	width: 48px;\r\n	height: 48px;\r\n	margin: 0 auto 16px;\r\n	border: 4px solid rgba(232, 184, 75, 0.2);\r\n	border-top-color: var(--gold, #e8b84b);\r\n	border-radius: 50%;\r\n	animation: intro-spin 0.8s linear infinite;\r\n}\r\n\r\n@keyframes intro-spin {\r\n	to {\r\n		transform: rotate(360deg);\r\n	}\r\n}\r\n\r\n#intro .loading-content p {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 14px;\r\n	letter-spacing: 2px;\r\n	text-transform: uppercase;\r\n}\r\n\r\n#intro .loading-text {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 16px;\r\n	letter-spacing: 3px;\r\n	text-transform: uppercase;\r\n	color: var(--gold, #e8b84b);\r\n}\r\n\r\n#intro .loading-text span {\r\n	display: inline-block;\r\n	animation: intro-wave 1.2s ease-in-out infinite;\r\n	animation-delay: calc(var(--i) * 0.08s);\r\n}\r\n\r\n@keyframes intro-wave {\r\n	0%,\r\n	60%,\r\n	100% {\r\n		transform: translateY(0);\r\n	}\r\n	30% {\r\n		transform: translateY(-8px);\r\n	}\r\n}\r\n\r\n/* ── About overlay ── */\r\n#intro .about-content {\r\n	max-width: 480px;\r\n	margin: 0 auto;\r\n	padding: 60px 30px 30px;\r\n	text-align: center;\r\n}\r\n#intro .emblem-icon {\r\n	font-size: 48px;\r\n	margin-bottom: 12px;\r\n	display: block;\r\n}\r\n#intro .about-title,\r\n#intro .gold-title {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 24px;\r\n	font-weight: 700;\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	-webkit-background-clip: text;\r\n	-webkit-text-fill-color: transparent;\r\n	background-clip: text;\r\n	margin: 0 0 6px;\r\n}\r\n#intro .about-subtitle {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 12px;\r\n	font-weight: 400;\r\n	color: var(--text-muted);\r\n	letter-spacing: 0.08em;\r\n	margin: 0 0 20px;\r\n}\r\n\r\n/* Ornament divider */\r\n#intro .ornament {\r\n	display: flex;\r\n	align-items: center;\r\n	gap: 12px;\r\n	margin: 0 auto 24px;\r\n	max-width: 280px;\r\n}\r\n#intro .ornament-line {\r\n	flex: 1;\r\n	height: 1px;\r\n	background: linear-gradient(to right, transparent, var(--gold-dark));\r\n}\r\n#intro .ornament-line:last-child {\r\n	background: linear-gradient(to left, transparent, var(--gold-dark));\r\n}\r\n#intro .ornament-diamond {\r\n	width: 8px;\r\n	height: 8px;\r\n	background: var(--gold);\r\n	transform: rotate(45deg);\r\n	box-shadow: 0 0 8px var(--gold);\r\n	flex-shrink: 0;\r\n}\r\n#intro .ornament-dot {\r\n	width: 4px;\r\n	height: 4px;\r\n	background: var(--gold-dark);\r\n	border-radius: 50%;\r\n	flex-shrink: 0;\r\n}\r\n\r\n#intro .about-content .info {\r\n	margin: 0 auto 24px;\r\n	text-align: left;\r\n	font-size: 14px;\r\n}\r\n#intro .about-content .info td:first-child {\r\n	color: var(--text-muted);\r\n	padding-right: 12px;\r\n	white-space: nowrap;\r\n}\r\n#intro .about-content a {\r\n	color: var(--gold);\r\n	text-decoration: none;\r\n}\r\n#intro .about-content a:hover {\r\n	text-decoration: underline;\r\n	color: var(--gold-bright);\r\n}\r\n#intro .concept {\r\n	font-size: 13px;\r\n	text-align: justify;\r\n	line-height: 1.6;\r\n	color: var(--text-muted);\r\n}\r\n#intro .concept p {\r\n	margin: 0 0 10px;\r\n}\r\n#intro .hint {\r\n	margin-top: 24px;\r\n	font-size: 11px;\r\n	color: var(--text-muted);\r\n	opacity: 0.6;\r\n}\r\n\r\n/* ── Settings overlay ── */\r\n#intro .settings-content {\r\n	max-width: 520px;\r\n	margin: 0 auto;\r\n	padding: 30px 30px 80px;\r\n}\r\n#intro .settings-title {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 22px;\r\n	font-weight: 700;\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	-webkit-background-clip: text;\r\n	-webkit-text-fill-color: transparent;\r\n	background-clip: text;\r\n	margin: 0 0 20px;\r\n	text-align: center;\r\n}\r\n\r\n/* Section headers */\r\n#intro .section-header {\r\n	display: flex;\r\n	align-items: center;\r\n	gap: 12px;\r\n	margin: 20px 0 12px;\r\n}\r\n#intro .section-header span {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 13px;\r\n	font-weight: 600;\r\n	color: var(--gold);\r\n	letter-spacing: 0.08em;\r\n	text-transform: uppercase;\r\n	white-space: nowrap;\r\n}\r\n#intro .section-header::after {\r\n	content: '';\r\n	flex: 1;\r\n	height: 1px;\r\n	background: linear-gradient(to right, var(--border-dim), transparent);\r\n}\r\n\r\n/* Tables */\r\n#intro .screen,\r\n#intro .sound {\r\n	width: 100%;\r\n	border-collapse: collapse;\r\n}\r\n#intro .screen td,\r\n#intro .sound td {\r\n	padding: 6px 4px;\r\n	font-size: 13px;\r\n	color: var(--text-light);\r\n	vertical-align: middle;\r\n}\r\n#intro .screen td:first-child,\r\n#intro .sound td:first-child {\r\n	width: 40%;\r\n	color: var(--text-muted);\r\n}\r\n\r\n/* Selects & inputs */\r\n#intro .settings-content select,\r\n#intro .settings-content input[type='text'] {\r\n	background: var(--bg-card);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-light);\r\n	padding: 4px 8px;\r\n	font-size: 13px;\r\n	font-family: inherit;\r\n}\r\n#intro .settings-content select:focus,\r\n#intro .settings-content input[type='text']:focus {\r\n	border-color: var(--gold);\r\n	outline: none;\r\n}\r\n#intro .screensize {\r\n	width: 150px;\r\n}\r\n\r\n/* Range sliders */\r\n#intro input[type='range'] {\r\n	width: 150px;\r\n	accent-color: var(--gold);\r\n}\r\n\r\n/* Checkboxes */\r\n#intro .settings-content input[type='checkbox'] {\r\n	accent-color: var(--gold);\r\n}\r\n\r\n/* Quality result / volume result */\r\n#intro .quality_result,\r\n#intro .bgmvol_result,\r\n#intro .soundvol_result {\r\n	font-size: 12px;\r\n	color: var(--gold);\r\n	min-width: 40px;\r\n}\r\n\r\n/* Clean cache */\r\n#intro .clean {\r\n	display: none;\r\n	padding: 4px 10px;\r\n	background: var(--bg-card);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-light);\r\n	font-size: 12px;\r\n	transition: border-color 0.2s;\r\n}\r\n#intro .clean:hover {\r\n	border-color: var(--gold);\r\n}\r\n#intro .clean-status {\r\n	color: var(--text-muted);\r\n	font-size: 12px;\r\n	margin-left: 8px;\r\n}\r\n\r\n/* ── Server list ── */\r\n#intro .serveredit dl {\r\n	margin: 0;\r\n}\r\n#intro .serveredit dt {\r\n	margin-bottom: 6px;\r\n}\r\n#intro .serveredit dd {\r\n	margin: 0 0 10px 0;\r\n}\r\n\r\n#intro .clientinfo {\r\n	background: transparent !important;\r\n	border: 1px solid transparent !important;\r\n	color: var(--gold) !important;\r\n	cursor: pointer;\r\n	text-decoration: underline;\r\n}\r\n#intro .clientinfo:focus {\r\n	cursor: text;\r\n	border: 1px solid var(--gold) !important;\r\n	background: var(--bg-card) !important;\r\n	color: var(--text-light) !important;\r\n	text-decoration: none;\r\n}\r\n\r\n#intro .settings-content span {\r\n	vertical-align: top;\r\n	margin-left: 5px;\r\n}\r\n\r\n/* Radio buttons */\r\n#intro input[type='radio'] {\r\n	margin: 0;\r\n	width: 15px;\r\n	height: 15px;\r\n	accent-color: var(--gold);\r\n	vertical-align: middle;\r\n	position: relative;\r\n	bottom: 1px;\r\n}\r\n\r\n/* Server container */\r\n#intro .servercontainer {\r\n	max-height: 70px;\r\n	overflow-y: auto;\r\n	overflow-x: hidden;\r\n	margin-top: 10px;\r\n	padding-right: 6px;\r\n}\r\n#intro .servercontainer::-webkit-scrollbar {\r\n	width: 6px;\r\n}\r\n#intro .servercontainer::-webkit-scrollbar-track {\r\n	background: var(--bg-void);\r\n	border-radius: 6px;\r\n}\r\n#intro .servercontainer::-webkit-scrollbar-thumb {\r\n	border-radius: 6px;\r\n	background: var(--gold-dark);\r\n}\r\n\r\n/* Server list table */\r\n#intro .serverlist {\r\n	border-collapse: collapse;\r\n	width: 100%;\r\n}\r\n#intro .serverlist td {\r\n	text-align: center;\r\n	height: 22px;\r\n	font-size: 12px;\r\n}\r\n#intro .serverlist thead td {\r\n	color: var(--gold-dark);\r\n	font-weight: bold;\r\n	font-size: 11px;\r\n}\r\n#intro .serverlist tbody tr:hover {\r\n	background: rgba(232, 184, 75, 0.06);\r\n}\r\n#intro .servers input {\r\n	background: transparent;\r\n	border: 1px solid transparent;\r\n	cursor: pointer;\r\n	color: var(--text-light);\r\n	text-align: center;\r\n	width: 100%;\r\n	font-size: 12px;\r\n	font-family: inherit;\r\n}\r\n#intro .servers input:focus {\r\n	cursor: text;\r\n	border: 1px solid var(--gold);\r\n	background: var(--bg-card);\r\n	color: var(--text-light);\r\n}\r\n\r\n/* Delete button */\r\n#intro .btn_delete {\r\n	width: 20px;\r\n	height: 20px;\r\n	background: rgba(239, 68, 68, 0.15);\r\n	border: 1px solid rgba(239, 68, 68, 0.3);\r\n	border-radius: 4px;\r\n	color: #ef4444;\r\n	font-size: 14px;\r\n	line-height: 18px;\r\n	text-align: center;\r\n	padding: 0;\r\n	transition: background 0.2s;\r\n}\r\n#intro .btn_delete:hover {\r\n	background: rgba(239, 68, 68, 0.3);\r\n}\r\n\r\n/* Add server button */\r\n#intro .settings .btn_add {\r\n	margin-top: 10px;\r\n	float: right;\r\n	padding: 5px 14px;\r\n	background: var(--bg-card);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-light);\r\n	font-size: 12px;\r\n	transition: border-color 0.2s;\r\n}\r\n#intro .settings .btn_add:hover {\r\n	border-color: var(--gold);\r\n	color: var(--gold);\r\n}\r\n\r\n/* Save button */\r\n#intro .settings .btn_save {\r\n	display: block;\r\n	width: 200px;\r\n	margin: 24px auto 0;\r\n	padding: 12px 0;\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 13px;\r\n	font-weight: 600;\r\n	letter-spacing: 0.1em;\r\n	text-transform: uppercase;\r\n	color: var(--bg-void);\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	border: none;\r\n	border-radius: var(--radius-sm);\r\n	transition:\r\n		transform 0.2s,\r\n		box-shadow 0.3s;\r\n	box-shadow: 0 4px 20px rgba(232, 184, 75, 0.3);\r\n}\r\n#intro .settings .btn_save:hover {\r\n	transform: translateY(-2px);\r\n	box-shadow: 0 6px 30px rgba(232, 184, 75, 0.45);\r\n}\r\n#intro .settings .btn_save:active {\r\n	transform: translateY(0);\r\n}\r\n\r\n/* ── Aspect Ratio Fixes ── */\r\n#intro .drop-zone {\r\n	transform: translateX(-50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .msg {\r\n	transform: translateX(-50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_play {\r\n	transform: translateX(-50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_play:hover {\r\n	transform: translateX(-50%) translateY(-2px) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_play:active {\r\n	transform: translateX(-50%) translateY(0) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_about {\r\n	transform: scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_about:hover {\r\n	transform: scale(calc(1.1 * var(--cx, 1)), calc(1.1 * var(--cy, 1)));\r\n}\r\n#intro .btn_settings {\r\n	scale: var(--cx, 1) var(--cy, 1);\r\n}\r\n#intro .btn_settings:hover {\r\n	scale: var(--cx, 1) var(--cy, 1);\r\n}\r\n#intro .loading-content {\r\n	transform: translate(-50%, -50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .about-content,\r\n#intro .settings-content {\r\n	scale: var(--cx, 1) var(--cy, 1);\r\n}\r\n";
+	Intro_default$1 = "/* ── Design Tokens ── */\r\n#intro {\r\n	--gold: #e8b84b;\r\n	--gold-bright: #f5d47c;\r\n	--gold-dark: #9a7030;\r\n	--bg-void: #060810;\r\n	--bg-deep: #0b0f1e;\r\n	--bg-panel: #111827;\r\n	--bg-card: #151d2e;\r\n	--border-dim: rgba(232, 184, 75, 0.15);\r\n	--border-glow: rgba(232, 184, 75, 0.5);\r\n	--text-light: #e2e8f0;\r\n	--text-muted: #64748b;\r\n	--radius: 12px;\r\n	--radius-sm: 8px;\r\n}\r\n\r\n/* ── Reset ── */\r\n#intro *,\r\n#intro *::before,\r\n#intro *::after {\r\n	box-sizing: border-box;\r\n}\r\n#intro button {\r\n	cursor: pointer;\r\n	font-family: inherit;\r\n}\r\n#intro .clear {\r\n	clear: both;\r\n}\r\n\r\n/* ── Main container ── */\r\n#intro .intro {\r\n	width: 800px;\r\n	height: 600px;\r\n	position: absolute;\r\n	top: 50%;\r\n	left: 50%;\r\n	margin-top: -300px;\r\n	margin-left: -400px;\r\n	overflow: hidden;\r\n	transform-origin: center center;\r\n	backface-visibility: hidden;\r\n	font-family: 'Inter', sans-serif;\r\n	/* Opt out of Common.css's font-size-adjust: this whole screen renders in Inter/Cinzel, whose\r\n	   x-height differs from Arial's — normalizing would rescale its headings (Cinzel ~+18%). All\r\n	   descendants inherit this reset, keeping the pre-normalization rendering. */\r\n	font-size-adjust: none;\r\n	color: var(--text-light);\r\n}\r\n\r\n/* ── Canvas ── */\r\n#intro canvas {\r\n	position: absolute;\r\n	top: 0;\r\n	left: 0;\r\n	z-index: -1;\r\n}\r\n\r\n/* ── Hidden file input ── */\r\n#intro input[type='file'] {\r\n	visibility: hidden;\r\n	position: absolute;\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   RIBBON — top-right corner  \r\n   ══════════════════════════════════════════ */\r\n#intro .ribbon {\r\n	width: 200px;\r\n	height: 200px;\r\n	position: absolute;\r\n	top: 0;\r\n	right: 0;\r\n	overflow: hidden;\r\n	pointer-events: none;\r\n	z-index: 10;\r\n}\r\n#intro .ribbon span {\r\n	display: block;\r\n	position: absolute;\r\n	top: 60px;\r\n	right: -80px;\r\n	width: 300px;\r\n	text-align: center;\r\n	transform: rotate(45deg);\r\n	background: linear-gradient(to bottom, var(--gold-bright), var(--gold-dark));\r\n	color: var(--bg-void);\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 10px;\r\n	font-weight: 700;\r\n	letter-spacing: 2px;\r\n	padding: 5px 0;\r\n	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   BUTTON ABOUT  \r\n   ══════════════════════════════════════════ */\r\n#intro .btn_about {\r\n	position: absolute;\r\n	top: 12px;\r\n	left: 12px;\r\n	background: rgba(60, 9, 90, 0.8);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-muted);\r\n	font-size: 20px;\r\n	width: 40px;\r\n	height: 40px;\r\n	line-height: 38px;\r\n	text-align: center;\r\n	z-index: 5;\r\n	transition:\r\n		color 0.3s,\r\n		border-color 0.3s,\r\n		transform 0.15s;\r\n	padding: 0;\r\n}\r\n#intro .btn_about:hover {\r\n	color: var(--gold);\r\n	border-color: var(--border-glow);\r\n	transform: scale(1.1);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   BUTTON SETTINGS  \r\n   ══════════════════════════════════════════ */\r\n#intro .btn_settings {\r\n	position: absolute;\r\n	bottom: 12px;\r\n	right: 12px;\r\n	background: rgba(60, 9, 90, 0.8);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-muted);\r\n	font-size: 28px;\r\n	width: 44px;\r\n	height: 44px;\r\n	line-height: 42px;\r\n	text-align: center;\r\n	z-index: 5;\r\n	transition:\r\n		color 0.3s,\r\n		border-color 0.3s,\r\n		transform 0.4s ease-out;\r\n	padding: 0;\r\n}\r\n#intro .btn_settings:hover {\r\n	color: var(--gold);\r\n	border-color: var(--border-glow);\r\n	transform: rotate(360deg);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   DROP ZONE (replaces old .box)  \r\n   ══════════════════════════════════════════ */\r\n#intro .drop-zone {\r\n	position: absolute;\r\n	top: 300px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	width: 320px;\r\n	border: 2px dashed rgba(232, 184, 75, 0.25);\r\n	border-radius: var(--radius);\r\n	padding: 30px 24px;\r\n	background: rgba(21, 29, 46, 0.6);\r\n	backdrop-filter: blur(10px);\r\n	transition:\r\n		border-color 0.3s,\r\n		box-shadow 0.3s,\r\n		background 0.3s;\r\n	cursor: pointer;\r\n	text-align: center;\r\n	z-index: 5;\r\n}\r\n#intro .drop-zone:hover,\r\n#intro .drop-zone.dragover {\r\n	border-color: rgba(232, 184, 75, 0.6);\r\n	box-shadow: 0 0 30px rgba(232, 184, 75, 0.12);\r\n	background: rgba(21, 29, 46, 0.8);\r\n}\r\n#intro .drop-zone-icon {\r\n	font-size: 36px;\r\n	margin-bottom: 8px;\r\n}\r\n#intro .drop-zone-text {\r\n	color: var(--text-muted);\r\n	font-size: 13px;\r\n	line-height: 1.6;\r\n}\r\n#intro .drop-zone-text strong {\r\n	color: var(--text-light);\r\n}\r\n\r\n/* ── File status message ── */\r\n#intro .msg {\r\n	position: absolute;\r\n	top: 440px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	text-align: center;\r\n	font-size: 14px;\r\n	color: var(--gold);\r\n	z-index: 6;\r\n	pointer-events: none;\r\n	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);\r\n	white-space: nowrap;\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   BUTTON PLAY  \r\n   ══════════════════════════════════════════ */\r\n#intro .btn_play {\r\n	position: absolute;\r\n	top: 470px;\r\n	left: 50%;\r\n	transform: translateX(-50%);\r\n	display: inline-flex;\r\n	align-items: center;\r\n	justify-content: center;\r\n	gap: 8px;\r\n	padding: 14px 44px;\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 14px;\r\n	font-weight: 600;\r\n	letter-spacing: 0.1em;\r\n	text-transform: uppercase;\r\n	color: var(--bg-void);\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	border: none;\r\n	border-radius: var(--radius-sm);\r\n	z-index: 5;\r\n	transition:\r\n		transform 0.2s,\r\n		box-shadow 0.3s;\r\n	box-shadow: 0 4px 20px rgba(232, 184, 75, 0.3);\r\n}\r\n#intro .btn_play:hover {\r\n	transform: translateX(-50%) translateY(-2px);\r\n	box-shadow: 0 6px 30px rgba(232, 184, 75, 0.45);\r\n}\r\n#intro .btn_play:active {\r\n	transform: translateX(-50%) translateY(0);\r\n	box-shadow: 0 2px 10px rgba(232, 184, 75, 0.2);\r\n}\r\n\r\n/* ══════════════════════════════════════════  \r\n   OVERLAYS  \r\n   ══════════════════════════════════════════ */\r\n#intro .overlay {\r\n	background: rgba(6, 8, 16, 0.92);\r\n	position: absolute;\r\n	z-index: 100;\r\n	top: 0;\r\n	left: 0;\r\n	width: 100%;\r\n	height: 100%;\r\n	color: var(--text-light);\r\n	opacity: 0;\r\n	display: none;\r\n	overflow-y: auto;\r\n	transition: opacity 0.2s ease;\r\n}\r\n\r\n/* ── Loading ── */\r\n#intro .loading-content {\r\n	position: absolute;\r\n	top: 50%;\r\n	left: 50%;\r\n	transform: translate(-50%, -50%);\r\n	text-align: center;\r\n	color: var(--gold, #e8b84b);\r\n}\r\n\r\n#intro .loading-spinner {\r\n	width: 48px;\r\n	height: 48px;\r\n	margin: 0 auto 16px;\r\n	border: 4px solid rgba(232, 184, 75, 0.2);\r\n	border-top-color: var(--gold, #e8b84b);\r\n	border-radius: 50%;\r\n	animation: intro-spin 0.8s linear infinite;\r\n}\r\n\r\n@keyframes intro-spin {\r\n	to {\r\n		transform: rotate(360deg);\r\n	}\r\n}\r\n\r\n#intro .loading-content p {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 14px;\r\n	letter-spacing: 2px;\r\n	text-transform: uppercase;\r\n}\r\n\r\n#intro .loading-text {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 16px;\r\n	letter-spacing: 3px;\r\n	text-transform: uppercase;\r\n	color: var(--gold, #e8b84b);\r\n}\r\n\r\n#intro .loading-text span {\r\n	display: inline-block;\r\n	animation: intro-wave 1.2s ease-in-out infinite;\r\n	animation-delay: calc(var(--i) * 0.08s);\r\n}\r\n\r\n@keyframes intro-wave {\r\n	0%,\r\n	60%,\r\n	100% {\r\n		transform: translateY(0);\r\n	}\r\n	30% {\r\n		transform: translateY(-8px);\r\n	}\r\n}\r\n\r\n/* ── About overlay ── */\r\n#intro .about-content {\r\n	max-width: 480px;\r\n	margin: 0 auto;\r\n	padding: 60px 30px 30px;\r\n	text-align: center;\r\n}\r\n#intro .emblem-icon {\r\n	font-size: 48px;\r\n	margin-bottom: 12px;\r\n	display: block;\r\n}\r\n#intro .about-title,\r\n#intro .gold-title {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 24px;\r\n	font-weight: 700;\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	-webkit-background-clip: text;\r\n	-webkit-text-fill-color: transparent;\r\n	background-clip: text;\r\n	margin: 0 0 6px;\r\n}\r\n#intro .about-subtitle {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 12px;\r\n	font-weight: 400;\r\n	color: var(--text-muted);\r\n	letter-spacing: 0.08em;\r\n	margin: 0 0 20px;\r\n}\r\n\r\n/* Ornament divider */\r\n#intro .ornament {\r\n	display: flex;\r\n	align-items: center;\r\n	gap: 12px;\r\n	margin: 0 auto 24px;\r\n	max-width: 280px;\r\n}\r\n#intro .ornament-line {\r\n	flex: 1;\r\n	height: 1px;\r\n	background: linear-gradient(to right, transparent, var(--gold-dark));\r\n}\r\n#intro .ornament-line:last-child {\r\n	background: linear-gradient(to left, transparent, var(--gold-dark));\r\n}\r\n#intro .ornament-diamond {\r\n	width: 8px;\r\n	height: 8px;\r\n	background: var(--gold);\r\n	transform: rotate(45deg);\r\n	box-shadow: 0 0 8px var(--gold);\r\n	flex-shrink: 0;\r\n}\r\n#intro .ornament-dot {\r\n	width: 4px;\r\n	height: 4px;\r\n	background: var(--gold-dark);\r\n	border-radius: 50%;\r\n	flex-shrink: 0;\r\n}\r\n\r\n#intro .about-content .info {\r\n	margin: 0 auto 24px;\r\n	text-align: left;\r\n	font-size: 14px;\r\n}\r\n#intro .about-content .info td:first-child {\r\n	color: var(--text-muted);\r\n	padding-right: 12px;\r\n	white-space: nowrap;\r\n}\r\n#intro .about-content a {\r\n	color: var(--gold);\r\n	text-decoration: none;\r\n}\r\n#intro .about-content a:hover {\r\n	text-decoration: underline;\r\n	color: var(--gold-bright);\r\n}\r\n#intro .concept {\r\n	font-size: 13px;\r\n	text-align: justify;\r\n	line-height: 1.6;\r\n	color: var(--text-muted);\r\n}\r\n#intro .concept p {\r\n	margin: 0 0 10px;\r\n}\r\n#intro .hint {\r\n	margin-top: 24px;\r\n	font-size: 11px;\r\n	color: var(--text-muted);\r\n	opacity: 0.6;\r\n}\r\n\r\n/* ── Settings overlay ── */\r\n#intro .settings-content {\r\n	max-width: 520px;\r\n	margin: 0 auto;\r\n	padding: 30px 30px 80px;\r\n}\r\n#intro .settings-title {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 22px;\r\n	font-weight: 700;\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	-webkit-background-clip: text;\r\n	-webkit-text-fill-color: transparent;\r\n	background-clip: text;\r\n	margin: 0 0 20px;\r\n	text-align: center;\r\n}\r\n\r\n/* Section headers */\r\n#intro .section-header {\r\n	display: flex;\r\n	align-items: center;\r\n	gap: 12px;\r\n	margin: 20px 0 12px;\r\n}\r\n#intro .section-header span {\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 13px;\r\n	font-weight: 600;\r\n	color: var(--gold);\r\n	letter-spacing: 0.08em;\r\n	text-transform: uppercase;\r\n	white-space: nowrap;\r\n}\r\n#intro .section-header::after {\r\n	content: '';\r\n	flex: 1;\r\n	height: 1px;\r\n	background: linear-gradient(to right, var(--border-dim), transparent);\r\n}\r\n\r\n/* Tables */\r\n#intro .screen,\r\n#intro .sound {\r\n	width: 100%;\r\n	border-collapse: collapse;\r\n}\r\n#intro .screen td,\r\n#intro .sound td {\r\n	padding: 6px 4px;\r\n	font-size: 13px;\r\n	color: var(--text-light);\r\n	vertical-align: middle;\r\n}\r\n#intro .screen td:first-child,\r\n#intro .sound td:first-child {\r\n	width: 40%;\r\n	color: var(--text-muted);\r\n}\r\n\r\n/* Selects & inputs */\r\n#intro .settings-content select,\r\n#intro .settings-content input[type='text'] {\r\n	background: var(--bg-card);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-light);\r\n	padding: 4px 8px;\r\n	font-size: 13px;\r\n	font-family: inherit;\r\n}\r\n#intro .settings-content select:focus,\r\n#intro .settings-content input[type='text']:focus {\r\n	border-color: var(--gold);\r\n	outline: none;\r\n}\r\n#intro .screensize {\r\n	width: 150px;\r\n}\r\n\r\n/* Range sliders */\r\n#intro input[type='range'] {\r\n	width: 150px;\r\n	accent-color: var(--gold);\r\n}\r\n\r\n/* Checkboxes */\r\n#intro .settings-content input[type='checkbox'] {\r\n	accent-color: var(--gold);\r\n}\r\n\r\n/* Quality result / volume result */\r\n#intro .quality_result,\r\n#intro .bgmvol_result,\r\n#intro .soundvol_result {\r\n	font-size: 12px;\r\n	color: var(--gold);\r\n	min-width: 40px;\r\n}\r\n\r\n/* Clean cache */\r\n#intro .clean {\r\n	display: none;\r\n	padding: 4px 10px;\r\n	background: var(--bg-card);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-light);\r\n	font-size: 12px;\r\n	transition: border-color 0.2s;\r\n}\r\n#intro .clean:hover {\r\n	border-color: var(--gold);\r\n}\r\n#intro .clean-status {\r\n	color: var(--text-muted);\r\n	font-size: 12px;\r\n	margin-left: 8px;\r\n}\r\n\r\n/* ── Server list ── */\r\n#intro .serveredit dl {\r\n	margin: 0;\r\n}\r\n#intro .serveredit dt {\r\n	margin-bottom: 6px;\r\n}\r\n#intro .serveredit dd {\r\n	margin: 0 0 10px 0;\r\n}\r\n\r\n#intro .clientinfo {\r\n	background: transparent !important;\r\n	border: 1px solid transparent !important;\r\n	color: var(--gold) !important;\r\n	cursor: pointer;\r\n	text-decoration: underline;\r\n}\r\n#intro .clientinfo:focus {\r\n	cursor: text;\r\n	border: 1px solid var(--gold) !important;\r\n	background: var(--bg-card) !important;\r\n	color: var(--text-light) !important;\r\n	text-decoration: none;\r\n}\r\n\r\n#intro .settings-content span {\r\n	vertical-align: top;\r\n	margin-left: 5px;\r\n}\r\n\r\n/* Radio buttons */\r\n#intro input[type='radio'] {\r\n	margin: 0;\r\n	width: 15px;\r\n	height: 15px;\r\n	accent-color: var(--gold);\r\n	vertical-align: middle;\r\n	position: relative;\r\n	bottom: 1px;\r\n}\r\n\r\n/* Server container */\r\n#intro .servercontainer {\r\n	max-height: 70px;\r\n	overflow-y: auto;\r\n	overflow-x: hidden;\r\n	margin-top: 10px;\r\n	padding-right: 6px;\r\n}\r\n#intro .servercontainer::-webkit-scrollbar {\r\n	width: 6px;\r\n}\r\n#intro .servercontainer::-webkit-scrollbar-track {\r\n	background: var(--bg-void);\r\n	border-radius: 6px;\r\n}\r\n#intro .servercontainer::-webkit-scrollbar-thumb {\r\n	border-radius: 6px;\r\n	background: var(--gold-dark);\r\n}\r\n\r\n/* Server list table */\r\n#intro .serverlist {\r\n	border-collapse: collapse;\r\n	width: 100%;\r\n}\r\n#intro .serverlist td {\r\n	text-align: center;\r\n	height: 22px;\r\n	font-size: 12px;\r\n}\r\n#intro .serverlist thead td {\r\n	color: var(--gold-dark);\r\n	font-weight: bold;\r\n	font-size: 11px;\r\n}\r\n#intro .serverlist tbody tr:hover {\r\n	background: rgba(232, 184, 75, 0.06);\r\n}\r\n#intro .servers input {\r\n	background: transparent;\r\n	border: 1px solid transparent;\r\n	cursor: pointer;\r\n	color: var(--text-light);\r\n	text-align: center;\r\n	width: 100%;\r\n	font-size: 12px;\r\n	font-family: inherit;\r\n}\r\n#intro .servers input:focus {\r\n	cursor: text;\r\n	border: 1px solid var(--gold);\r\n	background: var(--bg-card);\r\n	color: var(--text-light);\r\n}\r\n\r\n/* Delete button */\r\n#intro .btn_delete {\r\n	width: 20px;\r\n	height: 20px;\r\n	background: rgba(239, 68, 68, 0.15);\r\n	border: 1px solid rgba(239, 68, 68, 0.3);\r\n	border-radius: 4px;\r\n	color: #ef4444;\r\n	font-size: 14px;\r\n	line-height: 18px;\r\n	text-align: center;\r\n	padding: 0;\r\n	transition: background 0.2s;\r\n}\r\n#intro .btn_delete:hover {\r\n	background: rgba(239, 68, 68, 0.3);\r\n}\r\n\r\n/* Add server button */\r\n#intro .settings .btn_add {\r\n	margin-top: 10px;\r\n	float: right;\r\n	padding: 5px 14px;\r\n	background: var(--bg-card);\r\n	border: 1px solid var(--border-dim);\r\n	border-radius: var(--radius-sm);\r\n	color: var(--text-light);\r\n	font-size: 12px;\r\n	transition: border-color 0.2s;\r\n}\r\n#intro .settings .btn_add:hover {\r\n	border-color: var(--gold);\r\n	color: var(--gold);\r\n}\r\n\r\n/* Save button */\r\n#intro .settings .btn_save {\r\n	display: block;\r\n	width: 200px;\r\n	margin: 24px auto 0;\r\n	padding: 12px 0;\r\n	font-family: 'Cinzel', serif;\r\n	font-size: 13px;\r\n	font-weight: 600;\r\n	letter-spacing: 0.1em;\r\n	text-transform: uppercase;\r\n	color: var(--bg-void);\r\n	background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dark));\r\n	border: none;\r\n	border-radius: var(--radius-sm);\r\n	transition:\r\n		transform 0.2s,\r\n		box-shadow 0.3s;\r\n	box-shadow: 0 4px 20px rgba(232, 184, 75, 0.3);\r\n}\r\n#intro .settings .btn_save:hover {\r\n	transform: translateY(-2px);\r\n	box-shadow: 0 6px 30px rgba(232, 184, 75, 0.45);\r\n}\r\n#intro .settings .btn_save:active {\r\n	transform: translateY(0);\r\n}\r\n\r\n/* ── Aspect Ratio Fixes ── */\r\n#intro .drop-zone {\r\n	transform: translateX(-50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .msg {\r\n	transform: translateX(-50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_play {\r\n	transform: translateX(-50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_play:hover {\r\n	transform: translateX(-50%) translateY(-2px) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_play:active {\r\n	transform: translateX(-50%) translateY(0) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_about {\r\n	transform: scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .btn_about:hover {\r\n	transform: scale(calc(1.1 * var(--cx, 1)), calc(1.1 * var(--cy, 1)));\r\n}\r\n#intro .btn_settings {\r\n	scale: var(--cx, 1) var(--cy, 1);\r\n}\r\n#intro .btn_settings:hover {\r\n	scale: var(--cx, 1) var(--cy, 1);\r\n}\r\n#intro .loading-content {\r\n	transform: translate(-50%, -50%) scale(var(--cx, 1), var(--cy, 1));\r\n}\r\n#intro .about-content,\r\n#intro .settings-content {\r\n	scale: var(--cx, 1) var(--cy, 1);\r\n}\r\n";
 }));
 //#endregion
 //#region src/UI/Components/Intro/Particle.js
@@ -337061,6 +336874,7 @@ var init_PreLoader = __esmMin((() => {
 	}  
 	#ro-preloader .pre-text {  
 		font-family: serif;  
+		font-size-adjust: none; /* keep serif's native x-height, outside body's Arial normalization */  
 		font-size: 16px;  
 		letter-spacing: 3px;  
 		text-transform: uppercase;  
@@ -337359,8 +337173,8 @@ var init_Intro = __esmMin((() => {
 		FileSystem_default.getSize((used) => {
 			if (!used) return;
 			let msg = "";
-			if (used > 1024 * 1024 * 1024) msg = (used / 1024 / 1024 / 1024).toFixed(2) + " GiB saved";
-			else if (used > 1024 * 1024) msg = (used / 1024 / 1024).toFixed(2) + " MiB saved";
+			if (used > 1073741824) msg = (used / 1024 / 1024 / 1024).toFixed(2) + " GiB saved";
+			else if (used > 1048576) msg = (used / 1024 / 1024).toFixed(2) + " MiB saved";
 			else msg = (used / 1024).toFixed(2) + " KiB saved";
 			const msgEl = root.querySelector(".msg");
 			if (msgEl) msgEl.textContent = msg;
