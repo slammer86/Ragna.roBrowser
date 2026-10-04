@@ -266,8 +266,8 @@ function expansion(src, index) {
 * @param {number} index
 */
 function substitutionBox(src, index) {
-	let i;
-	for (i = 0; i < 4; ++i) tmp[i] = substitutionBox.table[i][src[i * 2 + 0 + index]] & 240 | substitutionBox.table[i][src[i * 2 + 1 + index]] & 15;
+	let i = 0;
+	for (; i < 4; ++i) tmp[i] = substitutionBox.table[i][src[i * 2 + 0 + index]] & 240 | substitutionBox.table[i][src[i * 2 + 1 + index]] & 15;
 	src.set(tmp, index);
 	tmp.set(clean);
 }
@@ -599,8 +599,8 @@ var GameFileDecrypt = class {
 	*/
 	static decodeHeader(buf, len) {
 		const nblocks = len >> 3;
-		let i;
-		for (i = 0; i < 20 && i < nblocks; ++i) decryptBlock(buf, i * 8);
+		let i = 0;
+		for (; i < 20 && i < nblocks; ++i) decryptBlock(buf, i * 8);
 	}
 };
 /**
@@ -780,8 +780,8 @@ var iconv = (() => {
 			var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen));
 			var curByte = 0;
 			var len2 = placeHoldersLen > 0 ? validLen - 4 : validLen;
-			var i2;
-			for (i2 = 0; i2 < len2; i2 += 4) {
+			var i2 = 0;
+			for (; i2 < len2; i2 += 4) {
 				tmp = revLookup[b64.charCodeAt(i2)] << 18 | revLookup[b64.charCodeAt(i2 + 1)] << 12 | revLookup[b64.charCodeAt(i2 + 2)] << 6 | revLookup[b64.charCodeAt(i2 + 3)];
 				arr[curByte++] = tmp >> 16 & 255;
 				arr[curByte++] = tmp >> 8 & 255;
@@ -1332,8 +1332,8 @@ var iconv = (() => {
 			}
 			const strLen = string.length;
 			if (length > strLen / 2) length = strLen / 2;
-			let i;
-			for (i = 0; i < length; ++i) {
+			let i = 0;
+			for (; i < length; ++i) {
 				const parsed = parseInt(string.substr(i * 2, 2), 16);
 				if (numberIsNaN(parsed)) return i;
 				buf[offset + i] = parsed;
@@ -2114,8 +2114,8 @@ var iconv = (() => {
 			return base64.toByteArray(base64clean(str));
 		}
 		function blitBuffer(src, dst, offset, length) {
-			let i;
-			for (i = 0; i < length; ++i) {
+			let i = 0;
+			for (; i < length; ++i) {
 				if (i + offset >= dst.length || i >= src.length) break;
 				dst[i + offset] = src[i];
 			}
@@ -16222,7 +16222,7 @@ var RSW = class RSW {
 			this.ground.left = fp.readLong();
 			this.ground.right = fp.readLong();
 		}
-		if (version >= 2.7) {
+		if (version >= 2.7 && this.files.buildnumber >= 221) {
 			count = fp.readLong();
 			fp.seek(4 * count, SEEK_CUR);
 		}
@@ -17067,6 +17067,7 @@ var Node = class {
 		const max = Math.max, min = Math.min;
 		let x, y, z;
 		mat4.copy(this.matrix, _matrix);
+		if (this.baseMatrix) mat4.multiply(this.matrix, this.matrix, this.baseMatrix);
 		mat4.translate(this.matrix, this.matrix, this.pos);
 		if (!this.rotKeyframes.length) mat4.rotate(this.matrix, this.matrix, this.rotangle, this.rotaxis);
 		else mat4.rotateQuat(this.matrix, this.matrix, this.rotKeyframes[0].q);
@@ -17091,7 +17092,10 @@ var Node = class {
 			box.range[i] = (box.max[i] - box.min[i]) / 2;
 			box.center[i] = box.min[i] + box.range[i];
 		}
-		for (i = 0, count = nodes.length; i < count; ++i) if (nodes[i].parentname === this.name && this.name !== this.parentname) nodes[i].calcBoundingBox(this.matrix);
+		for (i = 0, count = nodes.length; i < count; ++i) {
+			if (this.absoluteTransform) break;
+			if (nodes[i].parentname === this.name && this.name !== this.parentname) nodes[i].calcBoundingBox(this.matrix);
+		}
 	}
 	/**
 	* Compile Node
@@ -17179,6 +17183,7 @@ var Node = class {
 		]);
 		const nodeMatrix = mat4.create();
 		mat4.identity(nodeMatrix);
+		if (this.baseMatrix) mat4.multiply(nodeMatrix, nodeMatrix, this.baseMatrix);
 		const animPos = getPositionAtFrame(this.posKeyframes, frame, animLen);
 		if (animPos) mat4.translate(nodeMatrix, nodeMatrix, animPos);
 		else mat4.translate(nodeMatrix, nodeMatrix, this.pos);
@@ -17407,7 +17412,13 @@ var RSM = class RSM {
 		const fp = new BinaryReader(data);
 		const header = fp.readBinaryString(4);
 		if (header !== "GRSM" && header !== "GRSX") throw new Error(`RSM::load() - Incorrect header "${header}", must be "GRSM"`);
-		this.version = fp.readByte() + fp.readByte() / 10;
+		const major = fp.readByte();
+		const minor = fp.readByte();
+		this.version = major + minor / 10;
+		if (major === 2 && minor >= 2) {
+			this.loadRsm2(fp, minor);
+			return;
+		}
 		this.animLen = fp.readLong();
 		this.shadeType = fp.readLong();
 		this.main_node = null;
@@ -17431,6 +17442,7 @@ var RSM = class RSM {
 		}
 		count = fp.readLong();
 		const nodes = new Array(count);
+		if (nodes.length === 0) throw new Error("RSM::load() - Model contains no nodes");
 		for (i = 0; i < count; ++i) {
 			nodes[i] = new RSM.Node(this, fp, count === 1);
 			if (mainNodeName && nodes[i].name === mainNodeName) this.main_node = nodes[i];
@@ -17485,6 +17497,227 @@ var RSM = class RSM {
 			});
 		}
 		this.volumebox = volumebox;
+		this.instances = [];
+		this.box = new RSM.Box();
+		this.calcBoundingBox();
+	}
+	/**
+	* Load an RSM2 model.
+	*
+	* RSM2 stores an absolute 3x4 world transform per node and uses
+	* length-prefixed strings. Versions 2.2 and 2.3 also use different face
+	* encodings, so they cannot be parsed by the legacy Node constructor.
+	* The transform is baked into the vertices here while retaining the
+	* existing Node/renderer mesh API.
+	*
+	* @param {object} fp BinaryReader
+	* @param {number} minor RSM2 minor version
+	*/
+	loadRsm2(fp, minor) {
+		let i;
+		const readString = () => fp.readBinaryString(fp.readLong());
+		this.animLen = fp.readLong();
+		this.shadeType = fp.readLong();
+		this.alpha = fp.readUByte() / 255;
+		this.frameRatePerSecond = fp.readFloat();
+		const sharedTextures = [];
+		if (minor <= 2) {
+			const textureCount = fp.readLong();
+			for (i = 0; i < textureCount; i++) sharedTextures.push(readString());
+		}
+		const rootNodeCount = fp.readLong();
+		const rootNodeNames = new Array(rootNodeCount);
+		for (i = 0; i < rootNodeCount; i++) rootNodeNames[i] = readString();
+		const nodeCount = fp.readLong();
+		const nodes = new Array(nodeCount);
+		const allTextures = sharedTextures.slice();
+		const addTexture = (texture) => {
+			let index = allTextures.indexOf(texture);
+			if (index === -1) {
+				index = allTextures.length;
+				allTextures.push(texture);
+			}
+			return index;
+		};
+		for (i = 0; i < nodeCount; i++) {
+			const name = readString();
+			const parentname = readString();
+			const textureCount = fp.readLong();
+			const nodeTextures = new Array(textureCount);
+			for (let j = 0; j < textureCount; j++) {
+				const texture = minor <= 2 ? sharedTextures[fp.readLong()] : readString();
+				nodeTextures[j] = addTexture(texture || "");
+			}
+			const transform = new Array(12);
+			for (let j = 0; j < transform.length; j++) transform[j] = fp.readFloat();
+			const vertexCount = fp.readLong();
+			const vertices = new Array(vertexCount);
+			for (let j = 0; j < vertexCount; j++) {
+				const x = fp.readFloat();
+				const y = fp.readFloat();
+				const z = fp.readFloat();
+				vertices[j] = [
+					x,
+					y,
+					z
+				];
+			}
+			const tvertexCount = fp.readLong();
+			const tvertices = new Float32Array(tvertexCount * 6);
+			for (let j = 0; j < tvertexCount; j++) {
+				const offset = j * 6;
+				fp.readULong();
+				tvertices[offset + 4] = fp.readFloat() * .98 + .01;
+				tvertices[offset + 5] = fp.readFloat() * .98 + .01;
+			}
+			const faceCount = fp.readLong();
+			const faces = new Array(faceCount);
+			for (let j = 0; j < faceCount; j++) {
+				let faceLength = 24;
+				if (minor >= 2) faceLength = fp.readLong();
+				const face = {
+					vertidx: [
+						fp.readUShort(),
+						fp.readUShort(),
+						fp.readUShort()
+					],
+					tvertidx: [
+						fp.readUShort(),
+						fp.readUShort(),
+						fp.readUShort()
+					],
+					texid: fp.readUShort(),
+					padding: fp.readUShort(),
+					twoSide: fp.readLong(),
+					smoothGroup: 0
+				};
+				if (minor === 1 || minor >= 2) face.smoothGroup = fp.readLong();
+				const consumed = minor >= 2 ? 24 : 24;
+				if (minor >= 2 && faceLength > consumed) fp.seek(faceLength - consumed, SEEK_CUR);
+				faces[j] = face;
+			}
+			const scaleCount = fp.readLong();
+			const scaleKeyFrames = new Array(scaleCount);
+			for (let j = 0; j < scaleCount; j++) scaleKeyFrames[j] = {
+				Frame: fp.readLong(),
+				Scale: [
+					fp.readFloat(),
+					fp.readFloat(),
+					fp.readFloat()
+				],
+				Data: fp.readFloat()
+			};
+			const rotationCount = fp.readLong();
+			const rotationKeyFrames = new Array(rotationCount);
+			for (let j = 0; j < rotationCount; j++) rotationKeyFrames[j] = {
+				frame: fp.readLong(),
+				q: [
+					fp.readFloat(),
+					fp.readFloat(),
+					fp.readFloat(),
+					fp.readFloat()
+				]
+			};
+			const positionCount = fp.readLong();
+			const positionKeyFrames = new Array(positionCount);
+			for (let j = 0; j < positionCount; j++) positionKeyFrames[j] = {
+				frame: fp.readLong(),
+				px: fp.readFloat(),
+				py: fp.readFloat(),
+				pz: fp.readFloat(),
+				Data: fp.readLong()
+			};
+			if (minor === 3) {
+				const uvAnimationCount = fp.readLong();
+				for (let j = 0; j < uvAnimationCount; j++) {
+					fp.readLong();
+					const typeCount = fp.readLong();
+					for (let k = 0; k < typeCount; k++) {
+						fp.readLong();
+						fp.seek(fp.readLong() * 8, SEEK_CUR);
+					}
+				}
+			}
+			const node = Object.create(Node.prototype);
+			node.main = this;
+			node.is_only = true;
+			node.name = name;
+			node.parentname = parentname || null;
+			node.textures = nodeTextures;
+			node.mat3 = [
+				1,
+				0,
+				0,
+				0,
+				1,
+				0,
+				0,
+				0,
+				1
+			];
+			node.offset = [
+				0,
+				0,
+				0
+			];
+			node.pos = [
+				0,
+				0,
+				0
+			];
+			node.rotangle = 0;
+			node.rotaxis = [
+				0,
+				0,
+				0
+			];
+			node.scale = [
+				1,
+				1,
+				1
+			];
+			node.flip = [
+				1,
+				-1,
+				1
+			];
+			node.box = new RSM.Box();
+			node.matrix = mat4.create();
+			node.vertices = vertices;
+			node.tvertices = tvertices;
+			node.faces = faces;
+			node.rotKeyframes = rotationKeyFrames;
+			node.posKeyframes = positionKeyFrames;
+			node.scaleKeyFrames = scaleKeyFrames;
+			node.textureKeyFrameGroup = [];
+			node.absoluteTransform = true;
+			node.baseMatrix = mat4.create();
+			node.baseMatrix[0] = transform[0];
+			node.baseMatrix[1] = transform[1];
+			node.baseMatrix[2] = transform[2];
+			node.baseMatrix[4] = transform[3];
+			node.baseMatrix[5] = transform[4];
+			node.baseMatrix[6] = transform[5];
+			node.baseMatrix[8] = transform[6];
+			node.baseMatrix[9] = transform[7];
+			node.baseMatrix[10] = transform[8];
+			node.baseMatrix[12] = transform[9];
+			node.baseMatrix[13] = transform[10];
+			node.baseMatrix[14] = transform[11];
+			nodes[i] = node;
+		}
+		if (fp.offset + 4 <= fp.length) {
+			const volumeBoxCount = fp.readLong();
+			const remaining = fp.length - fp.offset;
+			const volumeBoxSize = remaining === volumeBoxCount * 40 || remaining < volumeBoxCount * 232 ? 40 : 232;
+			if (volumeBoxCount >= 0 && fp.offset + volumeBoxCount * volumeBoxSize <= fp.length) fp.seek(volumeBoxCount * volumeBoxSize, SEEK_CUR);
+		}
+		this.textures = allTextures;
+		this.nodes = nodes;
+		if (nodes.length === 0) throw new Error("RSM::load() - Model contains no nodes");
+		this.main_node = rootNodeNames.map((name) => nodes.find((node) => node.name === name)).find(Boolean) || nodes[0];
+		this.posKeyframes = [];
+		this.volumebox = [];
 		this.instances = [];
 		this.box = new RSM.Box();
 		this.calcBoundingBox();
@@ -18115,8 +18348,8 @@ var ACT = class {
 		const layers = new Array(count);
 		let layer;
 		const version = this.version;
-		let i;
-		for (i = 0; i < count; ++i) {
+		let i = 0;
+		for (; i < count; ++i) {
 			layer = layers[i] = {
 				pos: [fp.readLong(), fp.readLong()],
 				index: fp.readLong(),
